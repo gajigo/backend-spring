@@ -9,6 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     @GetMapping("/user")
     public User getUser(@RequestParam(value = "id", defaultValue = "1") Long id) {
-        Query query = new Session
+        User user = new User();
+        user.setName("funcionaldo");
+        user.setDescription("se esta vendo isso, o teste funcionou!");
+        user.setLogin("test");
+        user.setPassword("pass");
+
+        return user;
     }
 }
