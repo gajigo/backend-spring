@@ -35,6 +35,16 @@ public class LectureController {
         return assembler.toModel(lecture);
     }
 
+    /*
+    @GetMapping(path = {"/{id}/participants"})
+    public EntityModel participants(@PathVariable Long id) {
+        Lecture lecture = repository.findById(id)
+                .orElseThrow(() -> new LectureNotFoundException(id));
+
+        return lecture.getParticipants();
+    }
+     */
+
     @GetMapping
     public CollectionModel all() {
         List lectures = repository.findAll().stream()

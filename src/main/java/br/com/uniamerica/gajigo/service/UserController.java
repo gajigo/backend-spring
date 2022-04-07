@@ -33,6 +33,14 @@ public class UserController {
         return assembler.toModel(user);
     }
 
+    @GetMapping(path = {"/byusername/{username}"})
+    public EntityModel find(@PathVariable String username) {
+        User user = repository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException(username));
+
+        return assembler.toModel(user);
+    }
+
     @GetMapping
     public CollectionModel all() {
         List users = repository.findAll().stream()
