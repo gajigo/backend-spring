@@ -2,6 +2,8 @@ package br.com.uniamerica.gajigo.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -9,6 +11,8 @@ import java.util.Set;
 
 @Entity(name = "lectures")
 @Table(schema = "public")
+@SQLDelete(sql = "UPDATE lectures SET removed = CURRENT_TIMESTAMP WHERE id = ?")
+@Where(clause = "removed IS null")
 public class Lecture extends AbstractDescribable {
     @ManyToMany
     @JoinTable(
@@ -27,4 +31,11 @@ public class Lecture extends AbstractDescribable {
     )
     @Getter @Setter
     private Set<User> speakers = new HashSet<>();
+
+    public Lecture() {
+    }
+
+    public Lecture(String name, String description) {
+        super(name, description);
+    }
 }

@@ -12,7 +12,15 @@ public abstract class AbstractDescribable extends AbstractEntity {
     @Getter @Setter
     private String name;
 
-    @Column(name = "description", length = 1024)
+    @Column(name = "description", nullable = false, length = 1024)
     @Getter @Setter
-    private String description;
+    private String description = "";
+
+    public AbstractDescribable() {
+    }
+
+    public AbstractDescribable(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }
