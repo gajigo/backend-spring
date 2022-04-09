@@ -27,12 +27,10 @@ public class User extends AbstractDescribable {
     private String password;
 
     @ManyToMany(mappedBy = "participants")
-    @JsonIgnore
     @Getter @Setter
     private Set<Lecture> participatesIn = new HashSet<>();
 
     @ManyToMany(mappedBy = "speakers")
-    @JsonIgnore
     @Getter @Setter
     private Set<Lecture> speaksIn = new HashSet<>();
 
