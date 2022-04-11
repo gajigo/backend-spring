@@ -4,8 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Set;
 
-@Entity(name = "questions")
-@Table(schema = "public")
+@Entity
+@Table(schema = "public", name = "questions")
 public class Question {
     private String answer;
     private User responder;

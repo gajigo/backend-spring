@@ -5,8 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity(name = "telephones")
-@Table(schema = "public")
+@Entity
+@Table(schema = "public", name = "telephones")
 public class Telephone extends AbstractEntity {
     @ManyToOne
     @JoinColumn(name="user_id", nullable = false)
