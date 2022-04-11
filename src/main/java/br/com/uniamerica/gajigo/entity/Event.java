@@ -1,6 +1,7 @@
 package br.com.uniamerica.gajigo.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -14,6 +15,7 @@ import java.util.Set;
 @Table(schema = "public", name = "events")
 @SQLDelete(sql = "UPDATE events SET removed = CURRENT_TIMESTAMP WHERE id = ?")
 @Where(clause = "removed IS null")
+@NoArgsConstructor
 @Getter @Setter
 public class Event extends AbstractDescribable {
     @ManyToMany
@@ -36,9 +38,6 @@ public class Event extends AbstractDescribable {
 
     @Column(name = "end_time")
     private LocalDateTime endTime;
-
-    public Event() {
-    }
 
     public Event(String name, String description, EventStatus status) {
         super(name, description);

@@ -2,10 +2,10 @@ package br.com.uniamerica.gajigo.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -15,6 +15,7 @@ import java.util.Set;
 @Table(schema = "public", name = "users")
 @SQLDelete(sql = "UPDATE users SET removed = CURRENT_TIMESTAMP WHERE id = ?")
 @Where(clause = "removed IS null")
+@NoArgsConstructor
 @Getter @Setter
 public class User extends AbstractDescribable {
     @ManyToMany(mappedBy = "organizers")
@@ -35,9 +36,6 @@ public class User extends AbstractDescribable {
 
     @ManyToMany(mappedBy = "speakers")
     private Set<Lecture> speaksIn = new HashSet<>();
-
-    public User() {
-    }
 
     public User(String username, String password, String name) {
         super(name, "");
