@@ -9,11 +9,15 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "lectures")
-@Table(schema = "public")
+@Entity
+@Table(schema = "public", name = "lectures")
 @SQLDelete(sql = "UPDATE lectures SET removed = CURRENT_TIMESTAMP WHERE id = ?")
 @Where(clause = "removed IS null")
 public class Lecture extends AbstractDescribable {
+    @ManyToOne(optional = false)
+    @Getter @Setter
+    private Event event;
+
     @ManyToMany
     @JoinTable(
             name = "lectures_participants",
@@ -35,7 +39,8 @@ public class Lecture extends AbstractDescribable {
     public Lecture() {
     }
 
-    public Lecture(String name, String description) {
+    public Lecture(String name, String description, Event event) {
         super(name, description);
+        this.event = event;
     }
 }

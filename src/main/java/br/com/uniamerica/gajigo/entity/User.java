@@ -1,23 +1,23 @@
 package br.com.uniamerica.gajigo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "users")
-@Table(schema = "public")
+@Entity
+@Table(schema = "public", name = "users")
 @SQLDelete(sql = "UPDATE users SET removed = CURRENT_TIMESTAMP WHERE id = ?")
 @Where(clause = "removed IS null")
 public class User extends AbstractDescribable {
+    @ManyToMany(mappedBy = "organizers")
+    @Getter @Setter
+    private Set<Event> organizes = new HashSet<>();
+
     @Column(name = "username", nullable = false, unique = true, length = 32)
     @Getter @Setter
     private String username;
