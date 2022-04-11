@@ -76,8 +76,6 @@ public class MockDatabase {
                 lecture2.getSpeakers().add(userRepository.getById(1L));
                 lecture2.getSpeakers().add(userRepository.getById(3L));
 
-                lecture1.setRemoved(LocalDateTime.now());
-
                 UserMock mock = new UserMock(lectureRepository, eventRepository);
                 for (User user : mock.create(100)) {
                     log.info("Preloading " + userRepository.save(user));
