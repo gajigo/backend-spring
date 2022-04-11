@@ -4,25 +4,40 @@ import br.com.uniamerica.gajigo.entity.Event;
 import br.com.uniamerica.gajigo.entity.EventStatus;
 import br.com.uniamerica.gajigo.entity.Lecture;
 import br.com.uniamerica.gajigo.entity.User;
+import br.com.uniamerica.gajigo.mock.UserMock;
 import br.com.uniamerica.gajigo.repository.EventRepository;
 import br.com.uniamerica.gajigo.repository.LectureRepository;
 import br.com.uniamerica.gajigo.repository.UserRepository;
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.jboss.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDateTime;
 
 @Configuration
+@ComponentScan
 public class MockDatabase {
     private static final Logger log = LoggerFactory.logger(MockDatabase.class);
 
+    private EventRepository eventRepository;
+    private LectureRepository lectureRepository;
+    private UserRepository userRepository;
+
+    @Autowired
+    public MockDatabase(EventRepository eventRepository,
+                        LectureRepository lectureRepository,
+                        UserRepository userRepository) {
+        this.eventRepository = eventRepository;
+        this.lectureRepository = lectureRepository;
+        this.userRepository = userRepository;
+    }
+
     @Bean
-    CommandLineRunner initDatabase(EventRepository eventRepository,
-                                   LectureRepository lectureRepository,
-                                   UserRepository userRepository) {
+    CommandLineRunner initDatabase() {
         return args -> {
             try {
                 // Events
@@ -62,6 +77,11 @@ public class MockDatabase {
                 lecture2.getSpeakers().add(userRepository.getById(3L));
 
                 lecture1.setRemoved(LocalDateTime.now());
+
+                UserMock mock = new UserMock(lectureRepository, eventRepository);
+                for (User user : mock.create(100)) {
+                    log.info("Preloading " + userRepository.save(user));
+                }
 
                 log.info("Preloading " + lectureRepository.save(lecture1));
                 log.info("Preloading " + lectureRepository.save(lecture2));

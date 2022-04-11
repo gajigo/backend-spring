@@ -6,6 +6,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,6 +14,7 @@ import java.util.Set;
 @Table(schema = "public", name = "events")
 @SQLDelete(sql = "UPDATE events SET removed = CURRENT_TIMESTAMP WHERE id = ?")
 @Where(clause = "removed IS null")
+@Getter @Setter
 public class Event extends AbstractDescribable {
     @ManyToMany
     @JoinTable(
@@ -20,16 +22,20 @@ public class Event extends AbstractDescribable {
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "organizer_id")
     )
-    @Getter @Setter
     private Set<User> organizers = new HashSet<>();
 
     @OneToMany(mappedBy = "event")
-    @Getter @Setter
     private Set<Lecture> lectures = new HashSet<>();
 
     @Column(name = "status", nullable = false)
-    @Getter @Setter
+    @Enumerated(EnumType.STRING)
     private EventStatus status;
+
+    @Column(name = "start_time")
+    private LocalDateTime startTime;
+
+    @Column(name = "end_time")
+    private LocalDateTime endTime;
 
     public Event() {
     }

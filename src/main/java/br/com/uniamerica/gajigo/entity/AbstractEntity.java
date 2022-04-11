@@ -9,25 +9,22 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
+@Getter @Setter
 public abstract class AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
-    @Getter @Setter
     private Long id;
 
     @Column(name = "created", nullable = false, updatable = false)
     @CreatedDate
-    @Getter @Setter
     private LocalDateTime created;
 
     @Column(name = "updated", insertable = false)
     @LastModifiedDate
-    @Getter @Setter
     private LocalDateTime updated;
 
     @Column(name = "removed")
-    @Getter @Setter
     private LocalDateTime removed;
 
     @PrePersist

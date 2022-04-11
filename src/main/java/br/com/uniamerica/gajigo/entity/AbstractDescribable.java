@@ -7,13 +7,12 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
+@Getter @Setter
 public abstract class AbstractDescribable extends AbstractEntity {
     @Column(name = "name", nullable = false)
-    @Getter @Setter
     private String name;
 
     @Column(name = "description", nullable = false, length = 1024)
-    @Getter @Setter
     private String description = "";
 
     public AbstractDescribable() {
