@@ -22,6 +22,9 @@ public class User extends AbstractDescribable {
     @JoinColumn(name = "location_id")
     private City location;
 
+    @OneToMany(mappedBy = "owner")
+    private Set<Event> events;
+
     @ManyToMany(mappedBy = "organizers")
     private Set<Event> organizes = new HashSet<>();
 
@@ -34,6 +37,9 @@ public class User extends AbstractDescribable {
 
     @Column(name = "cpf")
     private String cpf;
+
+    @Column(name = "telephone")
+    private String telephone;
 
     @ManyToMany(mappedBy = "participants")
     private Set<Lecture> participatesIn = new HashSet<>();

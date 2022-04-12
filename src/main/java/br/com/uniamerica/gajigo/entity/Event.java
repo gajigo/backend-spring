@@ -22,6 +22,10 @@ public class Event extends AbstractDescribable {
     @JoinColumn(name = "location_id")
     private City location;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "owner_id")
+    private User owner;
+
     @ManyToMany
     @JoinTable(
             name = "events_organizers",
