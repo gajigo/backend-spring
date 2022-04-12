@@ -18,6 +18,10 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter @Setter
 public class Event extends AbstractDescribable {
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private City location;
+
     @ManyToMany
     @JoinTable(
             name = "events_organizers",
