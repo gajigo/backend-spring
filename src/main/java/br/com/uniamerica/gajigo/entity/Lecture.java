@@ -24,6 +24,14 @@ public class Lecture extends AbstractDescribable {
 
     @ManyToMany
     @JoinTable(
+            name = "lectures_tags",
+            joinColumns = @JoinColumn(name = "lecture_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private Set<Tag> tags = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
             name = "lectures_participants",
             joinColumns = @JoinColumn(name = "lecture_id"),
             inverseJoinColumns = @JoinColumn(name = "participant_id")
@@ -38,11 +46,15 @@ public class Lecture extends AbstractDescribable {
     )
     private Set<User> speakers = new HashSet<>();
 
-    @Column(name = "start_time")
-    private LocalDateTime startTime;
+    @Column(name = "start_date")
+    private LocalDateTime startDate;
 
-    @Column(name = "end_time")
-    private LocalDateTime endTime;
+    @Column(name = "end_date")
+    private LocalDateTime endDate;
+
+    @Column(name = "attendance_mode", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private AttendanceMode attendanceMode;
 
     public Lecture(String name, String description, Event event) {
         super(name, description);

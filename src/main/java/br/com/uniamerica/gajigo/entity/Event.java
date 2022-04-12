@@ -33,11 +33,11 @@ public class Event extends AbstractDescribable {
     @Enumerated(EnumType.STRING)
     private EventStatus status;
 
-    @Column(name = "start_time")
-    private LocalDateTime startTime;
+    @Column(name = "start_date")
+    private LocalDateTime startDate;
 
-    @Column(name = "end_time")
-    private LocalDateTime endTime;
+    @Column(name = "end_date")
+    private LocalDateTime endDate;
 
     public Event(String name, String description, EventStatus status) {
         super(name, description);

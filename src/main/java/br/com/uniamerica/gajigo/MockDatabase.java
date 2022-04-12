@@ -1,9 +1,6 @@
 package br.com.uniamerica.gajigo;
 
-import br.com.uniamerica.gajigo.entity.Event;
-import br.com.uniamerica.gajigo.entity.EventStatus;
-import br.com.uniamerica.gajigo.entity.Lecture;
-import br.com.uniamerica.gajigo.entity.User;
+import br.com.uniamerica.gajigo.entity.*;
 import br.com.uniamerica.gajigo.mock.UserMock;
 import br.com.uniamerica.gajigo.repository.EventRepository;
 import br.com.uniamerica.gajigo.repository.LectureRepository;
@@ -80,6 +77,9 @@ public class MockDatabase {
                 for (User user : mock.create(100)) {
                     log.info("Preloading " + userRepository.save(user));
                 }
+
+                lecture1.setAttendanceMode(AttendanceMode.Online);
+                lecture2.setAttendanceMode(AttendanceMode.Offline);
 
                 log.info("Preloading " + lectureRepository.save(lecture1));
                 log.info("Preloading " + lectureRepository.save(lecture2));
