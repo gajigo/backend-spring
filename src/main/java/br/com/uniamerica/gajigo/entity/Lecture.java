@@ -19,6 +19,7 @@ import java.util.Set;
 @Getter @Setter
 public class Lecture extends AbstractDescribable {
     @ManyToOne(optional = false)
+    @JoinColumn(name = "event_id")
     private Event event;
 
     @ManyToMany

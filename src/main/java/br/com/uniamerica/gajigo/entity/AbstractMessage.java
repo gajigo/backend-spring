@@ -14,6 +14,7 @@ public abstract class AbstractMessage {
     @ManyToOne
     @JoinColumn(name = "sender_id")
     private User sender;
-    @Column(name = "")
+
+    @Column(name = "text")
     private String text;
 }

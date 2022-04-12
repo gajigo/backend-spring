@@ -1,7 +1,5 @@
 package br.com.uniamerica.gajigo.mock;
 
-import br.com.uniamerica.gajigo.entity.Event;
-import br.com.uniamerica.gajigo.entity.Lecture;
 import br.com.uniamerica.gajigo.entity.User;
 import br.com.uniamerica.gajigo.repository.EventRepository;
 import br.com.uniamerica.gajigo.repository.LectureRepository;
