@@ -22,6 +22,10 @@ public class Lecture extends AbstractDescribable {
     @JoinColumn(name = "event_id")
     private Event event;
 
+    @ManyToOne
+    @JoinColumn(name = "language_id")
+    private Language language;
+
     @ManyToMany
     @JoinTable(
             name = "lectures_tags",
