@@ -13,8 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import java.time.LocalDateTime;
-
 @Configuration
 @ComponentScan
 public class MockDatabase {
@@ -42,7 +40,7 @@ public class MockDatabase {
                         "Uniamerica Eventos", "Palestras e Demais", EventStatus.EventScheduled
                 );
 
-                log.info("Preloading " + eventRepository.save(event1));
+                // log.info("Preloading " + eventRepository.save(event1));
 
                 // Users
                 log.info("Preloading " + userRepository.save(new User(
