@@ -40,8 +40,6 @@ public class MockDatabase {
                         "Uniamerica Eventos", "Palestras e Demais", EventStatus.EventScheduled
                 );
 
-                // log.info("Preloading " + eventRepository.save(event1));
-
                 // Users
                 log.info("Preloading " + userRepository.save(new User(
                         "pedro", "hunter2", "Pedro Henrique Garcia", "Fullstack Developer"
@@ -52,6 +50,9 @@ public class MockDatabase {
                 log.info("Preloading " + userRepository.save(new User(
                         "jean", "senhamaneira", "Jean Clayton", "Backend Developer"
                 )));
+
+                event1.setOwner(userRepository.getById(1L));
+                log.info("Preloading " + eventRepository.save(event1));
 
                 // Lectures
                 Lecture lecture1 = new Lecture(
