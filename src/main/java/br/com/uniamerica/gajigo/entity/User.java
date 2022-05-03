@@ -8,6 +8,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,10 +32,15 @@ public class User extends AbstractDescribable {
     @Column(name = "username", nullable = false, unique = true, length = 32)
     private String username;
 
+    @Email
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
     @Column(name = "password", nullable = false, length = 64)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+    // @CPF
     @Column(name = "cpf")
     private String cpf;
 
@@ -56,5 +62,11 @@ public class User extends AbstractDescribable {
     public User(String username, String password, String name, String description) {
         this(username, password, name);
         this.setDescription(description);
+    }
+
+    public User(String email, String username, String password,
+                String name, String description) {
+        this(username, password, name, description);
+        this.setEmail(email);
     }
 }

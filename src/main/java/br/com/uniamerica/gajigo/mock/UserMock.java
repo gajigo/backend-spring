@@ -32,6 +32,7 @@ public class UserMock {
 
         user.setUsername(generateUsername());
         user.setPassword(generatePassword());
+        user.setEmail(generateEmail());
 
         user.setCpf(generateCpf());
 
@@ -53,6 +54,11 @@ public class UserMock {
 
     private String generateDescription() {
         return faker.lorem().sentence();
+    }
+
+    private String generateEmail() {
+        return faker.lorem().characters(10) +
+                "@gmail.com";
     }
 
     private String generateUsername() {
