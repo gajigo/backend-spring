@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.rest.core.event.ValidatingRepositoryEventListener;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
+import org.springframework.validation.Validator;
 
 @SpringBootApplication
 public class GajigoApplication implements RepositoryRestConfigurer {
@@ -18,7 +19,13 @@ public class GajigoApplication implements RepositoryRestConfigurer {
     @Override
     public void configureValidatingRepositoryEventListener(
             ValidatingRepositoryEventListener validatingListener) {
-        validatingListener.addValidator("beforeCreate", new CountryValidator());
-        validatingListener.addValidator("beforeCreate", new UserValidator());
+        addValidator(new CountryValidator(), validatingListener);
+        addValidator(new UserValidator(), validatingListener);
+    }
+
+    private void addValidator(Validator validator,
+                              ValidatingRepositoryEventListener validatingListener) {
+        validatingListener.addValidator("beforeCreate", validator);
+        validatingListener.addValidator("beforeSave", validator);
     }
 }
