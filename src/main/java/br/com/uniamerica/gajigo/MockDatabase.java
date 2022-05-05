@@ -1,5 +1,7 @@
 package br.com.uniamerica.gajigo;
 
+import br.com.uniamerica.gajigo.entity.*;
+import br.com.uniamerica.gajigo.mock.UserMock;
 import br.com.uniamerica.gajigo.repository.CityRepository;
 import br.com.uniamerica.gajigo.repository.EventRepository;
 import br.com.uniamerica.gajigo.repository.LectureRepository;
@@ -34,7 +36,8 @@ public class MockDatabase {
                 /*
                 // Events
                 Event event1 = new Event(
-                        "Uniamerica Eventos", "Palestras e Demais", EventStatus.EventScheduled
+                        "Uniamerica Eventos", "Palestras e Demais", EventStatus.EventScheduled,
+                        AttendanceMode.Mixed
                 );
 
                 // Users
@@ -80,15 +83,13 @@ public class MockDatabase {
 
                 log.info("Preloading " + lectureRepository.save(lecture1));
                 log.info("Preloading " + lectureRepository.save(lecture2));
-                 */
 
                 // Users
-                /*
                 UserMock mock = new UserMock(cityRepository);
                 for (User user : mock.create(100)) {
                     log.info("Preloading " + userRepository.save(user));
                 }
-                */
+                 */
             } catch (Exception ignored) {}
         };
     }

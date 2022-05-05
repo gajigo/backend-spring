@@ -3,12 +3,10 @@ package br.com.uniamerica.gajigo.validator;
 import br.com.uniamerica.gajigo.entity.Country;
 import br.com.uniamerica.gajigo.entity.State;
 import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
 
-public class StateValidator implements Validator {
-    @Override
-    public boolean supports(Class<?> clazz) {
-        return State.class.equals(clazz);
+public class StateValidator extends AbstractValidator<State> {
+    public StateValidator() {
+        super(State.class);
     }
 
     @Override
@@ -21,24 +19,12 @@ public class StateValidator implements Validator {
 
     private void validateName(State state, Errors errors) {
         String name = state.getName();
-
-        if (name == null) {
-            errors.rejectValue("name", "name.null",
-                               "State name must not be null!");
-        }
-
-        if (name.isBlank()) {
-            errors.rejectValue("name", "name.empty",
-                               "State name must not be empty!");
-        }
+        validateString("name", name, errors);
     }
 
     private void validateCountry(State state, Errors errors) {
         Country country = state.getCountry();
-
-        if (country == null) {
-            errors.rejectValue("country", "country.null",
-                               "State must belong to a country!");
-        }
+        validateNull("country", country,
+                     "State must belong to a country!", errors);
     }
 }

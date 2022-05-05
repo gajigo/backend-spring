@@ -2,12 +2,10 @@ package br.com.uniamerica.gajigo.validator;
 
 import br.com.uniamerica.gajigo.entity.Language;
 import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
 
-public class LanguageValidator implements Validator {
-    @Override
-    public boolean supports(Class<?> clazz) {
-        return Language.class.equals(clazz);
+public class LanguageValidator extends AbstractValidator<Language> {
+    public LanguageValidator() {
+        super(Language.class);
     }
 
     @Override
@@ -19,15 +17,6 @@ public class LanguageValidator implements Validator {
 
     private void validateName(Language language, Errors errors) {
         String name = language.getName();
-
-        if (name == null) {
-            errors.rejectValue("name", "name.null",
-                               "Language name must not be null!");
-        }
-
-        if (name.isBlank()) {
-            errors.rejectValue("name", "name.empty",
-                               "Language name must not be empty!");
-        }
+        validateString("name", name, errors);
     }
 }

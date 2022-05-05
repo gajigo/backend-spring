@@ -47,8 +47,18 @@ public class Event extends AbstractDescribable {
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
+    @Column(name = "attendance_mode", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private AttendanceMode attendanceMode;
+
     public Event(String name, String description, EventStatus status) {
         super(name, description);
         this.status = status;
+    }
+
+    public Event(String name, String description, EventStatus status,
+                 AttendanceMode attendanceMode) {
+        this(name, description, status);
+        this.attendanceMode = attendanceMode;
     }
 }

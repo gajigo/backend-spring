@@ -2,12 +2,10 @@ package br.com.uniamerica.gajigo.validator;
 
 import br.com.uniamerica.gajigo.entity.Lecture;
 import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
 
-public class LectureValidator implements Validator {
-    @Override
-    public boolean supports(Class<?> clazz) {
-        return Lecture.class.equals(clazz);
+public class LectureValidator extends AbstractValidator<Lecture> {
+    public LectureValidator() {
+        super(Lecture.class);
     }
 
     @Override
@@ -19,15 +17,6 @@ public class LectureValidator implements Validator {
 
     private void validateName(Lecture lecture, Errors errors) {
         String name = lecture.getName();
-
-        if (name == null) {
-            errors.rejectValue("name", "name.null",
-                               "Lecture name must not be null!");
-        }
-
-        if (name.isBlank()) {
-            errors.rejectValue("name", "name.empty",
-                               "Lecture name must not be empty!");
-        }
+        validateString("name", name, errors);
     }
 }
