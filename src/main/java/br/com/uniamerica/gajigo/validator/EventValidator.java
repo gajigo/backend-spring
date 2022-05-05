@@ -28,6 +28,8 @@ public class EventValidator extends AbstractValidator<Event> {
     private void validateAttendanceMode(Event event, Errors errors) {
         AttendanceMode mode = event.getAttendanceMode();
 
+        // Se o evento for online, nao pode ter uma localizacao
+        // se for misto ou offline, precisa ter
         if (event.getAttendanceMode() == AttendanceMode.Online) {
             event.setLocation(null);
         } else if (event.getLocation() == null){
@@ -41,6 +43,8 @@ public class EventValidator extends AbstractValidator<Event> {
         LocalDateTime start = event.getStartDate();
         LocalDateTime end = event.getEndDate();
 
+        // TODO remove special logic for null, you shouldn't be able to schedule an event
+        // TODO ... without, you know, scheduling it...
         if (end != null && end.isBefore(start)) {
             errors.rejectValue("endDate", "endDate.beforeStart",
                                "The event cannot end before it has started!");

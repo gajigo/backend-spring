@@ -14,7 +14,9 @@ public abstract class AbstractMock<T> {
     public List<T> create(int n) {
         ArrayList<T> entities = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            entities.add(create());
+            try {
+                entities.add(create());
+            } catch (Exception ignored) {}
         }
 
         return entities;

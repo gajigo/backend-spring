@@ -22,7 +22,10 @@ public class UserValidator extends AbstractValidator<User> {
     }
 
     private void validateEmail(User user, Errors errors) {
-        if (!user.getEmail().contains("@")) {
+        String email = user.getEmail();
+        validateNull("email", email, errors);
+
+        if (!email.contains("@")) {
             errors.rejectValue("email", "email.invalid",
                     "Email must be valid!");
         }

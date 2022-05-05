@@ -1,11 +1,9 @@
 package br.com.uniamerica.gajigo;
 
 import br.com.uniamerica.gajigo.entity.*;
+import br.com.uniamerica.gajigo.mock.CountryMock;
 import br.com.uniamerica.gajigo.mock.UserMock;
-import br.com.uniamerica.gajigo.repository.CityRepository;
-import br.com.uniamerica.gajigo.repository.EventRepository;
-import br.com.uniamerica.gajigo.repository.LectureRepository;
-import br.com.uniamerica.gajigo.repository.UserRepository;
+import br.com.uniamerica.gajigo.repository.*;
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +14,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MockDatabase {
     private static final Logger log = LoggerFactory.logger(MockDatabase.class);
+
+    @Autowired
+    private CountryRepository countryRepository;
 
     @Autowired
     private CityRepository cityRepository;
@@ -90,6 +91,14 @@ public class MockDatabase {
                     log.info("Preloading " + userRepository.save(user));
                 }
                  */
+
+                // Countries
+                CountryMock mock = new CountryMock(countryRepository);
+                for (Country country : mock.create(1000)) {
+                    try {
+                        log.info("Preloading " + countryRepository.save(country));
+                    } catch (Exception ignored) {}
+                }
             } catch (Exception ignored) {}
         };
     }
