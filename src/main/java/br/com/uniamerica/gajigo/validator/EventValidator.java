@@ -27,6 +27,10 @@ public class EventValidator extends AbstractValidator<Event> {
 
     private void validateAttendanceMode(Event event, Errors errors) {
         AttendanceMode mode = event.getAttendanceMode();
+        if (validateNull("attendanceMode", mode, errors)) {
+            // Cannot do any more validations if the field is null
+            return;
+        }
 
         // Se o evento for online, nao pode ter uma localizacao
         // se for misto ou offline, precisa ter

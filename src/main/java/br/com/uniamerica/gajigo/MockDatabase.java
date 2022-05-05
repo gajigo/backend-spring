@@ -2,6 +2,7 @@ package br.com.uniamerica.gajigo;
 
 import br.com.uniamerica.gajigo.entity.*;
 import br.com.uniamerica.gajigo.mock.CountryMock;
+import br.com.uniamerica.gajigo.mock.LanguageMock;
 import br.com.uniamerica.gajigo.mock.UserMock;
 import br.com.uniamerica.gajigo.repository.*;
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
@@ -14,6 +15,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MockDatabase {
     private static final Logger log = LoggerFactory.logger(MockDatabase.class);
+
+    @Autowired
+    private LanguageRepository languageRepository;
 
     @Autowired
     private CountryRepository countryRepository;
@@ -86,19 +90,31 @@ public class MockDatabase {
                 log.info("Preloading " + lectureRepository.save(lecture2));
 
                 // Users
-                UserMock mock = new UserMock(cityRepository);
-                for (User user : mock.create(100)) {
+                UserMock userMock = new UserMock(cityRepository);
+                for (User user : userMock.create(100)) {
                     log.info("Preloading " + userRepository.save(user));
                 }
                  */
 
+                /*
                 // Countries
-                CountryMock mock = new CountryMock(countryRepository);
-                for (Country country : mock.create(1000)) {
+                CountryMock countryMock = new CountryMock();
+                for (Country country : countryMock.create(1000)) {
                     try {
                         log.info("Preloading " + countryRepository.save(country));
                     } catch (Exception ignored) {}
                 }
+                 */
+
+                /*
+                // Languages
+                LanguageMock languageMock = new LanguageMock();
+                for (Language language : languageMock.create(1000)) {
+                    try {
+                        log.info("Preloading " + languageRepository.save(language));
+                    } catch (Exception ignored) {}
+                }
+                 */
             } catch (Exception ignored) {}
         };
     }

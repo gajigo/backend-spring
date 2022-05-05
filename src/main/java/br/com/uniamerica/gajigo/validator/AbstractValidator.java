@@ -1,7 +1,10 @@
 package br.com.uniamerica.gajigo.validator;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+
+import java.util.List;
 
 public abstract class AbstractValidator<T> implements Validator {
     private final Class<T> objType;
@@ -45,5 +48,16 @@ public abstract class AbstractValidator<T> implements Validator {
                     className.toLowerCase() + ".empty",
                     className + " " + fieldName + " must not be empty!");
         }
+    }
+
+    protected String capitalizeString(String text) {
+        StringBuilder builder = new StringBuilder();
+
+        for (String s : text.split(" ")) {
+            builder.append(StringUtils.capitalize(s) + " ");
+        }
+
+        builder.setLength(builder.length()-1);
+        return builder.toString();
     }
 }
