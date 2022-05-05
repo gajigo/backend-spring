@@ -1,7 +1,6 @@
 package br.com.uniamerica.gajigo;
 
-import br.com.uniamerica.gajigo.entity.*;
-import br.com.uniamerica.gajigo.mock.UserMock;
+import br.com.uniamerica.gajigo.repository.CityRepository;
 import br.com.uniamerica.gajigo.repository.EventRepository;
 import br.com.uniamerica.gajigo.repository.LectureRepository;
 import br.com.uniamerica.gajigo.repository.UserRepository;
@@ -10,31 +9,29 @@ import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan
 public class MockDatabase {
     private static final Logger log = LoggerFactory.logger(MockDatabase.class);
 
-    private EventRepository eventRepository;
-    private LectureRepository lectureRepository;
-    private UserRepository userRepository;
+    @Autowired
+    private CityRepository cityRepository;
 
     @Autowired
-    public MockDatabase(EventRepository eventRepository,
-                        LectureRepository lectureRepository,
-                        UserRepository userRepository) {
-        this.eventRepository = eventRepository;
-        this.lectureRepository = lectureRepository;
-        this.userRepository = userRepository;
-    }
+    private EventRepository eventRepository;
+
+    @Autowired
+    private LectureRepository lectureRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Bean
     CommandLineRunner initDatabase() {
         return args -> {
             try {
+                /*
                 // Events
                 Event event1 = new Event(
                         "Uniamerica Eventos", "Palestras e Demais", EventStatus.EventScheduled
@@ -78,18 +75,21 @@ public class MockDatabase {
                 lecture2.getSpeakers().add(userRepository.getById(1L));
                 lecture2.getSpeakers().add(userRepository.getById(3L));
 
-                UserMock mock = new UserMock(lectureRepository, eventRepository);
-                for (User user : mock.create(100)) {
-                    log.info("Preloading " + userRepository.save(user));
-                }
-
                 lecture1.setAttendanceMode(AttendanceMode.Online);
                 lecture2.setAttendanceMode(AttendanceMode.Offline);
 
                 log.info("Preloading " + lectureRepository.save(lecture1));
                 log.info("Preloading " + lectureRepository.save(lecture2));
-            } catch (Exception ignored) {
-            }
+                 */
+
+                // Users
+                /*
+                UserMock mock = new UserMock(cityRepository);
+                for (User user : mock.create(100)) {
+                    log.info("Preloading " + userRepository.save(user));
+                }
+                */
+            } catch (Exception ignored) {}
         };
     }
 }

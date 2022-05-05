@@ -14,11 +14,18 @@ public class EventValidator implements Validator {
     public void validate(Object obj, Errors errors) {
         Event event = (Event) obj;
 
-        checkNameNotBlank(event, errors);
+        validateName(event, errors);
     }
 
-    private void checkNameNotBlank(Event event, Errors errors) {
-        if (event.getName().isBlank()) {
+    private void validateName(Event event, Errors errors) {
+        String name = event.getName();
+
+        if (name == null) {
+            errors.rejectValue("name", "name.null",
+                               "Event name must not be null!");
+        }
+
+        if (name.isBlank()) {
             errors.rejectValue("name", "name.empty",
                                "Event name must not be empty!");
         }

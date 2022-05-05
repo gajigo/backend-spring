@@ -25,4 +25,8 @@ public class City extends AbstractLocation {
 
     @OneToMany(mappedBy = "location")
     private Set<Event> events;
+
+    public City(String name) {
+        super(name);
+    }
 }

@@ -21,4 +21,8 @@ import java.util.Set;
 public class Country extends AbstractLocation {
     @OneToMany(mappedBy = "country")
     private Set<State> states = new HashSet<>();
+
+    public Country(String name) {
+        super(name);
+    }
 }

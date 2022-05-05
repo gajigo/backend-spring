@@ -14,19 +14,26 @@ public class UserValidator implements Validator {
     public void validate(Object obj, Errors errors) {
         User user = (User) obj;
 
-        checkEmailValid(user, errors);
-        checkNameNotBlank(user, errors);
+        validateEmail(user, errors);
+        validateName(user, errors);
     }
 
-    private void checkEmailValid(User user, Errors errors) {
+    private void validateEmail(User user, Errors errors) {
         if (!user.getEmail().contains("@")) {
             errors.rejectValue("email", "email.invalid",
                                "Email must be valid!");
         }
     }
 
-    private void checkNameNotBlank(User user, Errors errors) {
-        if (user.getName().isBlank()) {
+    private void validateName(User user, Errors errors) {
+        String name = user.getName();
+
+        if (name == null) {
+            errors.rejectValue("name", "name.null",
+                               "User name must not be null!");
+        }
+
+        if (name.isBlank()) {
             errors.rejectValue("name", "name.empty",
                                "User name must not be empty!");
         }

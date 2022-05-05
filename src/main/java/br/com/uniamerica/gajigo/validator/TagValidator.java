@@ -14,11 +14,18 @@ public class TagValidator implements Validator {
     public void validate(Object obj, Errors errors) {
         Tag tag = (Tag) obj;
 
-        checkNameNotBlank(tag, errors);
+        validateName(tag, errors);
     }
 
-    private void checkNameNotBlank(Tag tag, Errors errors) {
-        if (tag.getName().isBlank()) {
+    private void validateName(Tag tag, Errors errors) {
+        String name = tag.getName();
+
+        if (name == null) {
+            errors.rejectValue("name", "name.null",
+                               "Tag name must not be null!");
+        }
+
+        if (name.isBlank()) {
             errors.rejectValue("name", "name.empty",
                                "Tag name must not be empty!");
         }

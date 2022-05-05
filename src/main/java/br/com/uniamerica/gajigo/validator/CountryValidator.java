@@ -14,11 +14,18 @@ public class CountryValidator implements Validator {
     public void validate(Object obj, Errors errors) {
         Country country = (Country) obj;
 
-        checkNameNotBlank(country, errors);
+        validateName(country, errors);
     }
 
-    private void checkNameNotBlank(Country country, Errors errors) {
-        if (country.getName().isBlank()) {
+    private void validateName(Country country, Errors errors) {
+        String name = country.getName();
+
+        if (name == null) {
+            errors.rejectValue("name", "name.null",
+                               "Country name must not be null!");
+        }
+
+        if (name.isBlank()) {
             errors.rejectValue("name", "name.empty",
                                "Country name must not be empty!");
         }

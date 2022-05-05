@@ -14,11 +14,18 @@ public class LanguageValidator implements Validator {
     public void validate(Object obj, Errors errors) {
         Language language = (Language) obj;
 
-        checkNameNotBlank(language, errors);
+        validateName(language, errors);
     }
 
-    private void checkNameNotBlank(Language language, Errors errors) {
-        if (language.getName().isBlank()) {
+    private void validateName(Language language, Errors errors) {
+        String name = language.getName();
+
+        if (name == null) {
+            errors.rejectValue("name", "name.null",
+                               "Language name must not be null!");
+        }
+
+        if (name.isBlank()) {
             errors.rejectValue("name", "name.empty",
                                "Language name must not be empty!");
         }

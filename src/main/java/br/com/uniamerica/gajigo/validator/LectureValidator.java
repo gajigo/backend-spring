@@ -14,11 +14,18 @@ public class LectureValidator implements Validator {
     public void validate(Object obj, Errors errors) {
         Lecture lecture = (Lecture) obj;
 
-        checkNameNotBlank(lecture, errors);
+        validateName(lecture, errors);
     }
 
-    private void checkNameNotBlank(Lecture lecture, Errors errors) {
-        if (lecture.getName().isBlank()) {
+    private void validateName(Lecture lecture, Errors errors) {
+        String name = lecture.getName();
+
+        if (name == null) {
+            errors.rejectValue("name", "name.null",
+                               "Lecture name must not be null!");
+        }
+
+        if (name.isBlank()) {
             errors.rejectValue("name", "name.empty",
                                "Lecture name must not be empty!");
         }

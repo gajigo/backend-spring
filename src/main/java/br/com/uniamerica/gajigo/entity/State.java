@@ -23,4 +23,8 @@ public class State extends AbstractLocation {
 
     @OneToMany(mappedBy = "state")
     private Set<City> cities = new HashSet<>();
+
+    public State(String name) {
+        super(name);
+    }
 }

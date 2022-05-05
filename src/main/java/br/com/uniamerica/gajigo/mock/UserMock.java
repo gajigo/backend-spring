@@ -1,30 +1,21 @@
 package br.com.uniamerica.gajigo.mock;
 
+import br.com.uniamerica.gajigo.entity.City;
 import br.com.uniamerica.gajigo.entity.User;
-import br.com.uniamerica.gajigo.repository.EventRepository;
-import br.com.uniamerica.gajigo.repository.LectureRepository;
-import com.github.javafaker.Faker;
+import br.com.uniamerica.gajigo.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.*;
+import java.util.List;
 
-public class UserMock {
-    private Random rd;
-    private Faker faker;
-
-    private LectureRepository lectureRepository;
-    private EventRepository eventRepository;
+public class UserMock extends AbstractMock<User> {
+    private CityRepository cityRepository;
 
     @Autowired
-    public UserMock(LectureRepository lectureRepository,
-                    EventRepository eventRepository) {
-        this.rd = new Random();
-        this.faker = new Faker();
-        this.lectureRepository = lectureRepository;
-        this.eventRepository = eventRepository;
+    public UserMock(CityRepository cityRepository) {
+        this.cityRepository = cityRepository;
     }
 
-    private User create() {
+    public User create() {
         User user = new User();
 
         user.setName(generateName());
@@ -35,17 +26,11 @@ public class UserMock {
         user.setEmail(generateEmail());
 
         user.setCpf(generateCpf());
+        user.setTelephone(generateTelephone());
+
+        user.setLocation(generateLocation());
 
         return user;
-    }
-
-    public List<User> create(int n) {
-        ArrayList<User> users = new ArrayList();
-        for (int i = 0; i < n; i++) {
-            users.add(create());
-        }
-
-        return users;
     }
 
     private String generateName() {
@@ -73,21 +58,32 @@ public class UserMock {
         StringBuilder builder = new StringBuilder();
 
         for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                builder.append(randomNum());
-            }
+            builder.append(randomNum(3));
             builder.append(".");
         }
+
         builder.setLength(builder.length()-1);
         builder.append("-");
-        for (int i = 0; i < 2; i++) {
-            builder.append(randomNum());
-        }
+        builder.append(randomNum(2));
 
         return builder.toString();
     }
 
-    private int randomNum() {
-        return rd.nextInt(9) + 1;
+    private String generateTelephone() {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("+55(45) 9");
+        builder.append(randomNum(4));
+        builder.append("-");
+        builder.append(randomNum(4));
+
+        return builder.toString();
+    }
+
+    private City generateLocation() {
+        List<City> cities = cityRepository.findAll();
+
+        if (cities.size() == 0) return null;
+        return cities.get(rd.nextInt(cities.size()));
     }
 }
