@@ -9,9 +9,6 @@ import org.springframework.validation.Errors;
 @Configurable
 public class UserValidator extends AbstractValidator<User> {
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
     public UserValidator() {
         super(User.class);
     }
@@ -23,6 +20,7 @@ public class UserValidator extends AbstractValidator<User> {
         validateName(user, errors);
         validateEmail(user, errors);
         validateUsername(user, errors);
+        validatePassword(user, errors);
     }
 
     private void validateName(User user, Errors errors) {
@@ -53,10 +51,10 @@ public class UserValidator extends AbstractValidator<User> {
             // Cannot do any more validations if the field is null
             return;
         }
+    }
 
-        if (userRepository.findByUsername(username).size() != 0) {
-            errors.rejectValue("username", "username.duplicate",
-                               "Identical username has already been registered!");
-        }
+    private void validatePassword(User user, Errors errors) {
+        String password = user.getPassword();
+        validateString("password", password, errors);
     }
 }

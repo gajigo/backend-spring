@@ -4,7 +4,10 @@ import br.com.uniamerica.gajigo.entity.*;
 import org.springframework.validation.Errors;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class LectureValidator extends AbstractValidator<Lecture> {
     public LectureValidator() {
@@ -65,6 +68,14 @@ public class LectureValidator extends AbstractValidator<Lecture> {
             // Cannot do any more validations if the field is null
             return;
         }
+
+        System.out.println(mode.name());
+
+        List<String> modes = Arrays.stream(AttendanceMode.values())
+                .map(m -> {
+                    return m.name();
+                })
+                .collect(Collectors.toList());
 
         AttendanceMode eventMode = lecture.getEvent().getAttendanceMode();
         if (eventMode != AttendanceMode.Mixed && mode != eventMode) {
