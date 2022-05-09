@@ -20,6 +20,8 @@ public class StateValidator extends AbstractValidator<State> {
     private void validateName(State state, Errors errors) {
         String name = state.getName();
         validateString("name", name, errors);
+
+        state.setName(capitalizeString(state.getName()));
     }
 
     private void validateCountry(State state, Errors errors) {

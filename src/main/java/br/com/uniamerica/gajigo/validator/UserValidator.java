@@ -1,9 +1,17 @@
 package br.com.uniamerica.gajigo.validator;
 
 import br.com.uniamerica.gajigo.entity.User;
+import br.com.uniamerica.gajigo.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.validation.Errors;
 
+@Configurable
 public class UserValidator extends AbstractValidator<User> {
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     public UserValidator() {
         super(User.class);
     }
@@ -14,6 +22,7 @@ public class UserValidator extends AbstractValidator<User> {
 
         validateName(user, errors);
         validateEmail(user, errors);
+        validateUsername(user, errors);
     }
 
     private void validateName(User user, Errors errors) {
@@ -31,6 +40,23 @@ public class UserValidator extends AbstractValidator<User> {
         if (!email.contains("@")) {
             errors.rejectValue("email", "email.invalid",
                     "Email must be valid!");
+        }
+
+        user.setEmail(user.getEmail().toLowerCase());
+    }
+
+    private void validateUsername(User user, Errors errors) {
+        String username = user.getUsername();
+
+        validateString("username", username, errors);
+        if (username == null) {
+            // Cannot do any more validations if the field is null
+            return;
+        }
+
+        if (userRepository.findByUsername(username).size() != 0) {
+            errors.rejectValue("username", "username.duplicate",
+                               "Identical username has already been registered!");
         }
     }
 }

@@ -1,7 +1,6 @@
 package br.com.uniamerica.gajigo.validator;
 
-import br.com.uniamerica.gajigo.entity.AttendanceMode;
-import br.com.uniamerica.gajigo.entity.Event;
+import br.com.uniamerica.gajigo.entity.*;
 import org.springframework.validation.Errors;
 
 import java.time.LocalDateTime;
@@ -18,6 +17,8 @@ public class EventValidator extends AbstractValidator<Event> {
         validateName(event, errors);
         validateAttendanceMode(event, errors);
         validateDate(event, errors);
+        validateOwner(event, errors);
+        validateStatus(event, errors);
     }
 
     private void validateName(Event event, Errors errors) {
@@ -32,8 +33,8 @@ public class EventValidator extends AbstractValidator<Event> {
             return;
         }
 
-        // Se o evento for online, nao pode ter uma localizacao
-        // se for misto ou offline, precisa ter
+        // If the event is online, we can't have a location
+        // If the event is offline or mixed, we must have one.
         if (event.getAttendanceMode() == AttendanceMode.Online) {
             event.setLocation(null);
         } else if (event.getLocation() == null){
@@ -64,6 +65,46 @@ public class EventValidator extends AbstractValidator<Event> {
             if (end != null && end.isBefore(LocalDateTime.now())) {
                 errors.rejectValue("endDate", "endDate.past",
                                    "The end date of a new event cannot be in the past!");
+            }
+        }
+    }
+
+    private void validateOwner(Event event, Errors errors) {
+        User owner = event.getOwner();
+
+        if (validateNull("owner", owner,
+                         "Event must have an owner!", errors)) {
+            // Cannot do any more validations if the field is null
+            return;
+        }
+
+        // Add the owner to the list of event organizers
+        event.getOrganizers().add(owner);
+    }
+
+    private void validateStatus(Event event, Errors errors) {
+        EventStatus status = event.getStatus();
+
+        if (status == null) {
+            event.setStatus(EventStatus.EventScheduled);
+        }
+
+        if (status == EventStatus.EventMovedOnline) {
+            event.setAttendanceMode(AttendanceMode.Online);
+            for (Lecture lecture : event.getLectures()) {
+                lecture.setAttendanceMode(AttendanceMode.Online);
+            }
+
+            event.setLocation(null);
+        }
+
+        // Creation time only validations
+        if (event.getUpdated() == null) {
+            if (status != EventStatus.EventScheduled) {
+                // Maybe a gotcha? Events are ALWAYS scheduled
+                // at creation time, so I don't think it's worth
+                // it to give an error message on wrong status
+                event.setStatus(EventStatus.EventScheduled);
             }
         }
     }

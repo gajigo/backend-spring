@@ -13,12 +13,13 @@ public class LanguageValidator extends AbstractValidator<Language> {
     public void validate(Object obj, Errors errors) {
         Language language = (Language) obj;
 
-        ((Language) obj).setName(capitalizeString(language.getName()));
         validateName(language, errors);
     }
 
     private void validateName(Language language, Errors errors) {
         String name = language.getName();
         validateString("name", name, errors);
+
+        language.setName(capitalizeString(language.getName()));
     }
 }

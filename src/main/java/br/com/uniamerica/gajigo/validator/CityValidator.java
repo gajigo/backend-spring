@@ -20,6 +20,8 @@ public class CityValidator extends AbstractValidator<City> {
     private void validateName(City city, Errors errors) {
         String name = city.getName();
         validateString("name", name, errors);
+
+        city.setName(capitalizeString(city.getName()));
     }
 
     private void validateState(City city, Errors errors) {

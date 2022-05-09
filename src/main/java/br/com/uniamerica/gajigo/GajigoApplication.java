@@ -30,5 +30,6 @@ public class GajigoApplication implements RepositoryRestConfigurer {
                               ValidatingRepositoryEventListener validatingListener) {
         validatingListener.addValidator("beforeCreate", validator);
         validatingListener.addValidator("beforeSave", validator);
+        validatingListener.addValidator("beforeLinkSave", validator);
     }
 }
