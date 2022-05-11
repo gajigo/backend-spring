@@ -8,7 +8,6 @@ public class CountryMock extends AbstractMock<Country> {
 
         country.setName(generateName());
 
-        faker.nation().language();
         return country;
     }
 

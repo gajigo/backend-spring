@@ -4,8 +4,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import java.util.List;
-
 public abstract class AbstractValidator<T> implements Validator {
     private final Class<T> objType;
     private final String className;

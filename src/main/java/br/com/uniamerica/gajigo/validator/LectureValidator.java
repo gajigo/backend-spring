@@ -69,8 +69,6 @@ public class LectureValidator extends AbstractValidator<Lecture> {
             return;
         }
 
-        System.out.println(mode.name());
-
         List<String> modes = Arrays.stream(AttendanceMode.values())
                 .map(m -> {
                     return m.name();
@@ -80,7 +78,8 @@ public class LectureValidator extends AbstractValidator<Lecture> {
         AttendanceMode eventMode = lecture.getEvent().getAttendanceMode();
         if (eventMode != AttendanceMode.Mixed && mode != eventMode) {
             errors.rejectValue("attendanceMode", "attendanceMode.conflictsWithEvent",
-                               "Lecture Attendance Mode does not match mode of its Event!");
+                               "Lecture Attendance Mode does not match mode of its Event! " +
+                                       "Should be Mixed or " );
         }
     }
 

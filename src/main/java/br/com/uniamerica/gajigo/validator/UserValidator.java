@@ -1,14 +1,11 @@
 package br.com.uniamerica.gajigo.validator;
 
 import br.com.uniamerica.gajigo.entity.User;
-import br.com.uniamerica.gajigo.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.validation.Errors;
 
 @Configurable
 public class UserValidator extends AbstractValidator<User> {
-    @Autowired
     public UserValidator() {
         super(User.class);
     }

@@ -35,6 +35,9 @@ public class Event extends AbstractDescribable {
     private Set<User> organizers = new HashSet<>();
 
     @OneToMany(mappedBy = "event")
+    private Set<Room> rooms = new HashSet<>();
+
+    @OneToMany(mappedBy = "event")
     private Set<Lecture> lectures = new HashSet<>();
 
     @Column(name = "status", nullable = false)

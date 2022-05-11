@@ -21,8 +21,12 @@ public abstract class AbstractDescribable extends AbstractEntity {
     public AbstractDescribable() {
     }
 
-    public AbstractDescribable(String name, String description) {
+    public AbstractDescribable(String name) {
         this.name = name;
+    }
+
+    public AbstractDescribable(String name, String description) {
+        this(name);
         this.description = description;
     }
 }
