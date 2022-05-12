@@ -24,6 +24,7 @@ public class LectureValidator extends AbstractValidator<Lecture> {
         validateAttendanceMode(lecture, errors);
         validateDate(lecture, errors);
         validateSpeakers(lecture, errors);
+        validateRoom(lecture, errors);
     }
 
     private void validateName(Lecture lecture, Errors errors) {
@@ -79,7 +80,7 @@ public class LectureValidator extends AbstractValidator<Lecture> {
         if (eventMode != AttendanceMode.Mixed && mode != eventMode) {
             errors.rejectValue("attendanceMode", "attendanceMode.conflictsWithEvent",
                                "Lecture Attendance Mode does not match mode of its Event! " +
-                                       "Should be Mixed or " );
+                                       "Expected attendanceMode = " + eventMode.name());
         }
     }
 
@@ -113,6 +114,31 @@ public class LectureValidator extends AbstractValidator<Lecture> {
         if (speakers == null || speakers.size() == 0) {
             errors.rejectValue("speakers", "speakers.empty",
                                "Lecture must have at least one speaker!");
+        }
+    }
+
+    private void validateRoom(Lecture lecture, Errors errors) {
+        Room room = lecture.getRoom();
+
+        if (lecture.getAttendanceMode() == AttendanceMode.Online) {
+            lecture.setRoom(null);
+        } else if (room == null) {
+            // Complain if mode isn't online and there isn't a room set
+            errors.rejectValue("room", "room.null",
+                               "Lecture with Mixed or Offline Attendance Mode should have a room!");
+        }
+
+        Set<Lecture> roomLectures = room.getLectures();
+        for (Lecture roomLecture : roomLectures) {
+            if (intervalOverlaps(lecture.getStartDate(), lecture.getEndDate(),
+                                 roomLecture.getStartDate(), roomLecture.getEndDate())) {
+                errors.rejectValue("room", "room.conflict",
+                                   "Lecture cannot take place in room with the specified timeframe " +
+                                                  "because another lecture is already scheduled during that period! " +
+                                                  "Lecture causing conflict takes place between " + roomLecture.getStartDate() +
+                                                  " and " + roomLecture.getEndDate());
+                break; // Optimization, assumes the lectures have already been verified to not be conflicting beforehand
+            }
         }
     }
 }
