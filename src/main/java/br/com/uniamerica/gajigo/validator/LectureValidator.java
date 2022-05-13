@@ -34,7 +34,7 @@ public class LectureValidator extends AbstractValidator<Lecture> {
 
     private void validateEvent(Lecture lecture, Errors errors) {
         Event event = lecture.getEvent();
-        if (validateNull("event", event,
+        if (!validateNull("event", event,
                          "Lecture must belong to an event!", errors)) {
             // Cannot do any more validations if the field is null
             return;
@@ -65,7 +65,7 @@ public class LectureValidator extends AbstractValidator<Lecture> {
 
     private void validateAttendanceMode(Lecture lecture, Errors errors) {
         AttendanceMode mode = lecture.getAttendanceMode();
-        if (validateNull("attendanceMode", mode, errors)) {
+        if (!validateNull("attendanceMode", mode, errors)) {
             // Cannot do any more validations if the field is null
             return;
         }
