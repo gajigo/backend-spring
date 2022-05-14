@@ -27,7 +27,7 @@ public class UserValidator extends AbstractValidator<User> {
 
     private void validateEmail(User user, Errors errors) {
         String email = user.getEmail();
-        if (validateNull("email", email, errors)) {
+        if (!validateNull("email", email, errors)) {
             // Cannot do any more validations if the field is null
             return;
         }

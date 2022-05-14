@@ -25,10 +25,10 @@ public abstract class AbstractValidator<T> implements Validator {
             errors.rejectValue(fieldName,
                     className.toLowerCase() + ".null",
                     message);
-            return true;
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     protected Boolean validateNull(String fieldName, Object field, Errors errors) {
@@ -37,17 +37,20 @@ public abstract class AbstractValidator<T> implements Validator {
                 errors);
     }
 
-    protected void validateString(String fieldName, String field, Errors errors) {
-        if (validateNull(fieldName, field, errors)) {
+    protected Boolean validateString(String fieldName, String field, Errors errors) {
+        if (!validateNull(fieldName, field, errors)) {
             // Cannot do any more validations if the field is null
-            return;
+            return false;
         }
 
         if (field.isBlank()) {
             errors.rejectValue(fieldName,
                     className.toLowerCase() + ".empty",
                     className + " " + fieldName + " must not be empty!");
+            return false;
         }
+
+        return true;
     }
 
     protected String capitalizeString(String text) {

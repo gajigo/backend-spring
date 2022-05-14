@@ -28,7 +28,7 @@ public class EventValidator extends AbstractValidator<Event> {
 
     private void validateAttendanceMode(Event event, Errors errors) {
         AttendanceMode mode = event.getAttendanceMode();
-        if (validateNull("attendanceMode", mode, errors)) {
+        if (!validateNull("attendanceMode", mode, errors)) {
             // Cannot do any more validations if the field is null
             return;
         }
@@ -72,7 +72,7 @@ public class EventValidator extends AbstractValidator<Event> {
     private void validateOwner(Event event, Errors errors) {
         User owner = event.getOwner();
 
-        if (validateNull("owner", owner,
+        if (!validateNull("owner", owner,
                          "Event must have an owner!", errors)) {
             // Cannot do any more validations if the field is null
             return;

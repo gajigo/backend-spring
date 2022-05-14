@@ -23,6 +23,9 @@ public class User extends AbstractDescribable {
     @JoinColumn(name = "location_id")
     private City location;
 
+    @OneToMany(mappedBy = "user")
+    private Set<Document> documents;
+
     @OneToMany(mappedBy = "owner")
     private Set<Event> events;
 
@@ -39,10 +42,6 @@ public class User extends AbstractDescribable {
     @Column(name = "password", nullable = false, length = 64)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-
-    // @CPF
-    @Column(name = "cpf")
-    private String cpf;
 
     @Column(name = "telephone")
     private String telephone;

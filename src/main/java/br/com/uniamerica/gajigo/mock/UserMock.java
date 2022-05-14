@@ -1,6 +1,7 @@
 package br.com.uniamerica.gajigo.mock;
 
 import br.com.uniamerica.gajigo.entity.City;
+import br.com.uniamerica.gajigo.entity.Document;
 import br.com.uniamerica.gajigo.entity.User;
 import br.com.uniamerica.gajigo.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class UserMock extends AbstractMock<User> {
         user.setPassword(generatePassword());
         user.setEmail(generateEmail());
 
-        user.setCpf(generateCpf());
+        user.getDocuments().add(generateDocument());
         user.setTelephone(generateTelephone());
 
         user.setLocation(generateLocation());
@@ -54,8 +55,9 @@ public class UserMock extends AbstractMock<User> {
         return faker.lorem().characters(10);
     }
 
-    private String generateCpf() {
+    private Document generateDocument() {
         StringBuilder builder = new StringBuilder();
+        Document document = new Document();
 
         for (int i = 0; i < 3; i++) {
             builder.append(randomNum(3));
@@ -66,7 +68,10 @@ public class UserMock extends AbstractMock<User> {
         builder.append("-");
         builder.append(randomNum(2));
 
-        return builder.toString();
+        document.setType("cpf");
+        document.setValue(builder.toString());
+
+        return document;
     }
 
     private String generateTelephone() {
