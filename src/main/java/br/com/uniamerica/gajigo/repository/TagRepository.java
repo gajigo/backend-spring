@@ -6,4 +6,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(collectionResourceRel = "tags", path = "tags")
 public interface TagRepository extends JpaRepository<Tag, Long> {
+    Tag findFirstByName(String name);
 }
