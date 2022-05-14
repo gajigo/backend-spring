@@ -1,8 +1,10 @@
 package br.com.uniamerica.gajigo.validator;
 
 import br.com.uniamerica.gajigo.entity.Document;
-import br.com.uniamerica.gajigo.entity.State;
+import br.com.uniamerica.gajigo.entity.User;
 import org.springframework.validation.Errors;
+
+import java.util.regex.Pattern;
 
 public class DocumentValidator extends AbstractValidator<Document> {
     public DocumentValidator() {
@@ -13,8 +15,16 @@ public class DocumentValidator extends AbstractValidator<Document> {
     public void validate(Object obj, Errors errors) {
         Document document = (Document) obj;
 
+        validateUser(document, errors);
         validateType(document, errors);
         validateValue(document, errors);
+    }
+
+    private void validateUser(Document document, Errors errors) {
+        User user = document.getUser();
+
+        validateNull("user", user,
+                     "Document must belong to an user!", errors);
     }
 
     private void validateType(Document document, Errors errors) {
@@ -26,21 +36,42 @@ public class DocumentValidator extends AbstractValidator<Document> {
 
         document.setType(type);
 
-        int document_repeats = 0;
-        for (Document doc : document.getUser().getDocuments()) {
-            if (doc.getType() == type) {
-                document_repeats++;
-            }
+        User user = document.getUser();
+        if (user == null) {
+            // Can't check for duplicates in user if the user doesn't exist
+            return;
         }
 
-        // check by ID instead, we shouldnt have 2 document repeats ever because the document isnt sent to the list at this point
-        if ((document.getUpdated() == null && document_repeats == 1) ||
-             document_repeats == 2) {
-            errors.rejectValue("type", "type.duplicate",
-                    "User can only have one document of each type!");
+        for (Document doc : user.getDocuments()) {
+            if (doc.getType() == type && doc.getId() != document.getId()) {
+                errors.rejectValue("type", "type.duplicate",
+                        "User can only have one document of each type!");
+            }
         }
     }
 
     private void validateValue(Document document, Errors errors) {
+        String value = document.getValue().trim();
+        if (!validateString("value", value, errors)) {
+            // Cannot do any more validations if the field is null
+            return;
+        }
+
+        document.setValue(value);
+
+        String type = document.getType();
+        switch (type) {
+            case "cpf":
+                // regex = ^\d{3}\.\d{3}\.\d{3}-\d{2}$, mask = ddd.ddd.ddd-dd
+                Pattern pattern = Pattern.compile("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$");
+                Boolean matches = pattern.matcher(value).find();
+                if (!matches) {
+                    errors.rejectValue("value", "value.cpfinvalid",
+                                       "Provided CPF invalid! Expected mask: ddd.ddd.ddd-dd");
+                }
+
+                // TODO add checksum validation
+                break;
+        }
     }
 }
