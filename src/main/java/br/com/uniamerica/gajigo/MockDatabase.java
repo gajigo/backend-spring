@@ -49,17 +49,20 @@ public class MockDatabase {
                 log.info("Preloading " + userRepository.save(new User(
                         "pedro@projetodigital.com.br",
                         "pedro", "hunter2",
-                        "Pedro Henrique Garcia", "Fullstack Developer"
+                        "Pedro Henrique Garcia", "Fullstack Developer",
+                        true
                 )));
                 log.info("Preloading " + userRepository.save(new User(
                         "changzer@gmail.com",
                         "abel", "hunter3",
-                        "Abel Chang", "Frontend Developer"
+                        "Abel Chang", "Frontend Developer",
+                        true
                 )));
                 log.info("Preloading " + userRepository.save(new User(
                         "jeanclayton@gmail.com",
                         "jean", "senhamaneira",
-                        "Jean Clayton", "Backend Developer"
+                        "Jean Clayton", "Backend Developer",
+                        true
                 )));
 
                 event1.setOwner(userRepository.getById(1L));

@@ -19,6 +19,9 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter @Setter
 public class User extends AbstractDescribable {
+    @Column(name = "admin", nullable = false)
+    private boolean admin; // boolean is false by default
+
     @ManyToOne
     @JoinColumn(name = "location_id")
     private City location;
@@ -58,14 +61,21 @@ public class User extends AbstractDescribable {
         this.password = password;
     }
 
-    public User(String username, String password, String name, String description) {
+    public User(String username, String password, String name,
+                String description) {
         this(username, password, name);
         this.setDescription(description);
     }
 
-    public User(String email, String username, String password,
-                String name, String description) {
+    public User(String username, String password, String name,
+                String description, String email) {
         this(username, password, name, description);
         this.setEmail(email);
+    }
+
+    public User(String username, String password, String name,
+                String description, String email, boolean isAdmin) {
+        this(username, password, name, description, email);
+        this.setAdmin(isAdmin);
     }
 }
