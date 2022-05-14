@@ -24,14 +24,16 @@ public class UserRepositoryTest {
     private UserRepository repository;
 
     @Test
-    public void testFindName() {
+    public void testFindUsername() {
         // Given
-        User a = new User("UnitTestingUser", "asdfsafpass", "");
+        User a = new User("UnitTestingUser", "asdfsafpass",
+                          "Unit Testing User", "User for Testing",
+                          "fake@test.com", true);
         entityManager.persistAndFlush(a);
 
         // When
-        User findA = repository.findFirstByName("UnitTestingUser");
-        User findNull = repository.findFirstByName("NullUser");
+        User findA = repository.findFirstByUsername("UnitTestingUser");
+        User findNull = repository.findFirstByUsername("NullUser");
 
         // Then
         assert findNull == null;
