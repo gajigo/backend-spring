@@ -21,6 +21,7 @@ public class GajigoApplication implements RepositoryRestConfigurer {
         addValidator(new EventValidator(), validatingListener);
         addValidator(new LanguageValidator(), validatingListener);
         addValidator(new LectureValidator(), validatingListener);
+        addValidator(new RoomValidator(), validatingListener);
         addValidator(new StateValidator(), validatingListener);
         addValidator(new TagValidator(), validatingListener);
         addValidator(new UserValidator(), validatingListener);
