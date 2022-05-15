@@ -1,13 +1,16 @@
 package br.com.uniamerica.gajigo.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -15,6 +18,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import javax.transaction.Transactional;
 import java.util.Map;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -55,25 +59,17 @@ public abstract class AbstractTest {
     }
 
     ResultActions putObject(String json, String path) throws Exception {
-        return mockMvc.perform(put(path + "/1")
+        return mockMvc.perform(put(path)
                 .contentType("application/json")
                 .content(json)
         ).andDo(print());
     }
 
     ResultActions patchObject(String json, String path) throws Exception {
-        return mockMvc.perform(patch(path + "/1")
+        return mockMvc.perform(patch(path)
                 .contentType("application/json")
                 .content(json)
         ).andDo(print());
     }
 
-    @Test
-    public abstract void testPost() throws Exception;
-
-    @Test
-    public abstract void testPut() throws Exception;
-
-    @Test
-    public abstract void testPatch() throws Exception;
 }

@@ -2,7 +2,10 @@ package br.com.uniamerica.gajigo.integration;
 
 import br.com.uniamerica.gajigo.entity.Country;
 import br.com.uniamerica.gajigo.mock.CountryMock;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -17,6 +20,8 @@ public class CountryTest extends AbstractSingularTest {
         String json = objectMapper.writeValueAsString(country);
 
         postObject(json).andExpect(status().isBadRequest());
+
+        teardown();
     }
 
     @Test
@@ -25,6 +30,8 @@ public class CountryTest extends AbstractSingularTest {
         String json = objectMapper.writeValueAsString(country);
 
         postObject(json).andExpect(status().isBadRequest());
+
+        teardown();
     }
 
     @Test
@@ -32,35 +39,25 @@ public class CountryTest extends AbstractSingularTest {
         Country country = new CountryMock().create();
         String json = objectMapper.writeValueAsString(country);
 
-        postObject(json).andExpect(status().isCreated());
+        String url = getUrl(postObject(json).andExpect(status().isCreated()));
+
+        Country newCountry = new Country("Absolutediferentia");
+        String putJson = objectMapper.writeValueAsString(country);
+
+        putObject(putJson, url);
+
+        teardown();
     }
 
-    @Override
-    public void testPost() throws Exception {
-        Country a = new Country("Happyland");
-        Country b = new Country("Deleteland");
-        String jsonA = objectMapper.writeValueAsString(a);
-        String jsonB = objectMapper.writeValueAsString(b);
+    public String validJson(String name, ObjectMapper mapper) throws Exception {
+        Country a = new Country(name);
+        String country = mapper.writeValueAsString(a);
 
-        simplePostAndDuplicateTest(jsonA);
-        postObject(jsonB).andExpect(status().isCreated());
+        return country;
     }
 
-    @Override
-    public void testPut() throws Exception {
-        Country country = new Country("Putland");
-        String json = objectMapper.writeValueAsString(country);
-
-        putObject(json).andExpect(status().is2xxSuccessful());
+    public String validJson(ObjectMapper mapper) throws Exception {
+        return validJson("Happycountryland", mapper);
     }
 
-    @Override
-    public void testPatch() throws Exception {
-        Country country = new Country("Patchland");
-        country.setId(1L);
-
-        String json = objectMapper.writeValueAsString(country);
-
-        patchObject(json).andExpect(status().is2xxSuccessful());
-    }
 }
