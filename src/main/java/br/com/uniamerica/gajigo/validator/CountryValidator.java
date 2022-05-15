@@ -17,7 +17,9 @@ public class CountryValidator extends AbstractValidator<Country> {
 
     private void validateName(Country country, Errors errors) {
         String name = country.getName();
-        validateString("name", name, errors);
+        if (!validateString("name", name, errors)) {
+            return;
+        }
 
         country.setName(capitalizeString(country.getName()));
     }
