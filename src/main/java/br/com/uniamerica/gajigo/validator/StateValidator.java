@@ -19,7 +19,9 @@ public class StateValidator extends AbstractValidator<State> {
 
     private void validateName(State state, Errors errors) {
         String name = state.getName();
-        validateString("name", name, errors);
+        if (!validateString("name", name, errors)) {
+            return;
+        }
 
         state.setName(capitalizeString(state.getName()));
     }
