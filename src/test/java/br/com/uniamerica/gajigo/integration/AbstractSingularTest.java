@@ -1,6 +1,5 @@
 package br.com.uniamerica.gajigo.integration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -80,9 +79,15 @@ public abstract class AbstractSingularTest extends AbstractTest {
         return url.substring(url.indexOf("/api"));
     }
 
-    public abstract String validJson(String discriminator, ObjectMapper mapper) throws Exception;
+    public abstract String validJson(String discriminator) throws Exception;
 
-    public abstract String validJson(ObjectMapper mapper) throws Exception;
+    public abstract String validJson() throws Exception;
+
+    @Test
+    public void testEmptyJson() throws Exception {
+        String json = "{}";
+        postObject(json).andExpect(status().isBadRequest()); // Empty object shouldn't post
+    }
 
     @Test
     public void testHappyPath() throws Exception {
@@ -90,7 +95,7 @@ public abstract class AbstractSingularTest extends AbstractTest {
         tryLoading(path);
 
         // Object should be created and disallow duplicates
-        String url = simplePostAndDuplicateTest(validJson(this.objectMapper));
+        String url = simplePostAndDuplicateTest(validJson());
 
         // Individual resource should load
         tryLoading(getUri(url));

@@ -2,13 +2,14 @@ package br.com.uniamerica.gajigo.integration;
 
 import br.com.uniamerica.gajigo.entity.Country;
 import br.com.uniamerica.gajigo.mock.CountryMock;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@SpringBootTest
 public class CountryTest extends AbstractSingularTest {
     public CountryTest() {
         super("countries");
@@ -49,15 +50,15 @@ public class CountryTest extends AbstractSingularTest {
         teardown();
     }
 
-    public String validJson(String name, ObjectMapper mapper) throws Exception {
+    public String validJson(String name) throws Exception {
         Country a = new Country(name);
-        String country = mapper.writeValueAsString(a);
+        String country = objectMapper.writeValueAsString(a);
 
         return country;
     }
 
-    public String validJson(ObjectMapper mapper) throws Exception {
-        return validJson("Happycountryland", mapper);
+    public String validJson() throws Exception {
+        return validJson("Happycountryland");
     }
 
 }
