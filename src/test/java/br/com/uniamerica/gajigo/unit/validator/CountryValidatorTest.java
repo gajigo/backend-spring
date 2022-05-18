@@ -1,0 +1,25 @@
+package br.com.uniamerica.gajigo.unit.validator;
+
+import br.com.uniamerica.gajigo.entity.Country;
+import br.com.uniamerica.gajigo.unit.AbstractUnitTest;
+import br.com.uniamerica.gajigo.validator.AbstractValidator;
+import br.com.uniamerica.gajigo.validator.CountryValidator;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.core.ValidationErrors;
+import org.springframework.validation.BindException;
+import org.springframework.validation.Errors;
+
+public class CountryValidatorTest extends AbstractValidatorTest<Country> {
+    public CountryValidatorTest() {
+        super(new CountryValidator(), Country.class);
+    }
+
+    @Test
+    public void testEmptyObject() throws Exception {
+        Country country = new Country();
+        Errors errors = validate(country);
+
+        assert errors.hasErrors();
+    }
+}
