@@ -21,7 +21,7 @@ public class CountryValidatorTest extends AbstractValidatorTest<Country> {
     @Test
     public void testEmptyObject() throws Exception {
         Country country = new Country();
-        Errors errors = validate(country);
+        Errors errors = validator.validate(country);
 
         assert errors.hasErrors();
     }
@@ -31,7 +31,7 @@ public class CountryValidatorTest extends AbstractValidatorTest<Country> {
         Country country = validObject();
         country.setName("");
 
-        Errors errors = validate(country);
+        Errors errors = validator.validate(country);
 
         assert errors.getErrorCount() == 1;
     }

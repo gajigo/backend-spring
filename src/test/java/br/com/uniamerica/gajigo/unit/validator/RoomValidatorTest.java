@@ -15,7 +15,7 @@ public class RoomValidatorTest extends AbstractValidatorTest<Room> {
     @Test
     public void testEmptyObject() throws Exception {
         Room room = new Room();
-        Errors errors = validate(room);
+        Errors errors = validator.validate(room);
 
         assert errors.hasErrors();
     }
@@ -25,7 +25,7 @@ public class RoomValidatorTest extends AbstractValidatorTest<Room> {
         Room room = validObject();
         room.setDescription(null);
 
-        Errors errors = validate(room);
+        Errors errors = validator.validate(room);
 
         assert !errors.hasErrors();
         assert room.getDescription() == "";
@@ -36,7 +36,7 @@ public class RoomValidatorTest extends AbstractValidatorTest<Room> {
         Room room = validObject();
         room.setName("");
 
-        Errors errors = validate(room);
+        Errors errors = validator.validate(room);
 
         assert errors.getErrorCount() == 1;
     }

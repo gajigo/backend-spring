@@ -13,7 +13,7 @@ public class LanguageValidatorTest extends AbstractValidatorTest<Language> {
     @Test
     public void testEmptyObject() throws Exception {
         Language language = new Language();
-        Errors errors = validate(language);
+        Errors errors = validator.validate(language);
 
         assert errors.hasErrors();
     }
@@ -23,7 +23,7 @@ public class LanguageValidatorTest extends AbstractValidatorTest<Language> {
         Language language = validObject();
         language.setName("");
 
-        Errors errors = validate(language);
+        Errors errors = validator.validate(language);
 
         assert errors.getErrorCount() == 1;
     }

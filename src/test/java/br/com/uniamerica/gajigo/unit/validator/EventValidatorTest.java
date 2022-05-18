@@ -13,7 +13,7 @@ public class EventValidatorTest extends AbstractValidatorTest<Event> {
     @Test
     public void testEmptyObject() throws Exception {
         Event event = new Event();
-        Errors errors = validate(event);
+        Errors errors = validator.validate(event);
 
         assert errors.hasErrors();
     }
@@ -23,7 +23,7 @@ public class EventValidatorTest extends AbstractValidatorTest<Event> {
         Event event = validObject();
         event.setLocation(null);
 
-        Errors errors = validate(event);
+        Errors errors = validator.validate(event);
 
         assert errors.getErrorCount() == 1;
     }
@@ -33,7 +33,7 @@ public class EventValidatorTest extends AbstractValidatorTest<Event> {
         Event event = validObject();
         event.setName("");
 
-        Errors errors = validate(event);
+        Errors errors = validator.validate(event);
 
         assert errors.getErrorCount() == 1;
     }
@@ -43,7 +43,7 @@ public class EventValidatorTest extends AbstractValidatorTest<Event> {
         Event event = validObject();
         event.setAttendanceMode(AttendanceMode.Online);
 
-        Errors errors = validate(event);
+        Errors errors = validator.validate(event);
 
         assert !errors.hasErrors();
         assert event.getLocation() == null;

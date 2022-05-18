@@ -17,7 +17,7 @@ public class UserValidatorTest extends AbstractValidatorTest<User> {
     @Test
     public void testEmptyObject() throws Exception {
         User user = new User();
-        Errors errors = validate(user);
+        Errors errors = validator.validate(user);
 
         assert errors.hasErrors();
     }
@@ -27,7 +27,7 @@ public class UserValidatorTest extends AbstractValidatorTest<User> {
         User user = validObject();
         user.setName("");
 
-        Errors errors = validate(user);
+        Errors errors = validator.validate(user);
 
         assert errors.getErrorCount() == 1;
     }
@@ -37,14 +37,15 @@ public class UserValidatorTest extends AbstractValidatorTest<User> {
         User user = validObject();
         user.setEmail("invalid");
 
-        Errors errors = validate(user);
+        Errors errors = validator.validate(user);
 
         assert errors.getErrorCount() == 1;
     }
 
     public User validObject() {
         User user = new User("test", "test",
-                "test", "test", "test@fake.com");
+                "test", "test",
+                "test@fake.com", true);
 
         return user;
     }

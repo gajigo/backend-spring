@@ -27,21 +27,10 @@ public abstract class AbstractValidatorTest<T> extends AbstractUnitTest {
 
     @Test
     public void testValidObject() throws Exception {
-        Errors errors = validate(validObject());
+        Errors errors = validator.validate(validObject());
 
         assert !errors.hasErrors();
     }
 
     public abstract T validObject();
-
-    Errors getErrors(T obj) {
-        return new BindException(obj, objName);
-    }
-
-    Errors validate(T obj) throws Exception {
-        Errors errors = getErrors(obj);
-        validator.validate(obj, errors);
-
-        return errors;
-    }
 }

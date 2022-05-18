@@ -14,7 +14,7 @@ public class TagValidatorTest extends AbstractValidatorTest<Tag> {
     @Test
     public void testEmptyObject() throws Exception {
         Tag tag = new Tag();
-        Errors errors = validate(tag);
+        Errors errors = validator.validate(tag);
 
         assert errors.hasErrors();
     }
@@ -24,7 +24,7 @@ public class TagValidatorTest extends AbstractValidatorTest<Tag> {
         Tag tag = validObject();
         tag.setName("");
 
-        Errors errors = validate(tag);
+        Errors errors = validator.validate(tag);
 
         assert errors.getErrorCount() == 1;
     }

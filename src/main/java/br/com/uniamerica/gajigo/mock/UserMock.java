@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 public class UserMock extends AbstractMock<User> {
+    // TODO remove cityRepository dependency for easier testing. Maybe possible when we switch how we handle locations
     private CityRepository cityRepository;
 
     @Autowired

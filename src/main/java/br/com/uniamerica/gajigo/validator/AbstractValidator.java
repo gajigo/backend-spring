@@ -1,6 +1,7 @@
 package br.com.uniamerica.gajigo.validator;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -18,6 +19,14 @@ public abstract class AbstractValidator<T> implements Validator {
     @Override
     public boolean supports(Class<?> clazz) {
         return objType.equals(clazz);
+    }
+
+    public Errors validate(T obj) {
+        Errors errors = new BindException(obj, className);
+
+        validate(obj, errors);
+
+        return errors;
     }
 
     protected Boolean validateNull(String fieldName, Object field, String message, Errors errors) {
