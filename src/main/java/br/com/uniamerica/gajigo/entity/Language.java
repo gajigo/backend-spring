@@ -10,7 +10,8 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(schema = "public", name = "languages")
+@Table(schema = "public", name = "languages",
+       uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
 @SQLDelete(sql = "UPDATE languages SET removed = CURRENT_TIMESTAMP WHERE id = ?")
 @Where(clause = "removed IS null")
 @NoArgsConstructor
@@ -21,4 +22,8 @@ public class Language extends AbstractEntity {
 
     @OneToMany(mappedBy = "language")
     private Set<Lecture> lectures;
+
+    public Language(String name) {
+        this.name = name;
+    }
 }

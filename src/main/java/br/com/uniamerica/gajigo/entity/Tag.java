@@ -6,15 +6,13 @@ import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(schema = "public", name = "tags")
+@Table(schema = "public", name = "tags",
+       uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
 @SQLDelete(sql = "UPDATE tags SET removed = CURRENT_TIMESTAMP WHERE id = ?")
 @Where(clause = "removed IS null")
 @NoArgsConstructor
