@@ -25,4 +25,9 @@ public class Document extends AbstractEntity {
 
     @Column(name = "value", nullable = false)
     private String value;
+
+    public Document(String type, String value) {
+        this.type = type;
+        this.value = value;
+    }
 }

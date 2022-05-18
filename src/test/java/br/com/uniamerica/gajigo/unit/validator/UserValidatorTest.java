@@ -1,5 +1,6 @@
 package br.com.uniamerica.gajigo.unit.validator;
 
+import br.com.uniamerica.gajigo.entity.City;
 import br.com.uniamerica.gajigo.entity.User;
 import br.com.uniamerica.gajigo.unit.AbstractUnitTest;
 import br.com.uniamerica.gajigo.validator.AbstractValidator;
@@ -19,5 +20,32 @@ public class UserValidatorTest extends AbstractValidatorTest<User> {
         Errors errors = validate(user);
 
         assert errors.hasErrors();
+    }
+
+    @Test
+    public void testEmptyName() throws Exception {
+        User user = validObject();
+        user.setName("");
+
+        Errors errors = validate(user);
+
+        assert errors.getErrorCount() == 1;
+    }
+
+    @Test
+    public void testInvalidEmail() throws Exception {
+        User user = validObject();
+        user.setEmail("invalid");
+
+        Errors errors = validate(user);
+
+        assert errors.getErrorCount() == 1;
+    }
+
+    public User validObject() {
+        User user = new User("test", "test",
+                "test", "test", "test@fake.com");
+
+        return user;
     }
 }

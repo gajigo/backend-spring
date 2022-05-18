@@ -1,6 +1,9 @@
 package br.com.uniamerica.gajigo.unit.validator;
 
+import br.com.uniamerica.gajigo.entity.City;
 import br.com.uniamerica.gajigo.entity.Country;
+import br.com.uniamerica.gajigo.entity.Country;
+import br.com.uniamerica.gajigo.entity.Event;
 import br.com.uniamerica.gajigo.unit.AbstractUnitTest;
 import br.com.uniamerica.gajigo.validator.AbstractValidator;
 import br.com.uniamerica.gajigo.validator.CountryValidator;
@@ -21,5 +24,21 @@ public class CountryValidatorTest extends AbstractValidatorTest<Country> {
         Errors errors = validate(country);
 
         assert errors.hasErrors();
+    }
+
+    @Test
+    public void testEmptyName() throws Exception {
+        Country country = validObject();
+        country.setName("");
+
+        Errors errors = validate(country);
+
+        assert errors.getErrorCount() == 1;
+    }
+
+    public Country validObject() {
+        Country country = new Country("Testcountry");
+
+        return country;
     }
 }

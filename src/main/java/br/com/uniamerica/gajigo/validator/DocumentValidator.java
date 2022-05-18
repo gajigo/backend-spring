@@ -44,6 +44,8 @@ public class DocumentValidator extends AbstractValidator<Document> {
         }
 
         for (Document doc : user.getDocuments()) {
+            // TODO Confirm later if updating a document gets past this validation as it should
+            // Only real way to test this is through integration testing because the unit tests don't set ID
             if (doc.getType() == type && doc.getId() != document.getId()) {
                 errors.rejectValue("type", "type.duplicate",
                         "User can only have one document of each type!");

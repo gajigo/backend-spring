@@ -130,6 +130,10 @@ public class LectureValidator extends AbstractValidator<Lecture> {
             // When room isn't null and attendance mode is Offline or Mixed
             Set<Lecture> roomLectures = room.getLectures();
             for (Lecture roomLecture : roomLectures) {
+                if (roomLecture.getName() == lecture.getName()) {
+                    continue;
+                }
+
                 if (intervalOverlaps(lecture.getStartDate(), lecture.getEndDate(),
                         roomLecture.getStartDate(), roomLecture.getEndDate())) {
                     errors.rejectValue("room", "room.conflict",

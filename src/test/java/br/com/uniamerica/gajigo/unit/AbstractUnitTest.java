@@ -6,5 +6,5 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
-public class AbstractUnitTest {
+public abstract class AbstractUnitTest {
 }
