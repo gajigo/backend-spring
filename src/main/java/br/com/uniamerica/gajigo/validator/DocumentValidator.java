@@ -28,12 +28,13 @@ public class DocumentValidator extends AbstractValidator<Document> {
     }
 
     private void validateType(Document document, Errors errors) {
-        String type = document.getType().toLowerCase();
+        String type = document.getType();
         if (!validateString("type", type, errors)) {
             // Cannot do any more validations if the field is null
             return;
         }
 
+        type = type.toLowerCase();
         document.setType(type);
 
         User user = document.getUser();
@@ -51,12 +52,13 @@ public class DocumentValidator extends AbstractValidator<Document> {
     }
 
     private void validateValue(Document document, Errors errors) {
-        String value = document.getValue().trim();
+        String value = document.getValue();
         if (!validateString("value", value, errors)) {
             // Cannot do any more validations if the field is null
             return;
         }
 
+        value = value.trim();
         document.setValue(value);
 
         String type = document.getType();

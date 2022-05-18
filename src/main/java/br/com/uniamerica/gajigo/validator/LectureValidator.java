@@ -126,18 +126,19 @@ public class LectureValidator extends AbstractValidator<Lecture> {
             // Complain if mode isn't online and there isn't a room set
             errors.rejectValue("room", "room.null",
                                "Lecture with Mixed or Offline Attendance Mode should have a room!");
-        }
-
-        Set<Lecture> roomLectures = room.getLectures();
-        for (Lecture roomLecture : roomLectures) {
-            if (intervalOverlaps(lecture.getStartDate(), lecture.getEndDate(),
-                                 roomLecture.getStartDate(), roomLecture.getEndDate())) {
-                errors.rejectValue("room", "room.conflict",
-                                   "Lecture cannot take place in room with the specified timeframe " +
-                                                  "because another lecture is already scheduled during that period! " +
-                                                  "Lecture causing conflict takes place between " + roomLecture.getStartDate() +
-                                                  " and " + roomLecture.getEndDate());
-                break; // Optimization, assumes the lectures have already been verified to not be conflicting beforehand
+        } else {
+            // When room isn't null and attendance mode is Offline or Mixed
+            Set<Lecture> roomLectures = room.getLectures();
+            for (Lecture roomLecture : roomLectures) {
+                if (intervalOverlaps(lecture.getStartDate(), lecture.getEndDate(),
+                        roomLecture.getStartDate(), roomLecture.getEndDate())) {
+                    errors.rejectValue("room", "room.conflict",
+                            "Lecture cannot take place in room with the specified timeframe " +
+                                    "because another lecture is already scheduled during that period! " +
+                                    "Lecture causing conflict takes place between " + roomLecture.getStartDate() +
+                                    " and " + roomLecture.getEndDate());
+                    break; // Optimization, assumes the lectures have already been verified to not be conflicting beforehand
+                }
             }
         }
     }
