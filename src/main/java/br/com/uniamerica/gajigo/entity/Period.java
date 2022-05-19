@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Getter @Setter
 public class Period {
@@ -40,8 +41,8 @@ public class Period {
     }
 
     public boolean isAfterOrEqual(Period b) {
-        PeriodRelation relation = getRelation(b);
-        return relation == PeriodRelation.After || relation == PeriodRelation.StartTouching;
+        return isAfter(b) ||
+               getRelation(b) == PeriodRelation.StartTouching;
     }
 
     public boolean isBefore(Period b) {
@@ -49,8 +50,8 @@ public class Period {
     }
 
     public boolean isBeforeOrEqual(Period b) {
-        PeriodRelation relation = getRelation(b);
-        return relation == PeriodRelation.After || relation == PeriodRelation.EndTouching;
+        return isBefore(b) ||
+               getRelation(b) == PeriodRelation.EndTouching;
     }
 
     public boolean isEqual(Period b) {
@@ -85,6 +86,16 @@ public class Period {
                relation == PeriodRelation.EndInside;
     }
 
+    public long difference(LocalDateTime time) {
+        if (time.isBefore(start))   return ChronoUnit.MILLIS.between(time, start);
+        else if (time.isAfter(end)) return ChronoUnit.MILLIS.between(time, end);
+        else return 0;
+    }
+
+    public long duration() {
+        return ChronoUnit.MILLIS.between(start, end);
+    }
+
     public boolean isIntersecting(Period b) {
         // Periods conflict, not ignoring start and end
         // e.g. 10:00-11:00 overlaps with 11:00-12:00
@@ -97,5 +108,10 @@ public class Period {
 
     public boolean valid() {
         return start.isBefore(end);
+    }
+
+    @Override
+    public String toString() {
+        return start + " - " + end;
     }
 }
