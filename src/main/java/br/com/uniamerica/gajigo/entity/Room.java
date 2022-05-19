@@ -23,4 +23,12 @@ public class Room extends AbstractDescribable {
 
     @OneToMany(mappedBy = "room")
     private Set<Lecture> lectures;
+
+    public Room(String name) {
+        super(name);
+    }
+
+    public Room(String name, String description) {
+        super(name, description);
+    }
 }

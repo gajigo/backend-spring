@@ -17,7 +17,9 @@ public class TagValidator extends AbstractValidator<Tag> {
 
     private void validateName(Tag tag, Errors errors) {
         String name = tag.getName();
-        validateString("name", name, errors);
+        if (!validateString("name", name, errors)) {
+            return;
+        }
 
         tag.setName(capitalizeString(tag.getName()));
     }

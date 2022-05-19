@@ -18,7 +18,9 @@ public class LanguageValidator extends AbstractValidator<Language> {
 
     private void validateName(Language language, Errors errors) {
         String name = language.getName();
-        validateString("name", name, errors);
+        if (!validateString("name", name, errors)) {
+            return;
+        }
 
         language.setName(capitalizeString(language.getName()));
     }

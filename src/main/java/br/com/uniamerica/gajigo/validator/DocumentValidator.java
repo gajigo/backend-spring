@@ -28,12 +28,13 @@ public class DocumentValidator extends AbstractValidator<Document> {
     }
 
     private void validateType(Document document, Errors errors) {
-        String type = document.getType().toLowerCase();
+        String type = document.getType();
         if (!validateString("type", type, errors)) {
             // Cannot do any more validations if the field is null
             return;
         }
 
+        type = type.toLowerCase();
         document.setType(type);
 
         User user = document.getUser();
@@ -43,6 +44,8 @@ public class DocumentValidator extends AbstractValidator<Document> {
         }
 
         for (Document doc : user.getDocuments()) {
+            // TODO Confirm later if updating a document gets past this validation as it should
+            // Only real way to test this is through integration testing because the unit tests don't set ID
             if (doc.getType() == type && doc.getId() != document.getId()) {
                 errors.rejectValue("type", "type.duplicate",
                         "User can only have one document of each type!");
@@ -51,12 +54,13 @@ public class DocumentValidator extends AbstractValidator<Document> {
     }
 
     private void validateValue(Document document, Errors errors) {
-        String value = document.getValue().trim();
+        String value = document.getValue();
         if (!validateString("value", value, errors)) {
             // Cannot do any more validations if the field is null
             return;
         }
 
+        value = value.trim();
         document.setValue(value);
 
         String type = document.getType();

@@ -19,7 +19,9 @@ public class CityValidator extends AbstractValidator<City> {
 
     private void validateName(City city, Errors errors) {
         String name = city.getName();
-        validateString("name", name, errors);
+        if (!validateString("name", name, errors)) {
+            return;
+        }
 
         city.setName(capitalizeString(city.getName()));
     }
