@@ -55,10 +55,10 @@ public class Lecture extends AbstractDescribable {
     )
     private Set<User> speakers = new HashSet<>();
 
-    @Column(name = "start_date")
+    @Column(name = "start_date", nullable = false)
     private LocalDateTime startDate;
 
-    @Column(name = "end_date")
+    @Column(name = "end_date", nullable = false)
     private LocalDateTime endDate;
 
     @Column(name = "attendance_mode", nullable = false)

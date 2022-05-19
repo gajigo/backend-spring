@@ -44,18 +44,6 @@ public class LectureValidator extends AbstractValidator<Lecture> {
             errors.rejectValue("event", "event.cancelled",
                                "Lecture cannot be part of a cancelled event!");
         }
-
-        // Creation time only validations
-        if (lecture.getUpdated() == null) {
-            // TODO remove null check for endDate here as well, events should always have those
-            LocalDateTime start = event.getStartDate();
-            LocalDateTime end = event.getEndDate();
-
-            if (end != null && end.isBefore(LocalDateTime.now())) {
-                errors.rejectValue("event", "lecture.eventEnded",
-                                   "Cannot add a lecture to an event that has already ended!");
-            }
-        }
     }
 
     private void validateLanguage(Lecture lecture, Errors errors) {
@@ -88,21 +76,39 @@ public class LectureValidator extends AbstractValidator<Lecture> {
         LocalDateTime start = lecture.getStartDate();
         LocalDateTime end = lecture.getEndDate();
 
-        // TODO remove special logic for null, you shouldn't be able to schedule an lecture
-        // TODO ... without, you know, scheduling it...
-        if (end != null && end.isBefore(start)) {
+        if (!validateNull("startDate", start, errors) | // One | because we dont want short circuiting
+            !validateNull("endDate", end, errors)) {
+            return;
+        }
+
+        if (end.isBefore(start)) {
             errors.rejectValue("endDate", "endDate.beforeStart",
                     "The lecture cannot end before it has started!");
         }
 
+        LocalDateTime eventStart = lecture.getEvent().getStartDate();
+        LocalDateTime eventEnd = lecture.getEvent().getEndDate();
+
+        if (start.isBefore(eventStart)) {
+            errors.rejectValue("startDate", "startDate.beforeEventStart",
+                               "The lecture cannot start before the event it's in has started!");
+        }
+
+        if (start.isAfter(eventEnd))
+
+        if (end.isAfter(eventEnd)) {
+            errors.rejectValue("endDate", "endDate.afterEventEnd",
+                               "The lecture cannot end after the event it's in has ended!");
+        }
+
         // Creation time only validations
         if (lecture.getUpdated() == null) {
-            if (start != null && start.isBefore(LocalDateTime.now())) {
+            if (start.isBefore(LocalDateTime.now())) {
                 errors.rejectValue("startDate", "startDate.past",
                         "The start date of a new lecture cannot be in the past!");
             }
 
-            if (end != null && end.isBefore(LocalDateTime.now())) {
+            if (end.isBefore(LocalDateTime.now())) {
                 errors.rejectValue("endDate", "endDate.past",
                         "The end date of a new lecture cannot be in the past!");
             }

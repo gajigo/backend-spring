@@ -48,21 +48,24 @@ public class EventValidator extends AbstractValidator<Event> {
         LocalDateTime start = event.getStartDate();
         LocalDateTime end = event.getEndDate();
 
-        // TODO remove special logic for null, you shouldn't be able to schedule an event
-        // TODO ... without, you know, scheduling it...
-        if (end != null && end.isBefore(start)) {
+        if (!validateNull("startDate", start, errors) | // One | because we dont want short circuiting
+            !validateNull("endDate", end, errors)) {
+            return;
+        }
+
+        if (end.isBefore(start)) {
             errors.rejectValue("endDate", "endDate.beforeStart",
                                "The event cannot end before it has started!");
         }
 
         // Creation time only validations
         if (event.getUpdated() == null) {
-            if (start != null && start.isBefore(LocalDateTime.now())) {
+            if (start.isBefore(LocalDateTime.now())) {
                 errors.rejectValue("startDate", "startDate.past",
                                    "The start date of a new event cannot be in the past!");
             }
 
-            if (end != null && end.isBefore(LocalDateTime.now())) {
+            if (end.isBefore(LocalDateTime.now())) {
                 errors.rejectValue("endDate", "endDate.past",
                                    "The end date of a new event cannot be in the past!");
             }
