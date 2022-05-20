@@ -5,6 +5,8 @@ import br.com.uniamerica.gajigo.validator.EventValidator;
 import org.junit.Test;
 import org.springframework.validation.Errors;
 
+import java.time.LocalDateTime;
+
 public class EventValidatorTest extends AbstractValidatorTest<Event> {
     public EventValidatorTest() {
         super(new EventValidator(), Event.class);
@@ -57,6 +59,8 @@ public class EventValidatorTest extends AbstractValidatorTest<Event> {
 
         event.setLocation(city);
         event.setOwner(user);
+        event.setStartDate(LocalDateTime.now().plusDays(1));
+        event.setEndDate(LocalDateTime.now().plusYears(1));
 
         return event;
     }

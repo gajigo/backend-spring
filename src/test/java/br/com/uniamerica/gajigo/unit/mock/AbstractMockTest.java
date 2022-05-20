@@ -4,8 +4,10 @@ import br.com.uniamerica.gajigo.mock.AbstractMock;
 import br.com.uniamerica.gajigo.unit.AbstractUnitTest;
 import br.com.uniamerica.gajigo.validator.AbstractValidator;
 import org.junit.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Repeat;
 
+@SpringBootTest
 public abstract class AbstractMockTest<T> extends AbstractUnitTest {
     AbstractMock<T> mock;
     AbstractValidator<T> validator;

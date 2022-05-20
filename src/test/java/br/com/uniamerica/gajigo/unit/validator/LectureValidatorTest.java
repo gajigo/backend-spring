@@ -5,6 +5,7 @@ import br.com.uniamerica.gajigo.validator.LectureValidator;
 import org.junit.Test;
 import org.springframework.validation.Errors;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 
 public class LectureValidatorTest extends AbstractValidatorTest<Lecture> {
@@ -44,6 +45,8 @@ public class LectureValidatorTest extends AbstractValidatorTest<Lecture> {
         lecture.setRoom(room);
         room.setLectures(new HashSet<>());
         room.getLectures().add(lecture);
+        lecture.setStartDate(LocalDateTime.now().plusWeeks(1));
+        lecture.setEndDate(LocalDateTime.now().plusWeeks(4));
 
         return lecture;
     }

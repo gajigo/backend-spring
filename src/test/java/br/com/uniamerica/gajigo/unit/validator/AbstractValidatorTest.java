@@ -3,9 +3,11 @@ package br.com.uniamerica.gajigo.unit.validator;
 import br.com.uniamerica.gajigo.unit.AbstractUnitTest;
 import br.com.uniamerica.gajigo.validator.AbstractValidator;
 import org.junit.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 
+@SpringBootTest
 public abstract class AbstractValidatorTest<T> extends AbstractUnitTest {
     AbstractValidator validator;
     Class<T> clazz;
