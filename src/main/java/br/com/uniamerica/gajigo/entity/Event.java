@@ -7,7 +7,6 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,11 +43,8 @@ public class Event extends AbstractDescribable {
     @Enumerated(EnumType.STRING)
     private EventStatus status;
 
-    @Column(name = "start_date", nullable = false)
-    private LocalDateTime startDate;
-
-    @Column(name = "end_date", nullable = false)
-    private LocalDateTime endDate;
+    @Embedded
+    private Interval interval;
 
     @Column(name = "attendance_mode", nullable = false)
     @Enumerated(EnumType.STRING)

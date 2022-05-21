@@ -16,7 +16,7 @@ public class EventValidator extends AbstractValidator<Event> {
 
         validateName(event, errors);
         validateAttendanceMode(event, errors);
-        validateDate(event, errors);
+        validateInterval(event, errors);
         validateOwner(event, errors);
         validateStatus(event, errors);
     }
@@ -44,31 +44,35 @@ public class EventValidator extends AbstractValidator<Event> {
         }
     }
 
-    private void validateDate(Event event, Errors errors) {
-        LocalDateTime start = event.getStartDate();
-        LocalDateTime end = event.getEndDate();
+    private void validateInterval(Event event, Errors errors) {
+        Interval interval = event.getInterval();
 
-        if (!validateNull("startDate", start, errors) | // One | because we dont want short circuiting
-            !validateNull("endDate", end, errors)) {
+        if (interval == null) {
+            errors.rejectValue("interval", "start.null",
+                               "start must not be null!");
+            errors.rejectValue("interval", "end.null",
+                    "end must not be null!");
             return;
         }
 
-        if (end.isBefore(start)) {
-            errors.rejectValue("endDate", "endDate.beforeStart",
+        if (!validateNull("interval", interval.getStart(), errors) | // One | because we dont want short circuiting
+            !validateNull("interval", interval.getEnd(), errors)) {
+            return;
+        }
+
+        if (!interval.isValid()) {
+            errors.rejectValue("interval", "end.beforeStart",
                                "The event cannot end before it has started!");
+            return;
         }
 
         // Creation time only validations
         if (event.getUpdated() == null) {
-            if (start.isBefore(LocalDateTime.now())) {
-                errors.rejectValue("startDate", "startDate.past",
+            if (interval.getStart().isBefore(LocalDateTime.now())) {
+                errors.rejectValue("interval", "start.past",
                                    "The start date of a new event cannot be in the past!");
             }
-
-            if (end.isBefore(LocalDateTime.now())) {
-                errors.rejectValue("endDate", "endDate.past",
-                                   "The end date of a new event cannot be in the past!");
-            }
+            // No need to check end because end > start
         }
     }
 

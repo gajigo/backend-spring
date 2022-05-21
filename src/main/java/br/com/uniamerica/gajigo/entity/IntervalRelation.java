@@ -1,6 +1,6 @@
 package br.com.uniamerica.gajigo.entity;
 
-public enum PeriodRelation {
+public enum IntervalRelation {
     // Notation
     // A > B |= A completely after B
     // A < B |= A completely before B

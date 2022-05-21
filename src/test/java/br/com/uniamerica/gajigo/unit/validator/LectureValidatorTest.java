@@ -39,6 +39,8 @@ public class LectureValidatorTest extends AbstractValidatorTest<Lecture> {
         Language language = new LanguageValidatorTest().validObject();
         User user = new UserValidatorTest().validObject();
         Room room = new RoomValidatorTest().validObject();
+        Interval interval = new Interval(event.getInterval().getStart().plusDays(1),
+                                         event.getInterval().getEnd().minusDays(2));
 
         lecture.setSpeakers(new HashSet<>());
         lecture.getSpeakers().add(user);
@@ -47,8 +49,7 @@ public class LectureValidatorTest extends AbstractValidatorTest<Lecture> {
         lecture.setRoom(room);
         room.setLectures(new HashSet<>());
         room.getLectures().add(lecture);
-        lecture.setStartDate(LocalDateTime.now().plusWeeks(1));
-        lecture.setEndDate(LocalDateTime.now().plusWeeks(4));
+        lecture.setInterval(interval);
 
         return lecture;
     }

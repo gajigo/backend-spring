@@ -7,7 +7,6 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -55,11 +54,8 @@ public class Lecture extends AbstractDescribable {
     )
     private Set<User> speakers = new HashSet<>();
 
-    @Column(name = "start_date", nullable = false)
-    private LocalDateTime startDate;
-
-    @Column(name = "end_date", nullable = false)
-    private LocalDateTime endDate;
+    @Embedded
+    private Interval interval;
 
     @Column(name = "attendance_mode", nullable = false)
     @Enumerated(EnumType.STRING)

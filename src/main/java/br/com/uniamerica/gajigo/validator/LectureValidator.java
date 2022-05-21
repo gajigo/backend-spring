@@ -4,10 +4,7 @@ import br.com.uniamerica.gajigo.entity.*;
 import org.springframework.validation.Errors;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class LectureValidator extends AbstractValidator<Lecture> {
     public LectureValidator() {
@@ -22,7 +19,7 @@ public class LectureValidator extends AbstractValidator<Lecture> {
         validateEvent(lecture, errors);
         validateLanguage(lecture, errors);
         validateAttendanceMode(lecture, errors);
-        validateDate(lecture, errors);
+        validateInterval(lecture, errors);
         validateSpeakers(lecture, errors);
         validateRoom(lecture, errors);
     }
@@ -58,12 +55,6 @@ public class LectureValidator extends AbstractValidator<Lecture> {
             return;
         }
 
-        List<String> modes = Arrays.stream(AttendanceMode.values())
-                .map(m -> {
-                    return m.name();
-                })
-                .collect(Collectors.toList());
-
         AttendanceMode eventMode = lecture.getEvent().getAttendanceMode();
         if (eventMode != AttendanceMode.Mixed && mode != eventMode) {
             errors.rejectValue("attendanceMode", "attendanceMode.conflictsWithEvent",
@@ -72,45 +63,42 @@ public class LectureValidator extends AbstractValidator<Lecture> {
         }
     }
 
-    private void validateDate(Lecture lecture, Errors errors) {
-        LocalDateTime start = lecture.getStartDate();
-        LocalDateTime end = lecture.getEndDate();
+    private void validateInterval(Lecture lecture, Errors errors) {
+        Interval interval = lecture.getInterval();
 
-        if (!validateNull("startDate", start, errors) | // One | because we dont want short circuiting
-            !validateNull("endDate", end, errors)) {
+        if (interval == null) {
+            errors.rejectValue("interval", "start.null",
+                    "start must not be null!");
+            errors.rejectValue("interval", "end.null",
+                    "end must not be null!");
             return;
         }
 
-        if (end.isBefore(start)) {
-            errors.rejectValue("endDate", "endDate.beforeStart",
+        if (!validateNull("interval", interval.getStart(), errors) | // One | because we dont want short circuiting
+            !validateNull("interval", interval.getEnd(), errors)) {
+            return;
+        }
+
+        if (!interval.isValid()) {
+            errors.rejectValue("interval", "end.beforeStart",
                     "The lecture cannot end before it has started!");
+            return;
         }
 
-        LocalDateTime eventStart = lecture.getEvent().getStartDate();
-        LocalDateTime eventEnd = lecture.getEvent().getEndDate();
+        Interval eventInterval = lecture.getEvent().getInterval();
 
-        if (start.isBefore(eventStart)) {
-            errors.rejectValue("startDate", "startDate.beforeEventStart",
-                               "The lecture cannot start before the event it's in has started!");
-        }
-
-        if (start.isAfter(eventEnd))
-
-        if (end.isAfter(eventEnd)) {
-            errors.rejectValue("endDate", "endDate.afterEventEnd",
-                               "The lecture cannot end after the event it's in has ended!");
+        if (!eventInterval.hasInside(interval)) {
+            errors.rejectValue("interval", "date.outsideEventDate",
+                               "Lecture start and end must be completely contained inside its event!" +
+                                       "\nExpected start after " + eventInterval.getStart() +
+                                       " and end before " + eventInterval.getEnd() + ".");
         }
 
         // Creation time only validations
         if (lecture.getUpdated() == null) {
-            if (start.isBefore(LocalDateTime.now())) {
-                errors.rejectValue("startDate", "startDate.past",
+            if (interval.getStart().isBefore(LocalDateTime.now())) {
+                errors.rejectValue("interval", "start.past",
                         "The start date of a new lecture cannot be in the past!");
-            }
-
-            if (end.isBefore(LocalDateTime.now())) {
-                errors.rejectValue("endDate", "endDate.past",
-                        "The end date of a new lecture cannot be in the past!");
             }
         }
     }
@@ -140,13 +128,12 @@ public class LectureValidator extends AbstractValidator<Lecture> {
                     continue;
                 }
 
-                if (intervalOverlaps(lecture.getStartDate(), lecture.getEndDate(),
-                        roomLecture.getStartDate(), roomLecture.getEndDate())) {
+                if (roomLecture.getInterval().isOverlapping(lecture.getInterval())) {
                     errors.rejectValue("room", "room.conflict",
                             "Lecture cannot take place in room with the specified timeframe " +
                                     "because another lecture is already scheduled during that period! " +
-                                    "Lecture causing conflict takes place between " + roomLecture.getStartDate() +
-                                    " and " + roomLecture.getEndDate());
+                                    "Lecture causing conflict takes place between " + roomLecture.getInterval()
+                                    .getStart() + " and " + roomLecture.getInterval().getEnd() + ".");
                     break; // Optimization, assumes the lectures have already been verified to not be conflicting beforehand
                 }
             }
