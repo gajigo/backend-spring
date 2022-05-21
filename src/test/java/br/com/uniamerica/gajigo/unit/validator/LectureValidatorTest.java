@@ -5,7 +5,6 @@ import br.com.uniamerica.gajigo.validator.LectureValidator;
 import org.junit.jupiter.api.Test;
 import org.springframework.validation.Errors;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,8 +38,8 @@ public class LectureValidatorTest extends AbstractValidatorTest<Lecture> {
         Language language = new LanguageValidatorTest().validObject();
         User user = new UserValidatorTest().validObject();
         Room room = new RoomValidatorTest().validObject();
-        Interval interval = new Interval(event.getInterval().getStart().plusDays(1),
-                                         event.getInterval().getEnd().minusDays(2));
+        Interval interval = new Interval(event.getInterval().getStartDate().plusDays(1),
+                                         event.getInterval().getEndDate().minusDays(2));
 
         lecture.setSpeakers(new HashSet<>());
         lecture.getSpeakers().add(user);

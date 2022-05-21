@@ -48,29 +48,29 @@ public class EventValidator extends AbstractValidator<Event> {
         Interval interval = event.getInterval();
 
         if (interval == null) {
-            errors.rejectValue("interval", "start.null",
-                               "start must not be null!");
-            errors.rejectValue("interval", "end.null",
-                    "end must not be null!");
+            errors.rejectValue("interval", "startDate.null",
+                               "startDate must not be null!");
+            errors.rejectValue("interval", "endDate.null",
+                    "endDate must not be null!");
             return;
         }
 
-        if (!validateNull("interval", interval.getStart(), errors) | // One | because we dont want short circuiting
-            !validateNull("interval", interval.getEnd(), errors)) {
+        if (!validateNull("interval", interval.getStartDate(), errors) | // One | because we dont want short circuiting
+            !validateNull("interval", interval.getEndDate(), errors)) {
             return;
         }
 
         if (!interval.valid()) {
-            errors.rejectValue("interval", "end.beforeStart",
+            errors.rejectValue("interval", "endDate.beforeStart",
                                "The event cannot end before it has started!");
             return;
         }
 
         // Creation time only validations
         if (event.getUpdated() == null) {
-            if (interval.getStart().isBefore(LocalDateTime.now())) {
-                errors.rejectValue("interval", "start.past",
-                                   "The start date of a new event cannot be in the past!");
+            if (interval.getStartDate().isBefore(LocalDateTime.now())) {
+                errors.rejectValue("interval", "startDate.past",
+                                   "The startDate of a new event cannot be in the past!");
             }
             // No need to check end because end > start
         }

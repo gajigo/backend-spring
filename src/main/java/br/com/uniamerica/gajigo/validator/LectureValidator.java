@@ -67,20 +67,20 @@ public class LectureValidator extends AbstractValidator<Lecture> {
         Interval interval = lecture.getInterval();
 
         if (interval == null) {
-            errors.rejectValue("interval", "start.null",
-                    "start must not be null!");
-            errors.rejectValue("interval", "end.null",
-                    "end must not be null!");
+            errors.rejectValue("interval", "startDate.null",
+                    "startDate must not be null!");
+            errors.rejectValue("interval", "endDate.null",
+                    "endDate must not be null!");
             return;
         }
 
-        if (!validateNull("interval", interval.getStart(), errors) | // One | because we dont want short circuiting
-            !validateNull("interval", interval.getEnd(), errors)) {
+        if (!validateNull("interval", interval.getStartDate(), errors) | // One | because we dont want short circuiting
+            !validateNull("interval", interval.getEndDate(), errors)) {
             return;
         }
 
         if (!interval.valid()) {
-            errors.rejectValue("interval", "end.beforeStart",
+            errors.rejectValue("interval", "endDate.beforeStart",
                     "The lecture cannot end before it has started!");
             return;
         }
@@ -89,16 +89,16 @@ public class LectureValidator extends AbstractValidator<Lecture> {
 
         if (!eventInterval.hasInside(interval)) {
             errors.rejectValue("interval", "date.outsideEventDate",
-                               "Lecture start and end must be completely contained inside its event!" +
-                                       "\nExpected start after " + eventInterval.getStart() +
-                                       " and end before " + eventInterval.getEnd() + ".");
+                               "Lecture startDate and endDate must be completely contained inside its event!" +
+                                       "\nExpected startDate after " + eventInterval.getStartDate() +
+                                       " and endDate before " + eventInterval.getEndDate() + ".");
         }
 
         // Creation time only validations
         if (lecture.getUpdated() == null) {
-            if (interval.getStart().isBefore(LocalDateTime.now())) {
-                errors.rejectValue("interval", "start.past",
-                        "The start date of a new lecture cannot be in the past!");
+            if (interval.getStartDate().isBefore(LocalDateTime.now())) {
+                errors.rejectValue("interval", "startDate.past",
+                        "The startDate of a new lecture cannot be in the past!");
             }
         }
     }
@@ -133,7 +133,7 @@ public class LectureValidator extends AbstractValidator<Lecture> {
                             "Lecture cannot take place in room with the specified timeframe " +
                                     "because another lecture is already scheduled during that period! " +
                                     "Lecture causing conflict takes place between " + roomLecture.getInterval()
-                                    .getStart() + " and " + roomLecture.getInterval().getEnd() + ".");
+                                    .getStartDate() + " and " + roomLecture.getInterval().getEndDate() + ".");
                     break; // Optimization, assumes the lectures have already been verified to not be conflicting beforehand
                 }
             }

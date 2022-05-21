@@ -17,29 +17,29 @@ public class Interval {
         Implements Allen's Interval Algebra
     */
     @NotNull
-    private LocalDateTime start;
+    private LocalDateTime startDate;
     @NotNull
-    private LocalDateTime end;
+    private LocalDateTime endDate;
 
-    public Interval(LocalDateTime start, LocalDateTime end) {
-        this.start = start;
-        this.end = end;
+    public Interval(LocalDateTime startDate, LocalDateTime endDate) {
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public IntervalRelation getRelation(Interval b) {
-        if (start.isAfter(b.start)  && end.isBefore(b.end)) return IntervalRelation.Inside;
-        if (start.isAfter(b.start)  && end.isEqual(b.end))  return IntervalRelation.InsideEndTouching;
-        if (start.isBefore(b.start) && end.isAfter(b.end))  return IntervalRelation.Enclosing;
-        if (start.isBefore(b.start) && end.isBefore(b.end)) return IntervalRelation.EndInside;
-        if (start.isBefore(b.start) && end.isEqual(b.end))  return IntervalRelation.EnclosingEndTouching;
-        if (start.isEqual(b.start)  && end.isAfter(b.end))  return IntervalRelation.EnclosingStartTouching;
-        if (start.isEqual(b.start)  && end.isBefore(b.end)) return IntervalRelation.InsideStartTouching;
-        if (start.isEqual(b.start)  && end.isEqual(b.end))  return IntervalRelation.ExactMatch;
-        if (start.isAfter(b.end))  return IntervalRelation.After;
-        if (start.isBefore(b.end)) return IntervalRelation.StartInside;
-        if (start.isEqual(b.end))  return IntervalRelation.StartTouching;
-        if (end.isBefore(b.start)) return IntervalRelation.Before;
-        if (end.isEqual(b.start))  return IntervalRelation.EndTouching;
+        if (startDate.isAfter(b.startDate)  && endDate.isBefore(b.endDate)) return IntervalRelation.Inside;
+        if (startDate.isAfter(b.startDate)  && endDate.isEqual(b.endDate))  return IntervalRelation.InsideEndTouching;
+        if (startDate.isBefore(b.startDate) && endDate.isAfter(b.endDate))  return IntervalRelation.Enclosing;
+        if (startDate.isBefore(b.startDate) && endDate.isBefore(b.endDate)) return IntervalRelation.EndInside;
+        if (startDate.isBefore(b.startDate) && endDate.isEqual(b.endDate))  return IntervalRelation.EnclosingEndTouching;
+        if (startDate.isEqual(b.startDate)  && endDate.isAfter(b.endDate))  return IntervalRelation.EnclosingStartTouching;
+        if (startDate.isEqual(b.startDate)  && endDate.isBefore(b.endDate)) return IntervalRelation.InsideStartTouching;
+        if (startDate.isEqual(b.startDate)  && endDate.isEqual(b.endDate))  return IntervalRelation.ExactMatch;
+        if (startDate.isAfter(b.endDate))  return IntervalRelation.After;
+        if (startDate.isBefore(b.endDate)) return IntervalRelation.StartInside;
+        if (startDate.isEqual(b.endDate))  return IntervalRelation.StartTouching;
+        if (endDate.isBefore(b.startDate)) return IntervalRelation.Before;
+        if (endDate.isEqual(b.startDate))  return IntervalRelation.EndTouching;
         return null; // Unreachable
     }
 
@@ -104,21 +104,21 @@ public class Interval {
     }
 
     public long difference(LocalDateTime time) {
-        if (time.isBefore(start))   return ChronoUnit.MILLIS.between(time, start);
-        else if (time.isAfter(end)) return ChronoUnit.MILLIS.between(time, end);
+        if (time.isBefore(startDate))   return ChronoUnit.MILLIS.between(time, startDate);
+        else if (time.isAfter(endDate)) return ChronoUnit.MILLIS.between(time, endDate);
         else return 0;
     }
 
     public long duration() {
-        return ChronoUnit.MILLIS.between(start, end);
+        return ChronoUnit.MILLIS.between(startDate, endDate);
     }
 
     public boolean valid() {
-        return start.isBefore(end);
+        return startDate.isBefore(endDate);
     }
 
     @Override
     public String toString() {
-        return start + " - " + end;
+        return startDate + " - " + endDate;
     }
 }
