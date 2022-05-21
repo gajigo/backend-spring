@@ -79,7 +79,7 @@ public class LectureValidator extends AbstractValidator<Lecture> {
             return;
         }
 
-        if (!interval.isValid()) {
+        if (!interval.valid()) {
             errors.rejectValue("interval", "end.beforeStart",
                     "The lecture cannot end before it has started!");
             return;

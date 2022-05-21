@@ -4,15 +4,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-@Getter @Setter
 @NoArgsConstructor
+@Getter @Setter
 @Embeddable
 public class Interval {
     /*
@@ -115,7 +113,7 @@ public class Interval {
         return ChronoUnit.MILLIS.between(start, end);
     }
 
-    public boolean isValid() {
+    public boolean valid() {
         return start.isBefore(end);
     }
 

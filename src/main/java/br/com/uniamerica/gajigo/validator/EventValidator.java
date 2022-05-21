@@ -60,7 +60,7 @@ public class EventValidator extends AbstractValidator<Event> {
             return;
         }
 
-        if (!interval.isValid()) {
+        if (!interval.valid()) {
             errors.rejectValue("interval", "end.beforeStart",
                                "The event cannot end before it has started!");
             return;
