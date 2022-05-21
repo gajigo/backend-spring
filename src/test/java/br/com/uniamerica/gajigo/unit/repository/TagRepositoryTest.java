@@ -23,7 +23,7 @@ public class TagRepositoryTest extends AbstractRepositoryTest {
 
         // Then
         assertNull(findNull);
-        assertNull(findA);
+        assertNotNull(findA);
 
         a.setId(findA.getId());
 
