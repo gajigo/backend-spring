@@ -7,7 +7,7 @@ import br.com.uniamerica.gajigo.entity.Event;
 import br.com.uniamerica.gajigo.unit.AbstractUnitTest;
 import br.com.uniamerica.gajigo.validator.AbstractValidator;
 import br.com.uniamerica.gajigo.validator.CountryValidator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.ValidationErrors;
 import org.springframework.validation.BindException;

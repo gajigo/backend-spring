@@ -3,7 +3,7 @@ package br.com.uniamerica.gajigo.unit.validator;
 import br.com.uniamerica.gajigo.entity.City;
 import br.com.uniamerica.gajigo.entity.Tag;
 import br.com.uniamerica.gajigo.validator.TagValidator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.validation.Errors;
 
 public class TagValidatorTest extends AbstractValidatorTest<Tag> {

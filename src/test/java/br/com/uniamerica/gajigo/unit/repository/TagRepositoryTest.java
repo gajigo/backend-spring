@@ -2,7 +2,7 @@ package br.com.uniamerica.gajigo.unit.repository;
 
 import br.com.uniamerica.gajigo.entity.Tag;
 import br.com.uniamerica.gajigo.repository.TagRepository;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class TagRepositoryTest extends AbstractRepositoryTest {

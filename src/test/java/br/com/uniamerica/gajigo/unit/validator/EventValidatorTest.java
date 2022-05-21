@@ -2,7 +2,7 @@ package br.com.uniamerica.gajigo.unit.validator;
 
 import br.com.uniamerica.gajigo.entity.*;
 import br.com.uniamerica.gajigo.validator.EventValidator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.validation.Errors;
 
 import java.time.LocalDateTime;

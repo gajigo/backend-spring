@@ -4,7 +4,7 @@ import br.com.uniamerica.gajigo.entity.City;
 import br.com.uniamerica.gajigo.entity.Event;
 import br.com.uniamerica.gajigo.entity.Room;
 import br.com.uniamerica.gajigo.validator.RoomValidator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.validation.Errors;
 
 public class RoomValidatorTest extends AbstractValidatorTest<Room> {

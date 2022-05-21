@@ -2,7 +2,7 @@ package br.com.uniamerica.gajigo.unit.repository;
 
 import br.com.uniamerica.gajigo.entity.Country;
 import br.com.uniamerica.gajigo.repository.CountryRepository;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class CountryRepositoryTest extends AbstractRepositoryTest {
