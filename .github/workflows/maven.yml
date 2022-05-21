@@ -42,4 +42,4 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Test with Maven
-      run: mvn test pom.xml
+      run: mvn test
