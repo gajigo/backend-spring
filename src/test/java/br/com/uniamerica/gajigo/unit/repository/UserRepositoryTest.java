@@ -5,6 +5,8 @@ import br.com.uniamerica.gajigo.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class UserRepositoryTest extends AbstractRepositoryTest {
     @Autowired
     private UserRepository repository;
@@ -22,11 +24,11 @@ public class UserRepositoryTest extends AbstractRepositoryTest {
         User findNull = repository.findFirstByUsername("NullUser");
 
         // Then
-        assert findNull == null;
-        assert findA != null;
+        assertNull(findNull);
+        assertNotNull(findA);
 
         a.setId(findA.getId());
 
-        assert a.equals(findA);
+        assertEquals(a, findA);
     }
 }

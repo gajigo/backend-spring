@@ -7,6 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 public abstract class AbstractValidatorTest<T> extends AbstractUnitTest {
     AbstractValidator validator;
@@ -21,7 +23,7 @@ public abstract class AbstractValidatorTest<T> extends AbstractUnitTest {
 
     @Test
     public void testSupports() throws Exception {
-        assert validator.supports(clazz);
+        assertTrue(validator.supports(clazz));
     }
 
     @Test
@@ -31,7 +33,7 @@ public abstract class AbstractValidatorTest<T> extends AbstractUnitTest {
     public void testValidObject() throws Exception {
         Errors errors = validator.validate(validObject());
 
-        assert !errors.hasErrors();
+        assertFalse(errors.hasErrors());
     }
 
     public abstract T validObject();

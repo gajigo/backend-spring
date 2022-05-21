@@ -7,6 +7,8 @@ import br.com.uniamerica.gajigo.validator.RoomValidator;
 import org.junit.jupiter.api.Test;
 import org.springframework.validation.Errors;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class RoomValidatorTest extends AbstractValidatorTest<Room> {
     public RoomValidatorTest() {
         super(new RoomValidator(), Room.class);
@@ -17,7 +19,7 @@ public class RoomValidatorTest extends AbstractValidatorTest<Room> {
         Room room = new Room();
         Errors errors = validator.validate(room);
 
-        assert errors.hasErrors();
+        assertTrue(errors.hasErrors());
     }
 
     @Test
@@ -27,8 +29,8 @@ public class RoomValidatorTest extends AbstractValidatorTest<Room> {
 
         Errors errors = validator.validate(room);
 
-        assert !errors.hasErrors();
-        assert room.getDescription() == "";
+        assertFalse(errors.hasErrors());
+        assertEquals("", room.getDescription());
     }
 
     @Test
@@ -38,7 +40,7 @@ public class RoomValidatorTest extends AbstractValidatorTest<Room> {
 
         Errors errors = validator.validate(room);
 
-        assert errors.getErrorCount() == 1;
+        assertEquals(1, errors.getErrorCount());
     }
 
     public Room validObject() {

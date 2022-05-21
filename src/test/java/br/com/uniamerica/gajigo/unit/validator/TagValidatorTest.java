@@ -6,6 +6,8 @@ import br.com.uniamerica.gajigo.validator.TagValidator;
 import org.junit.jupiter.api.Test;
 import org.springframework.validation.Errors;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class TagValidatorTest extends AbstractValidatorTest<Tag> {
     public TagValidatorTest() {
         super(new TagValidator(), Tag.class);
@@ -16,7 +18,7 @@ public class TagValidatorTest extends AbstractValidatorTest<Tag> {
         Tag tag = new Tag();
         Errors errors = validator.validate(tag);
 
-        assert errors.hasErrors();
+        assertTrue(errors.hasErrors());
     }
 
     @Test
@@ -26,7 +28,7 @@ public class TagValidatorTest extends AbstractValidatorTest<Tag> {
 
         Errors errors = validator.validate(tag);
 
-        assert errors.getErrorCount() == 1;
+        assertEquals(1, errors.getErrorCount());
     }
 
     public Tag validObject() {

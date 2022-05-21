@@ -9,6 +9,8 @@ import org.springframework.validation.Errors;
 
 import java.util.HashSet;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class DocumentValidatorTest extends AbstractValidatorTest<Document> {
     public DocumentValidatorTest() {
         super(new DocumentValidator(), Document.class);
@@ -19,7 +21,7 @@ public class DocumentValidatorTest extends AbstractValidatorTest<Document> {
         Document document = new Document();
         Errors errors = validator.validate(document);
 
-        assert errors.hasErrors();
+        assertTrue(errors.hasErrors());
     }
 
     @Test
@@ -29,7 +31,7 @@ public class DocumentValidatorTest extends AbstractValidatorTest<Document> {
 
         Errors errors = validator.validate(document);
 
-        assert errors.getErrorCount() == 1;
+        assertEquals(1, errors.getErrorCount());
     }
 
     @Test
@@ -40,7 +42,7 @@ public class DocumentValidatorTest extends AbstractValidatorTest<Document> {
 
         Errors errors = validator.validate(document);
 
-        assert errors.getErrorCount() == 1;
+        assertEquals(1, errors.getErrorCount());
     }
 
     public Document validObject() {

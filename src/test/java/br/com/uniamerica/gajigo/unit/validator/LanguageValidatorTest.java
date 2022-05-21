@@ -5,6 +5,8 @@ import br.com.uniamerica.gajigo.validator.LanguageValidator;
 import org.junit.jupiter.api.Test;
 import org.springframework.validation.Errors;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class LanguageValidatorTest extends AbstractValidatorTest<Language> {
     public LanguageValidatorTest() {
         super(new LanguageValidator(), Language.class);
@@ -15,7 +17,7 @@ public class LanguageValidatorTest extends AbstractValidatorTest<Language> {
         Language language = new Language();
         Errors errors = validator.validate(language);
 
-        assert errors.hasErrors();
+        assertTrue(errors.hasErrors());
     }
 
     @Test
@@ -25,7 +27,7 @@ public class LanguageValidatorTest extends AbstractValidatorTest<Language> {
 
         Errors errors = validator.validate(language);
 
-        assert errors.getErrorCount() == 1;
+        assertEquals(1, errors.getErrorCount());
     }
 
     public Language validObject() {

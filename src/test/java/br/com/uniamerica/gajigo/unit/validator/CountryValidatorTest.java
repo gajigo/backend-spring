@@ -13,6 +13,8 @@ import org.springframework.data.rest.core.ValidationErrors;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class CountryValidatorTest extends AbstractValidatorTest<Country> {
     public CountryValidatorTest() {
         super(new CountryValidator(), Country.class);
@@ -23,7 +25,7 @@ public class CountryValidatorTest extends AbstractValidatorTest<Country> {
         Country country = new Country();
         Errors errors = validator.validate(country);
 
-        assert errors.hasErrors();
+        assertTrue(errors.hasErrors());
     }
 
     @Test
@@ -33,7 +35,7 @@ public class CountryValidatorTest extends AbstractValidatorTest<Country> {
 
         Errors errors = validator.validate(country);
 
-        assert errors.getErrorCount() == 1;
+        assertEquals(1, errors.getErrorCount());
     }
 
     public Country validObject() {

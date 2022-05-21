@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class UserValidatorTest extends AbstractValidatorTest<User> {
     public UserValidatorTest() {
         super(new UserValidator(), User.class);
@@ -19,7 +21,7 @@ public class UserValidatorTest extends AbstractValidatorTest<User> {
         User user = new User();
         Errors errors = validator.validate(user);
 
-        assert errors.hasErrors();
+        assertTrue(errors.hasErrors());
     }
 
     @Test
@@ -29,7 +31,7 @@ public class UserValidatorTest extends AbstractValidatorTest<User> {
 
         Errors errors = validator.validate(user);
 
-        assert errors.getErrorCount() == 1;
+        assertEquals(1, errors.getErrorCount());
     }
 
     @Test
@@ -39,7 +41,7 @@ public class UserValidatorTest extends AbstractValidatorTest<User> {
 
         Errors errors = validator.validate(user);
 
-        assert errors.getErrorCount() == 1;
+        assertEquals(1, errors.getErrorCount());
     }
 
     public User validObject() {

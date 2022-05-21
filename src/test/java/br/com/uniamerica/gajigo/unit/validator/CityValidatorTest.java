@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class CityValidatorTest extends AbstractValidatorTest<City> {
     public CityValidatorTest() {
         super(new CityValidator(), City.class);
@@ -19,7 +21,7 @@ public class CityValidatorTest extends AbstractValidatorTest<City> {
         City city = new City();
         Errors errors = validator.validate(city);
 
-        assert errors.hasErrors();
+        assertTrue(errors.hasErrors());
     }
 
     @Test
@@ -29,7 +31,7 @@ public class CityValidatorTest extends AbstractValidatorTest<City> {
 
         Errors errors = validator.validate(city);
 
-        assert errors.getErrorCount() == 1;
+        assertEquals(1, errors.getErrorCount());
     }
 
     public City validObject() {

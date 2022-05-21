@@ -5,6 +5,8 @@ import br.com.uniamerica.gajigo.repository.TagRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class TagRepositoryTest extends AbstractRepositoryTest {
     @Autowired
     private TagRepository repository;
@@ -20,11 +22,11 @@ public class TagRepositoryTest extends AbstractRepositoryTest {
         Tag findNull = repository.findFirstByName("NullTag");
 
         // Then
-        assert findNull == null;
-        assert findA != null;
+        assertNull(findNull);
+        assertNotNull(findA);
 
         a.setId(findA.getId());
 
-        assert a.equals(findA);
+        assertEquals(a, findA);
     }
 }

@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class StateValidatorTest extends AbstractValidatorTest<State> {
     public StateValidatorTest() {
         super(new StateValidator(), State.class);
@@ -20,7 +22,7 @@ public class StateValidatorTest extends AbstractValidatorTest<State> {
         State state = new State();
         Errors errors = validator.validate(state);
 
-        assert errors.hasErrors();
+        assertTrue(errors.hasErrors());
     }
 
     @Test
@@ -30,7 +32,7 @@ public class StateValidatorTest extends AbstractValidatorTest<State> {
 
         Errors errors = validator.validate(state);
 
-        assert errors.getErrorCount() == 1;
+        assertEquals(1, errors.getErrorCount());
     }
 
     public State validObject() {

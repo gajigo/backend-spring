@@ -7,6 +7,8 @@ import org.springframework.validation.Errors;
 
 import java.time.LocalDateTime;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class EventValidatorTest extends AbstractValidatorTest<Event> {
     public EventValidatorTest() {
         super(new EventValidator(), Event.class);
@@ -17,7 +19,7 @@ public class EventValidatorTest extends AbstractValidatorTest<Event> {
         Event event = new Event();
         Errors errors = validator.validate(event);
 
-        assert errors.hasErrors();
+        assertTrue(errors.hasErrors());
     }
 
     @Test
@@ -27,7 +29,7 @@ public class EventValidatorTest extends AbstractValidatorTest<Event> {
 
         Errors errors = validator.validate(event);
 
-        assert errors.getErrorCount() == 1;
+        assertEquals(1, errors.getErrorCount());
     }
 
     @Test
@@ -37,7 +39,7 @@ public class EventValidatorTest extends AbstractValidatorTest<Event> {
 
         Errors errors = validator.validate(event);
 
-        assert errors.getErrorCount() == 1;
+        assertEquals(1, errors.getErrorCount());
     }
 
     @Test
@@ -47,8 +49,8 @@ public class EventValidatorTest extends AbstractValidatorTest<Event> {
 
         Errors errors = validator.validate(event);
 
-        assert !errors.hasErrors();
-        assert event.getLocation() == null;
+        assertFalse(errors.hasErrors());
+        assertNull(event.getLocation());
     }
 
     public Event validObject() {

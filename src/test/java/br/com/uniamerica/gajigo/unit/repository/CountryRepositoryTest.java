@@ -5,6 +5,8 @@ import br.com.uniamerica.gajigo.repository.CountryRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class CountryRepositoryTest extends AbstractRepositoryTest {
     @Autowired
     private CountryRepository repository;
@@ -20,11 +22,11 @@ public class CountryRepositoryTest extends AbstractRepositoryTest {
         Country findNull = repository.findFirstByName("Nulland");
 
         // Then
-        assert findNull == null;
-        assert findA != null;
+        assertNull(findNull);
+        assertNotNull(findA);
 
         a.setId(findA.getId());
 
-        assert a.equals(findA);
+        assertEquals(a, findA);
     }
 }

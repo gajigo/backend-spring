@@ -8,6 +8,8 @@ import org.springframework.validation.Errors;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class LectureValidatorTest extends AbstractValidatorTest<Lecture> {
     public LectureValidatorTest() {
         super(new LectureValidator(), Lecture.class);
@@ -18,7 +20,7 @@ public class LectureValidatorTest extends AbstractValidatorTest<Lecture> {
         Lecture lecture = new Lecture();
         Errors errors = validator.validate(lecture);
 
-        assert errors.hasErrors();
+        assertTrue(errors.hasErrors());
     }
 
     @Test
@@ -28,7 +30,7 @@ public class LectureValidatorTest extends AbstractValidatorTest<Lecture> {
 
         Errors errors = validator.validate(lecture);
 
-        assert errors.getErrorCount() == 1;
+        assertEquals(1, errors.getErrorCount());
     }
 
     public Lecture validObject() {
