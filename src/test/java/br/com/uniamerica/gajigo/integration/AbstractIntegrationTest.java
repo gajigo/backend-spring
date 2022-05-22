@@ -27,7 +27,7 @@ public abstract class AbstractIntegrationTest {
     private String root = "http://localhost:" + port + "/api/";
 
     private String resource;
-    private String path;
+    String path;
 
     public AbstractIntegrationTest(String resource) {
         this.resource = resource;
