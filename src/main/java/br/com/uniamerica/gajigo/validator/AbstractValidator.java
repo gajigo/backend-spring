@@ -5,8 +5,6 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import java.time.LocalDateTime;
-
 public abstract class AbstractValidator<T> implements Validator {
     private final Class<T> objType;
     private final String className;
@@ -73,8 +71,4 @@ public abstract class AbstractValidator<T> implements Validator {
         return builder.toString();
     }
 
-    protected boolean intervalOverlaps(LocalDateTime start1, LocalDateTime end1,
-                                       LocalDateTime start2, LocalDateTime end2) {
-        return start1.isBefore(end2) && start2.isBefore(end1);
-    }
 }
