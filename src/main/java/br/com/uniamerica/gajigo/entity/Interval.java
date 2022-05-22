@@ -27,19 +27,19 @@ public class Interval {
     }
 
     public IntervalRelation getRelation(Interval b) {
+        if (startDate.isAfter(b.endDate))  return IntervalRelation.After;
+        if (endDate.isBefore(b.startDate)) return IntervalRelation.Before;
+        if (endDate.isEqual(b.startDate))  return IntervalRelation.EndTouching;
+        if (startDate.isEqual(b.endDate))  return IntervalRelation.StartTouching;
+        if (startDate.isEqual(b.startDate)  && endDate.isEqual(b.endDate))  return IntervalRelation.ExactMatch;
         if (startDate.isAfter(b.startDate)  && endDate.isBefore(b.endDate)) return IntervalRelation.Inside;
         if (startDate.isAfter(b.startDate)  && endDate.isEqual(b.endDate))  return IntervalRelation.InsideEndTouching;
         if (startDate.isBefore(b.startDate) && endDate.isAfter(b.endDate))  return IntervalRelation.Enclosing;
-        if (startDate.isBefore(b.startDate) && endDate.isBefore(b.endDate)) return IntervalRelation.EndInside;
         if (startDate.isBefore(b.startDate) && endDate.isEqual(b.endDate))  return IntervalRelation.EnclosingEndTouching;
         if (startDate.isEqual(b.startDate)  && endDate.isAfter(b.endDate))  return IntervalRelation.EnclosingStartTouching;
         if (startDate.isEqual(b.startDate)  && endDate.isBefore(b.endDate)) return IntervalRelation.InsideStartTouching;
-        if (startDate.isEqual(b.startDate)  && endDate.isEqual(b.endDate))  return IntervalRelation.ExactMatch;
-        if (startDate.isAfter(b.endDate))  return IntervalRelation.After;
+        if (startDate.isBefore(b.startDate) && endDate.isBefore(b.endDate)) return IntervalRelation.EndInside;
         if (startDate.isBefore(b.endDate)) return IntervalRelation.StartInside;
-        if (startDate.isEqual(b.endDate))  return IntervalRelation.StartTouching;
-        if (endDate.isBefore(b.startDate)) return IntervalRelation.Before;
-        if (endDate.isEqual(b.startDate))  return IntervalRelation.EndTouching;
         return null; // Unreachable
     }
 
