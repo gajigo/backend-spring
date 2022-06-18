@@ -109,7 +109,6 @@ public class MockDatabase {
                 }
                  */
 
-                /*
                 // Languages
                 LanguageMock languageMock = new LanguageMock();
                 for (Language language : languageMock.create(1000)) {
@@ -117,7 +116,6 @@ public class MockDatabase {
                         log.info("Preloading " + languageRepository.save(language));
                     } catch (Exception ignored) {}
                 }
-                 */
             } catch (Exception ignored) {}
         };
     }
