@@ -13,7 +13,6 @@ import java.util.Set;
 @Entity
 @Table(schema = "public", name = "tags",
        uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
-@SQLDelete(sql = "UPDATE tags SET removed = CURRENT_TIMESTAMP WHERE id = ?")
 @Where(clause = "removed IS null")
 @NoArgsConstructor
 @Getter @Setter
