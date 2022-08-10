@@ -6,7 +6,6 @@ on:
   push:
     branches:
       - master
-  workflow_dispatch:
 
 jobs:
   build:
@@ -16,11 +15,6 @@ jobs:
         image: postgres
         env:
           POSTGRES_PASSWORD: postgres
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
         ports:
           - 5432:5432
     steps:
@@ -32,4 +26,4 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Test with Maven
-      run: mvn test -Dspring.datasource.url=jdbc:postgresql://localhost:5432/postgres
+      run: mvn test
