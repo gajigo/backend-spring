@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Entity
 @Table(schema = "public", name = "documents",
        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "type"}))
-@SQLDelete(sql = "UPDATE documents SET removed = CURRENT_TIMESTAMP WHERE id = ?")
 @Where(clause = "removed IS null")
 @NoArgsConstructor
 @Getter @Setter

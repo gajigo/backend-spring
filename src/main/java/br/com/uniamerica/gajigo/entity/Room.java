@@ -12,7 +12,6 @@ import java.util.Set;
 @Entity
 @Table(schema = "public", name = "rooms",
        uniqueConstraints = @UniqueConstraint(columnNames = {"name", "event_id"}))
-@SQLDelete(sql = "UPDATE rooms SET removed = CURRENT_TIMESTAMP WHERE id = ?")
 @Where(clause = "removed IS null")
 @NoArgsConstructor
 @Getter @Setter

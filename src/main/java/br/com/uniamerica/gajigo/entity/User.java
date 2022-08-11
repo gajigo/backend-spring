@@ -14,7 +14,6 @@ import java.util.Set;
 
 @Entity
 @Table(schema = "public", name = "users")
-@SQLDelete(sql = "UPDATE users SET removed = CURRENT_TIMESTAMP WHERE id = ?")
 @Where(clause = "removed IS null")
 @NoArgsConstructor
 @Getter @Setter
