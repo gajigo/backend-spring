@@ -1,5 +1,6 @@
 package br.com.uniamerica.gajigo.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,14 +20,17 @@ public abstract class AbstractEntity {
 
     @Column(name = "created", nullable = false, updatable = false)
     @CreatedDate
-    private LocalDateTime created;
+    protected LocalDateTime created;
 
     @Column(name = "updated", insertable = false)
     @LastModifiedDate
-    private LocalDateTime updated;
+    protected LocalDateTime updated;
 
     @Column(name = "removed")
-    private LocalDateTime removed;
+    private Boolean removed;
+
+    @Column(name = "removeDate")
+    protected LocalDateTime removeDate;
 
     @PrePersist
     public void create() {
@@ -36,5 +40,11 @@ public abstract class AbstractEntity {
     @PreUpdate
     public void update() {
         this.updated = LocalDateTime.now();
+
+        if (removed && removeDate == null) {
+            this.setRemoveDate(LocalDateTime.now());
+        } else {
+            this.setRemoveDate(null);
+        }
     }
 }

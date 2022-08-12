@@ -9,6 +9,7 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -77,4 +78,6 @@ public class User extends AbstractDescribable {
         this(username, password, name, description, email);
         this.setAdmin(isAdmin);
     }
+
+
 }
