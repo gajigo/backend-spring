@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     UserRepository repository;
 
-
     public UserController(UserRepository repository) {
         this.repository = repository;
     }

@@ -1,8 +1,6 @@
 package br.com.uniamerica.gajigo.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -24,7 +22,7 @@ public abstract class AbstractEntity {
 
     @Column(name = "updated", insertable = false)
     @LastModifiedDate
-    protected LocalDateTime updated;
+    private LocalDateTime updated;
 
     @Column(name = "removed")
     private Boolean removed;

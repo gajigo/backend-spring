@@ -44,14 +44,15 @@ public class UserRepositoryTest extends AbstractRepositoryTest {
     public void testInsertUser() {
         User user = new User("eduardo123", "minhasenha123", "eduardo de souza magalhaes");
         user.setEmail("eduardo@gmail.com");
-        this.repository.save(user);
-        int number = this.repository.findAll().size();
-        assertEquals(1, (int) number);
+        repository.save(user);
+
+        assertEquals(1, repository.findAll().size());
     }
 
     @Test
     public void testUpdateUser() {
         User user = new User("eduardo123", "minhasenha123", "eduardo de souza magalhaes");
+        user.setEmail("eduardo@gmail.com");
         user = this.repository.save(user);
 
         assertEquals(user.getUsername(), "eduardo123");
