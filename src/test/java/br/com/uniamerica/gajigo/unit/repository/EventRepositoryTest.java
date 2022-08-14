@@ -31,7 +31,6 @@ public class EventRepositoryTest  extends AbstractRepositoryTest{
                 AttendanceMode.Online);
         event.setOwner(user);
         eventRepository.save(event);
-
         assertEquals(1, eventRepository.findAll().size());
     }
 
