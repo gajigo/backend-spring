@@ -16,7 +16,7 @@ public abstract class AbstractEntity {
 
     @Column(name = "created", nullable = false, updatable = false)
     @CreatedDate
-    protected LocalDateTime created;
+    private LocalDateTime created;
 
     @Column(name = "updated", insertable = false)
     @LastModifiedDate
@@ -26,7 +26,7 @@ public abstract class AbstractEntity {
     private Boolean removed;
 
     @Column(name = "removeDate")
-    protected LocalDateTime removeDate;
+    private LocalDateTime removeDate;
 
     @PrePersist
     public void create() {
