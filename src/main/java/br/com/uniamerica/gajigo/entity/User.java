@@ -75,6 +75,4 @@ public class User extends AbstractDescribable {
         this(username, password, name, description, email);
         this.setAdmin(isAdmin);
     }
-
-
 }

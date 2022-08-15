@@ -15,11 +15,11 @@ public class UserRepositoryTest extends AbstractRepositoryTest {
         User a = new User("UnitTestingUser", "asdfsafpass",
                           "Unit Testing User", "User for Testing",
                           "fake@test.com", true);
-        entityManager.persistAndFlush(a);
+        this.entityManager.persistAndFlush(a);
 
         // When
-        User findA = repository.findFirstByUsername("UnitTestingUser");
-        User findNull = repository.findFirstByUsername("NullUser");
+        User findA = this.repository.findFirstByUsername("UnitTestingUser");
+        User findNull = this.repository.findFirstByUsername("NullUser");
 
         // Then
         assertNull(findNull);
@@ -34,9 +34,9 @@ public class UserRepositoryTest extends AbstractRepositoryTest {
     public void testInsertUser() {
         User user = new User("eduardo123", "minhasenha123", "eduardo de souza magalhaes");
         user.setEmail("eduardo@gmail.com");
-        repository.save(user);
+        this.repository.save(user);
 
-        assertEquals(1, repository.findAll().size());
+        assertEquals(1, this.repository.count());
     }
 
     @Test
