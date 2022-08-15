@@ -45,11 +45,12 @@ public class UserRepositoryTest extends AbstractRepositoryTest {
         user.setEmail("eduardo@gmail.com");
         user = this.repository.save(user);
 
-        assertEquals(user.getUsername(), "eduardo123");
-
+        assertEquals("eduardo123", user.getUsername());
         user.setUsername("teste123");
         user = this.repository.save(user);
 
-        assertEquals(user.getUsername(), "teste123");
+        assertEquals("teste123", user.getUsername());
     }
+
+
 }
