@@ -1,10 +1,8 @@
 package br.com.uniamerica.gajigo.entity;
-
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -28,7 +26,7 @@ public abstract class AbstractEntity {
     private Boolean removed;
 
     @Column(name = "removeDate")
-    protected LocalDateTime removeDate;
+    private LocalDateTime removeDate;
 
     @PrePersist
     public void create() {

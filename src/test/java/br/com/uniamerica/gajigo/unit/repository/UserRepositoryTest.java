@@ -1,5 +1,4 @@
 package br.com.uniamerica.gajigo.unit.repository;
-
 import br.com.uniamerica.gajigo.entity.User;
 import br.com.uniamerica.gajigo.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -16,11 +15,11 @@ public class UserRepositoryTest extends AbstractRepositoryTest {
         User a = new User("UnitTestingUser", "asdfsafpass",
                           "Unit Testing User", "User for Testing",
                           "fake@test.com", true);
-        entityManager.persistAndFlush(a);
+        this.entityManager.persistAndFlush(a);
 
         // When
-        User findA = repository.findFirstByUsername("UnitTestingUser");
-        User findNull = repository.findFirstByUsername("NullUser");
+        User findA = this.repository.findFirstByUsername("UnitTestingUser");
+        User findNull = this.repository.findFirstByUsername("NullUser");
 
         // Then
         assertNull(findNull);
@@ -35,9 +34,10 @@ public class UserRepositoryTest extends AbstractRepositoryTest {
     public void testInsertUser() {
         User user = new User("eduardo123", "minhasenha123", "eduardo de souza magalhaes");
         user.setEmail("eduardo@gmail.com");
-        repository.save(user);
 
-        assertEquals(1, repository.findAll().size());
+        this.repository.save(user);
+
+        assertEquals(1, this.repository.count());
     }
 
     @Test
@@ -46,14 +46,13 @@ public class UserRepositoryTest extends AbstractRepositoryTest {
         user.setEmail("eduardo@gmail.com");
         user = this.repository.save(user);
 
-        assertEquals(user.getUsername(), "eduardo123");
-
+        assertEquals("eduardo123", user.getUsername());
         user.setUsername("teste123");
-        user = this.repository.save(user);
-
-        assertEquals(user.getUsername(), "teste123");
+        user = this.repository.save(user); 
+        
+        assertEquals("teste123", user.getUsername());
     }
-
+    
     @Test
     public void testDeleteUser() {
         User user = new User("eduardo123", "minhasenha123", "eduardo de souza magalhaes");
@@ -62,8 +61,6 @@ public class UserRepositoryTest extends AbstractRepositoryTest {
 
         this.repository.delete(user);
 
-        int size = this.repository.findAll().size();
-
-        assertEquals(size, 0);
+        assertEquals(0, this.repository.count());
     }
 }
