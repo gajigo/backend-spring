@@ -40,6 +40,6 @@ public class LectureRepositoryTest extends AbstractRepositoryTest{
 
         lectureRepository.save(lecture);
 
-        assertEquals(1, lectureRepository.findAll().size());
+        assertEquals(1, lectureRepository.count());
     }
 }
