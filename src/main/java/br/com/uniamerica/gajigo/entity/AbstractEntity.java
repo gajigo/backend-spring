@@ -28,6 +28,10 @@ public abstract class AbstractEntity {
     @Column(name = "removeDate")
     private LocalDateTime removeDate;
 
+    public boolean isActive() {
+        return this.removeDate != null;
+    }
+
     @PrePersist
     public void create() {
         this.created = LocalDateTime.now();
