@@ -55,4 +55,11 @@ public abstract class AbstractIntegrationTest {
                 .content(json))
                 .andDo(print());
     }
+
+    ResultActions put(String path, String json) throws Exception {
+        return this.mockMvc.perform(MockMvcRequestBuilders.put(path)
+                        .contentType("application/json")
+                        .content(json))
+                .andDo(print());
+    }
 }
