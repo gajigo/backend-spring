@@ -1,4 +1,5 @@
 package br.com.uniamerica.gajigo.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -28,6 +29,7 @@ public abstract class AbstractEntity {
     @Column(name = "removeDate")
     private LocalDateTime removeDate;
 
+    @JsonIgnore
     public boolean isActive() {
         return this.removeDate != null;
     }
