@@ -42,4 +42,30 @@ public class LectureRepositoryTest extends AbstractRepositoryTest{
 
         assertEquals(1, lectureRepository.count());
     }
+
+    @Test
+    public void testLectureDelete(){
+        User user = new User("username", "password", "name");
+        user.setEmail("email@email.com");
+        userRepository.save(user);
+
+        Event event = new Event("new event",
+                "a new event",
+                EventStatus.EventPostponed,
+                AttendanceMode.Online);
+        event.setOwner(user);
+        eventRepository.save(event);
+
+        Lecture lecture = new Lecture("new lecture",
+                "a new lecture",
+                event);
+        lecture.setAttendanceMode(AttendanceMode.Online);
+
+        lectureRepository.save(lecture);
+
+        lectureRepository.delete(lecture);
+
+        assertEquals(0, lectureRepository.count());
+    }
+
 }
