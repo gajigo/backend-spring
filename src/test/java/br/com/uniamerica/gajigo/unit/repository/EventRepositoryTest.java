@@ -30,17 +30,45 @@ public class EventRepositoryTest  extends AbstractRepositoryTest{
                 EventStatus.EventPostponed,
                 AttendanceMode.Online);
         event.setOwner(user);
-        eventRepository.save(event);
-        assertEquals(1, eventRepository.findAll().size());
+        this.eventRepository.save(event);
+        assertEquals(1, this.eventRepository.findAll().size());
     }
 
     @Test
     public void testEventUpdate() {
+        User user = new User("eduardo123", "minhasenha123", "eduardo de souza magalhaes");
+        user.setEmail("eduardo@gmail.com");
+        user = this.userRepository.save(user);
 
+        Event event = new Event(
+                "novo evento",
+                "descricao do evento",
+                EventStatus.EventPostponed,
+                AttendanceMode.Online);
+        event.setOwner(user);
+        event = eventRepository.save(event);
+        event.setName("outro nome");
+        this.eventRepository.save(event);
+
+        assertEquals("outro nome", this.eventRepository.findById(event.getId()).get().getName());
+        assertNotEquals("novo evento", this.eventRepository.findById(event.getId()).get().getName());
     }
 
     @Test
     public void testEventDelete() {
+        User user = new User("eduardo123", "minhasenha123", "eduardo de souza magalhaes");
+        user.setEmail("eduardo@gmail.com");
+        user = this.userRepository.save(user);
 
+        Event event = new Event(
+                "novo evento",
+                "descricao do evento",
+                EventStatus.EventPostponed,
+                AttendanceMode.Online);
+        event.setOwner(user);
+        event = this.eventRepository.save(event);
+        this.eventRepository.delete(event);
+
+        assertEquals(0, this.eventRepository.count());
     }
 }

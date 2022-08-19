@@ -9,10 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -48,7 +45,16 @@ public abstract class AbstractIntegrationTest {
         return this.mockMvc.perform(MockMvcRequestBuilders.get(path).accept("application/json"))
                 .andDo(print());
     }
+    ResultActions getById(String path, Long id) throws Exception {
+        return this.mockMvc.perform(MockMvcRequestBuilders.get(path + "/" + id).accept("application/json"))
+                .andDo(print());
+    }
 
+    ResultActions delete(String path, Long id) throws Exception {
+        return this.mockMvc.perform(MockMvcRequestBuilders.delete(path + "/" + id)
+                        .accept("application/json"))
+                        .andDo(print());
+    }
     ResultActions post(String path, String json) throws Exception {
         return this.mockMvc.perform(MockMvcRequestBuilders.post(path)
                 .contentType("application/json")
@@ -56,10 +62,18 @@ public abstract class AbstractIntegrationTest {
                 .andDo(print());
     }
 
-    ResultActions put(String path, String json) throws Exception {
-        return this.mockMvc.perform(MockMvcRequestBuilders.put(path)
+    ResultActions put(String path, Long id, String json) throws Exception {
+        return this.mockMvc
+                .perform(MockMvcRequestBuilders.put(path + "/" + id)
                         .contentType("application/json")
                         .content(json))
-                .andDo(print());
+                        .andDo(print());
+    }
+
+    ResultActions disable(String path, Long id, String json) throws Exception {
+        return this.mockMvc.perform(MockMvcRequestBuilders.patch(path + "/" + id)
+                        .contentType("application/json")
+                        .content(json))
+                        .andDo(print());
     }
 }
