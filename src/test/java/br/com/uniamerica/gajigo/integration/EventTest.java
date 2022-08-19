@@ -45,7 +45,32 @@ public class EventTest extends AbstractIntegrationTest {
                 "}";
         post(path, json).andExpect(status().is2xxSuccessful());
     }
+    @Test
+    public void testFindById() throws Exception {
+        String json = "\n" +
+                "{\n" +
+                "    \"name\": \"eduardo\",\n" +
+                "    \"email\":\"eduardo@gmail.com\",\n" +
+                "    \"username\": \"eduardo.sm\",\n" +
+                "    \"password\": \"123\"\n" +
+                "}";
 
+        String caminho = "http://localhost:8080/api/users";
+        post(caminho, json).andExpect(status().is2xxSuccessful());
+
+        json = "{\n" +
+                "    \"name\": \"eduardo\",\n" +
+                "    \"attendanceMode\": \"Online\",\n" +
+                "    \"interval\": {\n" +
+                "        \"startDate\": \"2023-07-15T00:00:00\",\n" +
+                "        \"endDate\": \"2023-07-25T00:00:00\"\n" +
+                "    },\n" +
+                "    \"owner\": \"http://localhost:8080/api/users/1\"\n" +
+                "}";
+        post(path, json).andExpect(status().is2xxSuccessful());
+
+        getById(path, 1L).andExpect(status().is2xxSuccessful());
+    }
     @Test
     public void testFindAll() throws Exception {
         String json = "\n" +
