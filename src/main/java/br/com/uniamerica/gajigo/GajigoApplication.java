@@ -1,9 +1,6 @@
 package br.com.uniamerica.gajigo;
 
-import br.com.uniamerica.gajigo.entity.User;
-import br.com.uniamerica.gajigo.repository.UserRepository;
 import br.com.uniamerica.gajigo.validator.*;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
