@@ -1,16 +1,27 @@
 package br.com.uniamerica.gajigo;
 
+import br.com.uniamerica.gajigo.entity.User;
+import br.com.uniamerica.gajigo.repository.UserRepository;
 import br.com.uniamerica.gajigo.validator.*;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.rest.core.event.ValidatingRepositoryEventListener;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.Validator;
 
 @SpringBootApplication
 public class GajigoApplication implements RepositoryRestConfigurer {
     public static void main(String[] args) {
         SpringApplication.run(GajigoApplication.class, args);
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Override
