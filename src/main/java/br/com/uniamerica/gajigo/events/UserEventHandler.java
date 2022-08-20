@@ -6,6 +6,7 @@ import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.HandleBeforeSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.Assert;
 
 import java.util.logging.Logger;
 
@@ -27,8 +28,10 @@ public class UserEventHandler {
     }
 
     private void beforeSaveUser(User user) {
-        user.setPassword(
-                passwordEncoder.encode(user.getPassword())
-        );
+        if (user.getPassword() != null) {
+            user.setPassword(
+                    passwordEncoder.encode(user.getPassword())
+            );
+        }
     }
 }
