@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -45,6 +46,8 @@ public class AppUser implements UserDetails {
     public static AppUser build(final User user) {
         // TODO: Implementation needed
         final Set<GrantedAuthority> grantedAuthoritySet = new HashSet<>();
+        grantedAuthoritySet.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+
 
         AppUser currentUser = new AppUser();
         currentUser.setName(user.getName());
