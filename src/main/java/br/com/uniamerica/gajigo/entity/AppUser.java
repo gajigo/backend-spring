@@ -48,8 +48,8 @@ public class AppUser implements UserDetails {
 
         AppUser currentUser = new AppUser();
         currentUser.setName(user.getName());
-        currentUser.setUsername(user.getEmail());
         currentUser.setActive(user.isActive());
+        currentUser.setUsername(user.getUsername());
         currentUser.setPassword(user.getPassword());
         currentUser.setAuthorities(grantedAuthoritySet);
 
