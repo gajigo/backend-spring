@@ -31,7 +31,7 @@ public abstract class AbstractEntity {
 
     @JsonIgnore
     public boolean isActive() {
-        return this.removeDate != null;
+        return this.removeDate == null;
     }
 
     @PrePersist
