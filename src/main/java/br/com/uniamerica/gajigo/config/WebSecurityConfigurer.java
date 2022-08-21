@@ -2,6 +2,7 @@ package br.com.uniamerica.gajigo.config;
 
 import br.com.uniamerica.gajigo.filter.AuthenticationFilter;
 import br.com.uniamerica.gajigo.filter.AuthorizationFilter;
+import br.com.uniamerica.gajigo.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +28,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
     @Autowired
-    private final UserDetailsService userDetailsService;
+    private final AuthenticationService authenticationService;
 
     @Bean
     @Override
@@ -51,8 +52,8 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(this.userDetailsService)
                 .passwordEncoder(this.passwordEncoder);
+        auth.userDetailsService(this.authenticationService)
     }
 
 }
