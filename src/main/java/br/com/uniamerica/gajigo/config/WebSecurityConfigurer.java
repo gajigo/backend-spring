@@ -14,9 +14,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.springframework.http.HttpMethod.GET;
 
@@ -26,9 +30,18 @@ import static org.springframework.http.HttpMethod.GET;
 @RequiredArgsConstructor
 public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
-    private final PasswordEncoder passwordEncoder;
     @Autowired
     private final AuthenticationService authenticationService;
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        String defaultEncoding = "bcrypt";
+        Map<String, PasswordEncoder> encoders = new HashMap<>();
+        encoders.put(defaultEncoding, new BCryptPasswordEncoder());
+
+        return new DelegatingPasswordEncoder(defaultEncoding, encoders);
+    }
+
 
     @Bean
     @Override
@@ -52,8 +65,8 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-                .passwordEncoder(this.passwordEncoder);
         auth.userDetailsService(this.authenticationService)
+                .passwordEncoder(passwordEncoder());
     }
 
 }
