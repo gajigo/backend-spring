@@ -32,15 +32,28 @@ public class EventTest extends AbstractIntegrationTest {
     }
     @Test
     public void testInsert() throws Exception  {
-
+        String createuser =  "\n" +
+                "{\n" +
+                "    \"name\": \"eduardo\",\n" +
+                "    \"email\":\"inserttest@gmail.com\",\n" +
+                "    \"username\": \"testInsert.sm\",\n" +
+                "    \"password\": \"123\"\n" +
+                "}";
         String caminho = "http://localhost:8080/api/users";
-        post(caminho, createUser()).andExpect(status().is2xxSuccessful());
+        post(caminho, createuser).andExpect(status().is2xxSuccessful());
         post(path, createEvent()).andExpect(status().is2xxSuccessful());
     }
     @Test
     public void testFindById() throws Exception {
+        String createuser =  "\n" +
+                "{\n" +
+                "    \"name\": \"eduardo\",\n" +
+                "    \"email\":\"testfindbyid@gmail.com\",\n" +
+                "    \"username\": \"testFindById.sm\",\n" +
+                "    \"password\": \"123\"\n" +
+                "}";
         String caminho = "http://localhost:8080/api/users";
-        post(caminho, createUser()).andExpect(status().is2xxSuccessful());
+        post(caminho, createuser).andExpect(status().is2xxSuccessful());
         post(path, createEvent()).andExpect(status().is2xxSuccessful());
         getById(path, 1L).andExpect(status().is2xxSuccessful());
     }
@@ -54,8 +67,15 @@ public class EventTest extends AbstractIntegrationTest {
 
     @Test
     public void testUpdate() throws Exception {
+        String createuser =  "\n" +
+                "{\n" +
+                "    \"name\": \"eduardo\",\n" +
+                "    \"email\":\"testeupdate@gmail.com\",\n" +
+                "    \"username\": \"testUpdate.sm\",\n" +
+                "    \"password\": \"123\"\n" +
+                "}";
         String caminho = "http://localhost:8080/api/users";
-        post(caminho, createUser()).andExpect(status().is2xxSuccessful());
+        post(caminho, createuser).andExpect(status().is2xxSuccessful());
         post(path, createEvent()).andExpect(status().is2xxSuccessful());
         String json = "{\n" +
                 "    \"name\": \"Novo Nome\",\n" +
@@ -72,16 +92,30 @@ public class EventTest extends AbstractIntegrationTest {
 
     @Test
     public void testDelete() throws Exception{
+        String createuser =  "\n" +
+                "{\n" +
+                "    \"name\": \"eduardo\",\n" +
+                "    \"email\":\"testDelete@gmail.com\",\n" +
+                "    \"username\": \"testDelete.sm\",\n" +
+                "    \"password\": \"123\"\n" +
+                "}";
         String caminho = "http://localhost:8080/api/users";
-        post(caminho, createUser()).andExpect(status().is2xxSuccessful());
+        post(caminho, createuser).andExpect(status().is2xxSuccessful());
         post(path, createEvent()).andExpect(status().is2xxSuccessful());
         delete(path, 1L).andExpect(status().is2xxSuccessful());
     }
 
     @Test
     public void testDisable() throws Exception {
+        String createuser =  "\n" +
+                "{\n" +
+                "    \"name\": \"eduardo\",\n" +
+                "    \"email\":\"testDisable@gmail.com\",\n" +
+                "    \"username\": \"testDisable.sm\",\n" +
+                "    \"password\": \"123\"\n" +
+                "}";
         String caminho = "http://localhost:8080/api/users";
-        post(caminho, createUser()).andExpect(status().is2xxSuccessful());
+        post(caminho, createuser).andExpect(status().is2xxSuccessful());
         post(path, createEvent()).andExpect(status().is2xxSuccessful());
         String json = "{\n" +
                 "    \"removed\": true\n" +
