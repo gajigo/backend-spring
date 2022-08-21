@@ -13,12 +13,26 @@ public class UserTest extends AbstractIntegrationTest {
 
     @Test
     public void testInsert() throws Exception {
-        post(path, createdUser()).andExpect(status().is2xxSuccessful());
+        String createUser = "\n" +
+                "{\n" +
+                "    \"name\": \"eduardo\",\n" +
+                "    \"email\":\"testInsertuser@gmail.com\",\n" +
+                "    \"username\": \"testInsertuser.sm\",\n" +
+                "    \"password\": \"123\"\n" +
+                "}";
+        post(path, createUser).andExpect(status().is2xxSuccessful());
     }
 
     @Test
     public void testUpdate() throws Exception {
-        post(path, createdUser()).andExpect(status().is2xxSuccessful());
+        String createUser = "\n" +
+                "{\n" +
+                "    \"name\": \"eduardo\",\n" +
+                "    \"email\":\"testUpdateuser@gmail.com\",\n" +
+                "    \"username\": \"testUpdateuser.sm\",\n" +
+                "    \"password\": \"123\"\n" +
+                "}";
+        post(path, createUser).andExpect(status().is2xxSuccessful());
 
         String json = "{\n" +
                 "    \"name\": \"Novo Nome\",\n" +
@@ -31,7 +45,14 @@ public class UserTest extends AbstractIntegrationTest {
     }
     @Test
     public void testDisable() throws Exception {
-        post(path, createdUser()).andExpect(status().is2xxSuccessful());
+        String createUser = "\n" +
+                "{\n" +
+                "    \"name\": \"eduardo\",\n" +
+                "    \"email\":\"testDisableuser@gmail.com\",\n" +
+                "    \"username\": \"testDisable.sm\",\n" +
+                "    \"password\": \"123\"\n" +
+                "}";
+        post(path, createUser).andExpect(status().is2xxSuccessful());
 
         String json = "{\n" +
                 "    \"removed\": true\n" +
@@ -39,24 +60,28 @@ public class UserTest extends AbstractIntegrationTest {
         disable(path, 1L, json).andExpect(status().is2xxSuccessful());
     }
 
-    public String createdUser() {
-        return "\n" +
-                "{\n" +
-                "    \"name\": \"eduardo\",\n" +
-                "    \"email\":\"eduardo@gmail.com\",\n" +
-                "    \"username\": \"eduardo.sm\",\n" +
-                "    \"password\": \"123\"\n" +
-                "}";
-    }
-
     @Test
     public void testFindById() throws Exception {
-        post(path, createdUser()).andExpect(status().is2xxSuccessful());
+        String createUser = "\n" +
+                "{\n" +
+                "    \"name\": \"eduardo\",\n" +
+                "    \"email\":\"testFindById@gmail.com\",\n" +
+                "    \"username\": \"testFindById.sm\",\n" +
+                "    \"password\": \"123\"\n" +
+                "}";
+        post(path, createUser).andExpect(status().is2xxSuccessful());
         getById(path, 1L);
     }
     @Test
     public void testFindAll() throws Exception {
-        post(path, createdUser()).andExpect(status().is2xxSuccessful());
+        String createUser = "\n" +
+                "{\n" +
+                "    \"name\": \"eduardo\",\n" +
+                "    \"email\":\"testFindAll@gmail.com\",\n" +
+                "    \"username\": \"testFindAll.sm\",\n" +
+                "    \"password\": \"123\"\n" +
+                "}";
+        post(path, createUser).andExpect(status().is2xxSuccessful());
         get(path).andExpect(status().is2xxSuccessful());
     }
 }
