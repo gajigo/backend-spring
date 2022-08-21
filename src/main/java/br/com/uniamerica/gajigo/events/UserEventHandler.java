@@ -5,17 +5,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.HandleBeforeSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.util.Assert;
-
-import java.util.logging.Logger;
 
 @RepositoryEventHandler
 @RequiredArgsConstructor
 @SuppressWarnings("unused")
 public class UserEventHandler {
-
-    private final PasswordEncoder passwordEncoder;
 
     @HandleBeforeSave
     public void handleUserBeforeSave(User user) {
@@ -28,10 +22,6 @@ public class UserEventHandler {
     }
 
     private void beforeSaveUser(User user) {
-        if (user.getPassword() != null) {
-            user.setPassword(
-                    passwordEncoder.encode(user.getPassword())
-            );
-        }
+        // TODO: Changes needed before saving
     }
 }

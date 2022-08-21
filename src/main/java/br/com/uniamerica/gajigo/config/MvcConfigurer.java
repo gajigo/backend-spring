@@ -5,7 +5,6 @@ import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class MvcConfigurer {
@@ -16,7 +15,7 @@ public class MvcConfigurer {
     }
 
     @Bean
-    UserEventHandler userEventHandler(PasswordEncoder passwordEncoder) {
-        return new UserEventHandler(passwordEncoder);
+    UserEventHandler userEventHandler() {
+        return new UserEventHandler();
     }
 }
