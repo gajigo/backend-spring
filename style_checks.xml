@@ -68,6 +68,7 @@
     <!-- See https://checkstyle.org/config_sizes.html -->
     <module name="FileLength"/>
     <module name="LineLength">
+        <property name="max" value="120"/>
         <property name="fileExtensions" value="java"/>
     </module>
 
@@ -102,7 +103,6 @@
         <!-- See https://checkstyle.org/config_naming.html -->
         <module name="LocalFinalVariableName"/>
         <module name="LocalVariableName"/>
-        <module name="MemberName"/>
         <module name="MethodName"/>
         <module name="PackageName"/>
         <module name="ParameterName"/>
