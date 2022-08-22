@@ -32,14 +32,14 @@ public class LectureValidator extends AbstractValidator<Lecture> {
     private void validateEvent(Lecture lecture, Errors errors) {
         Event event = lecture.getEvent();
         if (!validateNull("event", event,
-                         "Lecture must belong to an event!", errors)) {
+                "Lecture must belong to an event!", errors)) {
             // Cannot do any more validations if the field is null
             return;
         }
 
         if (event.getStatus() == EventStatus.EventCancelled) {
             errors.rejectValue("event", "event.cancelled",
-                               "Lecture cannot be part of a cancelled event!");
+                    "Lecture cannot be part of a cancelled event!");
         }
     }
 
@@ -58,8 +58,8 @@ public class LectureValidator extends AbstractValidator<Lecture> {
         AttendanceMode eventMode = lecture.getEvent().getAttendanceMode();
         if (eventMode != AttendanceMode.Mixed && mode != eventMode) {
             errors.rejectValue("attendanceMode", "attendanceMode.conflictsWithEvent",
-                               "Lecture Attendance Mode does not match mode of its Event! " +
-                                       "Expected attendanceMode = " + eventMode.name());
+                    "Lecture Attendance Mode does not match mode of its Event! " +
+                            "Expected attendanceMode = " + eventMode.name());
         }
     }
 
@@ -75,7 +75,7 @@ public class LectureValidator extends AbstractValidator<Lecture> {
         }
 
         if (!validateNull("interval", interval.getStartDate(), errors) | // One | because we dont want short circuiting
-            !validateNull("interval", interval.getEndDate(), errors)) {
+                !validateNull("interval", interval.getEndDate(), errors)) {
             return;
         }
 
@@ -89,9 +89,9 @@ public class LectureValidator extends AbstractValidator<Lecture> {
 
         if (!eventInterval.hasInside(interval)) {
             errors.rejectValue("interval", "date.outsideEventDate",
-                               "Lecture startDate and endDate must be completely contained inside its event!" +
-                                       "\nExpected startDate after " + eventInterval.getStartDate() +
-                                       " and endDate before " + eventInterval.getEndDate() + ".");
+                    "Lecture startDate and endDate must be completely contained inside its event!" +
+                            "\nExpected startDate after " + eventInterval.getStartDate() +
+                            " and endDate before " + eventInterval.getEndDate() + ".");
         }
 
         // Creation time only validations
@@ -107,7 +107,7 @@ public class LectureValidator extends AbstractValidator<Lecture> {
         Set<User> speakers = lecture.getSpeakers();
         if (speakers == null || speakers.size() == 0) {
             errors.rejectValue("speakers", "speakers.empty",
-                               "Lecture must have at least one speaker!");
+                    "Lecture must have at least one speaker!");
         }
     }
 
@@ -119,7 +119,7 @@ public class LectureValidator extends AbstractValidator<Lecture> {
         } else if (room == null) {
             // Complain if mode isn't online and there isn't a room set
             errors.rejectValue("room", "room.null",
-                               "Lecture with Mixed or Offline Attendance Mode should have a room!");
+                    "Lecture with Mixed or Offline Attendance Mode should have a room!");
         } else {
             // When room isn't null and attendance mode is Offline or Mixed
             Set<Lecture> roomLectures = room.getLectures();

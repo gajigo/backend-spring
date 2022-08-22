@@ -8,7 +8,8 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 
 @MappedSuperclass
-@Getter @Setter
+@Getter
+@Setter
 public abstract class AbstractDescribable extends AbstractEntity {
     @NotNull(message = "Please enter a name!")
     @Column(name = "name", nullable = false)

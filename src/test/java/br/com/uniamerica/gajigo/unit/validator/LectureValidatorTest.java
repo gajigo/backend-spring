@@ -7,7 +7,8 @@ import org.springframework.validation.Errors;
 
 import java.util.HashSet;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LectureValidatorTest extends AbstractValidatorTest<Lecture> {
     public LectureValidatorTest() {
@@ -39,7 +40,7 @@ public class LectureValidatorTest extends AbstractValidatorTest<Lecture> {
         User user = new UserValidatorTest().validObject();
         Room room = new RoomValidatorTest().validObject();
         Interval interval = new Interval(event.getInterval().getStartDate().plusDays(1),
-                                         event.getInterval().getEndDate().minusDays(2));
+                event.getInterval().getEndDate().minusDays(2));
 
         lecture.setSpeakers(new HashSet<>());
         lecture.getSpeakers().add(user);

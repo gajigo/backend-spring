@@ -10,9 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -51,8 +49,8 @@ public abstract class AbstractIntegrationTest {
 
     ResultActions post(String path, String json) throws Exception {
         return this.mockMvc.perform(MockMvcRequestBuilders.post(path)
-                .contentType("application/json")
-                .content(json))
+                        .contentType("application/json")
+                        .content(json))
                 .andDo(print());
     }
 }

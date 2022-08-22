@@ -67,7 +67,7 @@ public abstract class AbstractValidator<T> implements Validator {
             builder.append(StringUtils.capitalize(s) + " ");
         }
 
-        builder.setLength(builder.length()-1);
+        builder.setLength(builder.length() - 1);
         return builder.toString();
     }
 

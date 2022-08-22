@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.HashSet;
@@ -14,7 +15,8 @@ import java.util.Set;
 @Table(schema = "public", name = "users")
 @Where(clause = "removed IS null")
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class User extends AbstractDescribable {
     @Column(name = "admin", nullable = false)
     private boolean admin; // boolean is false by default

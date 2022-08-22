@@ -1,6 +1,5 @@
 package br.com.uniamerica.gajigo.unit.validator;
 
-import br.com.uniamerica.gajigo.entity.City;
 import br.com.uniamerica.gajigo.entity.Document;
 import br.com.uniamerica.gajigo.entity.User;
 import br.com.uniamerica.gajigo.validator.DocumentValidator;
@@ -9,7 +8,8 @@ import org.springframework.validation.Errors;
 
 import java.util.HashSet;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DocumentValidatorTest extends AbstractValidatorTest<Document> {
     public DocumentValidatorTest() {

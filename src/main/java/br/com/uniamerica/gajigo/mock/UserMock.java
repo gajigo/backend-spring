@@ -65,7 +65,7 @@ public class UserMock extends AbstractMock<User> {
             builder.append(".");
         }
 
-        builder.setLength(builder.length()-1);
+        builder.setLength(builder.length() - 1);
         builder.append("-");
         builder.append(randomNum(2));
 

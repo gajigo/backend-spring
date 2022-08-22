@@ -1,12 +1,12 @@
 package br.com.uniamerica.gajigo.unit.validator;
 
-import br.com.uniamerica.gajigo.entity.City;
 import br.com.uniamerica.gajigo.entity.Tag;
 import br.com.uniamerica.gajigo.validator.TagValidator;
 import org.junit.jupiter.api.Test;
 import org.springframework.validation.Errors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TagValidatorTest extends AbstractValidatorTest<Tag> {
     public TagValidatorTest() {

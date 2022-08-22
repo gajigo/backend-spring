@@ -10,7 +10,8 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 @Embeddable
 public class Interval {
     /*
@@ -27,17 +28,18 @@ public class Interval {
     }
 
     public IntervalRelation getRelation(Interval b) {
-        if (startDate.isAfter(b.endDate))  return IntervalRelation.After;
+        if (startDate.isAfter(b.endDate)) return IntervalRelation.After;
         if (endDate.isBefore(b.startDate)) return IntervalRelation.Before;
-        if (endDate.isEqual(b.startDate))  return IntervalRelation.EndTouching;
-        if (startDate.isEqual(b.endDate))  return IntervalRelation.StartTouching;
-        if (startDate.isEqual(b.startDate)  && endDate.isEqual(b.endDate))  return IntervalRelation.ExactMatch;
-        if (startDate.isAfter(b.startDate)  && endDate.isBefore(b.endDate)) return IntervalRelation.Inside;
-        if (startDate.isAfter(b.startDate)  && endDate.isEqual(b.endDate))  return IntervalRelation.InsideEndTouching;
-        if (startDate.isBefore(b.startDate) && endDate.isAfter(b.endDate))  return IntervalRelation.Enclosing;
-        if (startDate.isBefore(b.startDate) && endDate.isEqual(b.endDate))  return IntervalRelation.EnclosingEndTouching;
-        if (startDate.isEqual(b.startDate)  && endDate.isAfter(b.endDate))  return IntervalRelation.EnclosingStartTouching;
-        if (startDate.isEqual(b.startDate)  && endDate.isBefore(b.endDate)) return IntervalRelation.InsideStartTouching;
+        if (endDate.isEqual(b.startDate)) return IntervalRelation.EndTouching;
+        if (startDate.isEqual(b.endDate)) return IntervalRelation.StartTouching;
+        if (startDate.isEqual(b.startDate) && endDate.isEqual(b.endDate)) return IntervalRelation.ExactMatch;
+        if (startDate.isAfter(b.startDate) && endDate.isBefore(b.endDate)) return IntervalRelation.Inside;
+        if (startDate.isAfter(b.startDate) && endDate.isEqual(b.endDate)) return IntervalRelation.InsideEndTouching;
+        if (startDate.isBefore(b.startDate) && endDate.isAfter(b.endDate)) return IntervalRelation.Enclosing;
+        if (startDate.isBefore(b.startDate) && endDate.isEqual(b.endDate)) return IntervalRelation.EnclosingEndTouching;
+        if (startDate.isEqual(b.startDate) && endDate.isAfter(b.endDate))
+            return IntervalRelation.EnclosingStartTouching;
+        if (startDate.isEqual(b.startDate) && endDate.isBefore(b.endDate)) return IntervalRelation.InsideStartTouching;
         if (startDate.isBefore(b.startDate) && endDate.isBefore(b.endDate)) return IntervalRelation.EndInside;
         if (startDate.isBefore(b.endDate)) return IntervalRelation.StartInside;
         return null; // Unreachable
@@ -49,7 +51,7 @@ public class Interval {
 
     public boolean isAfterOrEqual(Interval b) {
         return isAfter(b) ||
-               getRelation(b) == IntervalRelation.StartTouching;
+                getRelation(b) == IntervalRelation.StartTouching;
     }
 
     public boolean isBefore(Interval b) {
@@ -58,7 +60,7 @@ public class Interval {
 
     public boolean isBeforeOrEqual(Interval b) {
         return isBefore(b) ||
-               getRelation(b) == IntervalRelation.EndTouching;
+                getRelation(b) == IntervalRelation.EndTouching;
     }
 
     public boolean isEqual(Interval b) {
@@ -75,9 +77,9 @@ public class Interval {
         IntervalRelation relation = getRelation(b);
 
         return isEnclosing(b) ||
-               relation == IntervalRelation.EnclosingStartTouching ||
-               relation == IntervalRelation.EnclosingEndTouching ||
-               relation == IntervalRelation.ExactMatch;
+                relation == IntervalRelation.EnclosingStartTouching ||
+                relation == IntervalRelation.EnclosingEndTouching ||
+                relation == IntervalRelation.ExactMatch;
     }
 
     public boolean isOverlapping(Interval b) {
@@ -86,11 +88,11 @@ public class Interval {
         IntervalRelation relation = getRelation(b);
 
         return hasInside(b) ||
-               relation == IntervalRelation.StartInside ||
-               relation == IntervalRelation.InsideStartTouching ||
-               relation == IntervalRelation.Inside ||
-               relation == IntervalRelation.InsideEndTouching ||
-               relation == IntervalRelation.EndInside;
+                relation == IntervalRelation.StartInside ||
+                relation == IntervalRelation.InsideStartTouching ||
+                relation == IntervalRelation.Inside ||
+                relation == IntervalRelation.InsideEndTouching ||
+                relation == IntervalRelation.EndInside;
     }
 
     public boolean isIntersecting(Interval b) {
@@ -104,7 +106,7 @@ public class Interval {
     }
 
     public long difference(LocalDateTime time) {
-        if (time.isBefore(startDate))   return ChronoUnit.MILLIS.between(time, startDate);
+        if (time.isBefore(startDate)) return ChronoUnit.MILLIS.between(time, startDate);
         else if (time.isAfter(endDate)) return ChronoUnit.MILLIS.between(time, endDate);
         else return 0;
     }

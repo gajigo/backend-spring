@@ -1,9 +1,5 @@
 package br.com.uniamerica.gajigo;
 
-import br.com.uniamerica.gajigo.entity.*;
-import br.com.uniamerica.gajigo.mock.CountryMock;
-import br.com.uniamerica.gajigo.mock.LanguageMock;
-import br.com.uniamerica.gajigo.mock.UserMock;
 import br.com.uniamerica.gajigo.repository.*;
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.jboss.logging.Logger;
@@ -118,7 +114,8 @@ public class MockDatabase {
                     } catch (Exception ignored) {}
                 }
                  */
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         };
     }
 }

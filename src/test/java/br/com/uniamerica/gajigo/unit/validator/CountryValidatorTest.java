@@ -1,19 +1,12 @@
 package br.com.uniamerica.gajigo.unit.validator;
 
-import br.com.uniamerica.gajigo.entity.City;
 import br.com.uniamerica.gajigo.entity.Country;
-import br.com.uniamerica.gajigo.entity.Country;
-import br.com.uniamerica.gajigo.entity.Event;
-import br.com.uniamerica.gajigo.unit.AbstractUnitTest;
-import br.com.uniamerica.gajigo.validator.AbstractValidator;
 import br.com.uniamerica.gajigo.validator.CountryValidator;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.core.ValidationErrors;
-import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CountryValidatorTest extends AbstractValidatorTest<Country> {
     public CountryValidatorTest() {

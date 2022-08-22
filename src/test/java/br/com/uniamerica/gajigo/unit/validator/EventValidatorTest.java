@@ -59,7 +59,7 @@ public class EventValidatorTest extends AbstractValidatorTest<Event> {
         City city = new CityValidatorTest().validObject();
         User user = new UserValidatorTest().validObject();
         Interval interval = new Interval(LocalDateTime.now().plusDays(1),
-                                   LocalDateTime.now().plusYears(1));
+                LocalDateTime.now().plusYears(1));
 
         event.setLocation(city);
         event.setOwner(user);

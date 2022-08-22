@@ -1,7 +1,6 @@
 package br.com.uniamerica.gajigo.validator;
 
 import br.com.uniamerica.gajigo.entity.Language;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.Errors;
 
 public class LanguageValidator extends AbstractValidator<Language> {

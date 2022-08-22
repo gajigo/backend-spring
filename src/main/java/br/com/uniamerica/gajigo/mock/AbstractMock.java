@@ -11,12 +11,14 @@ public abstract class AbstractMock<T> {
     protected Faker faker = new Faker();
 
     abstract T create();
+
     public List<T> create(int n) {
         ArrayList<T> entities = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             try {
                 entities.add(create());
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         }
 
         return entities;
