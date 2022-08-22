@@ -1,16 +1,14 @@
 package br.com.uniamerica.gajigo.entity;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-@Getter
-@Setter
+@Getter @Setter
 public abstract class AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +28,11 @@ public abstract class AbstractEntity {
 
     @Column(name = "removeDate")
     private LocalDateTime removeDate;
+
+    @JsonIgnore
+    public boolean isActive() {
+        return this.removeDate == null;
+    }
 
     @PrePersist
     public void create() {
