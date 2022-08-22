@@ -18,7 +18,8 @@ public class JsonDeserializers {
             ObjectCodec oc = jsonParser.getCodec();
             JsonNode node = oc.readTree(jsonParser);
             String rawPassword = node.asText();
-            PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+            PasswordEncoder passwordEncoder =
+                    PasswordEncoderFactories.createDelegatingPasswordEncoder();
             return passwordEncoder.encode(rawPassword);
         }
     }
