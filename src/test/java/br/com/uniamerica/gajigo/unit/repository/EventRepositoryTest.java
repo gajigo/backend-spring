@@ -8,8 +8,8 @@ import br.com.uniamerica.gajigo.repository.EventRepository;
 import br.com.uniamerica.gajigo.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import static org.junit.jupiter.api.Assertions.*;
 
+import static org.junit.jupiter.api.Assertions.*;
 
 public class EventRepositoryTest  extends AbstractRepositoryTest{
     @Autowired
