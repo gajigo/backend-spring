@@ -36,7 +36,7 @@ jobs:
     - name: Run check style
       uses: nikitasavinov/checkstyle-action@master
       with:
-        checkstyle_config: sun_checks.xml
+        checkstyle_config: style_checks.xml
         fail_on_error: true
         filter_mode: nofilter
         level: error
