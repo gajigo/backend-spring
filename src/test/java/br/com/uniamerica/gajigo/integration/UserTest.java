@@ -49,7 +49,7 @@ public class UserTest extends AbstractIntegrationTest {
         get(path).andExpect(content().string(containsString("John Doe")));
 
         mockMvc.perform( MockMvcRequestBuilders.delete("/api/users/{id}",1))
-                .andExpect(status().is2xxSuccessful());
+                .andExpect(status().isNoContent());
 
     }
 
