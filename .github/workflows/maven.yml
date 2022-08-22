@@ -38,4 +38,5 @@ jobs:
       with:
         checkstyle_config: sun_checks.xml
         fail_on_error: true
+        filter_mode: nofilter
         level: error
