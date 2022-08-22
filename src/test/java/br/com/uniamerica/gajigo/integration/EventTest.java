@@ -1,7 +1,6 @@
 package br.com.uniamerica.gajigo.integration;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

@@ -16,7 +16,7 @@ public abstract class AbstractEntity {
 
     @Column(name = "created", nullable = false, updatable = false)
     @CreatedDate
-    protected LocalDateTime created;
+    private LocalDateTime created;
 
     @Column(name = "updated", insertable = false)
     @LastModifiedDate

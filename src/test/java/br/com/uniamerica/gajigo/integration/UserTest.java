@@ -1,9 +1,6 @@
 package br.com.uniamerica.gajigo.integration;
 
-
 import org.junit.jupiter.api.Test;
-
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class UserTest extends AbstractIntegrationTest {
@@ -43,6 +40,7 @@ public class UserTest extends AbstractIntegrationTest {
                 "}";
         put(path,1L, json).andExpect(status().is2xxSuccessful());
     }
+
     @Test
     public void testDisable() throws Exception {
         String createUser = "\n" +
@@ -72,6 +70,7 @@ public class UserTest extends AbstractIntegrationTest {
         post(path, createUser).andExpect(status().is2xxSuccessful());
         getById(path, 1L);
     }
+
     @Test
     public void testFindAll() throws Exception {
         String createUser = "\n" +

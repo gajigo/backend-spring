@@ -48,8 +48,7 @@ public class UserRepositoryTest extends AbstractRepositoryTest {
 
         assertEquals("eduardo123", user.getUsername());
         user.setUsername("teste123");
-        user = this.repository.save(user); 
-        
+        user = this.repository.save(user);
         assertEquals("teste123", user.getUsername());
     }
     

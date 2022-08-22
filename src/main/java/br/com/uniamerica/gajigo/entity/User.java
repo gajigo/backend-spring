@@ -51,7 +51,6 @@ public class User extends AbstractDescribable {
     @ManyToMany(mappedBy = "speakers")
     private Set<Lecture> speaksIn = new HashSet<>();
 
-
     public User(String username, String password, String name) {
         super(name, "");
         this.username = username;
@@ -75,6 +74,4 @@ public class User extends AbstractDescribable {
         this(username, password, name, description, email);
         this.setAdmin(isAdmin);
     }
-
-
 }
