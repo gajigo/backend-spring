@@ -29,7 +29,6 @@ import static org.springframework.http.HttpMethod.GET;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
-
     @Autowired
     private final AuthenticationService authenticationService;
 
@@ -68,5 +67,4 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(this.authenticationService)
                 .passwordEncoder(passwordEncoder());
     }
-
 }
