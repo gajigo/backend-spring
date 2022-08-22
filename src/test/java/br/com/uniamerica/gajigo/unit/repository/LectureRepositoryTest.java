@@ -21,11 +21,9 @@ public class LectureRepositoryTest extends AbstractRepositoryTest{
     private LectureRepository lectureRepository;
 
     @Test
-    public void testLectureInsert(){
+    public void testLectureInsert() {
         User user = new User("username", "password", "name");
-
         user.setEmail("email@email.com");
-
         userRepository.save(user);
 
         Event event = new Event("new event",
@@ -33,26 +31,21 @@ public class LectureRepositoryTest extends AbstractRepositoryTest{
                 EventStatus.EventPostponed,
                 AttendanceMode.Online);
         event.setOwner(user);
-
         eventRepository.save(event);
 
         Lecture lecture = new Lecture("new lecture",
                 "a new lecture",
                 event);
-
         lecture.setAttendanceMode(AttendanceMode.Online);
-
         lectureRepository.save(lecture);
 
         assertEquals(1, lectureRepository.count());
     }
 
     @Test
-    public void testLectureDelete(){
+    public void testLectureDelete() {
         User user = new User("username", "password", "name");
-
         user.setEmail("email@email.com");
-
         userRepository.save(user);
 
         Event event = new Event("new event",
@@ -60,27 +53,22 @@ public class LectureRepositoryTest extends AbstractRepositoryTest{
                 EventStatus.EventPostponed,
                 AttendanceMode.Online);
         event.setOwner(user);
-
         eventRepository.save(event);
 
         Lecture lecture = new Lecture("new lecture",
                 "a new lecture",
                 event);
-
         lecture.setAttendanceMode(AttendanceMode.Online);
-
         lectureRepository.save(lecture);
-
         lectureRepository.delete(lecture);
 
         assertEquals(0, lectureRepository.count());
     }
+
     @Test
-    public void testLectureUpdate(){
+    public void testLectureUpdate() {
         User user = new User("username", "password", "name");
-
         user.setEmail("email@email.com");
-
         userRepository.save(user);
 
         Event event = new Event("new event",
@@ -88,19 +76,14 @@ public class LectureRepositoryTest extends AbstractRepositoryTest{
                 EventStatus.EventPostponed,
                 AttendanceMode.Online);
         event.setOwner(user);
-
         eventRepository.save(event);
 
         Lecture lecture = new Lecture("new lecture",
                 "a new lecture",
                 event);
-
         lecture.setAttendanceMode(AttendanceMode.Online);
-
         lectureRepository.save(lecture);
-
         lecture.setName("new name lecture");
-
         lectureRepository.save(lecture);
 
         assertEquals("new name lecture", lecture.getName());
