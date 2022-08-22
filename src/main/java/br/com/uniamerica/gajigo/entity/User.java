@@ -1,6 +1,8 @@
 package br.com.uniamerica.gajigo.entity;
 
+import br.com.uniamerica.gajigo.utils.JsonDeserializers;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -39,8 +41,9 @@ public class User extends AbstractDescribable {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password", nullable = false, length = 64)
+    @Column(name = "password", nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonDeserialize(using = JsonDeserializers.PasswordDeserializer.class)
     private String password;
 
     @Column(name = "telephone")
