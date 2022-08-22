@@ -16,8 +16,6 @@ public class EventTest extends AbstractIntegrationTest {
         super("events");
     }
 
-
-
     public String createUser() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode user = mapper.createObjectNode();
