@@ -40,6 +40,7 @@ public class User extends AbstractDescribable {
     private String email;
 
     @Column(name = "password", nullable = false, length = 64)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Column(name = "telephone")

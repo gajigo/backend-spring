@@ -42,9 +42,12 @@ public abstract class AbstractIntegrationTest {
     }
 
     ResultActions get(String path) throws Exception {
-        return this.mockMvc.perform(MockMvcRequestBuilders.get(path).accept("application/json"))
-                .andDo(print());
+        return this.mockMvc.perform(MockMvcRequestBuilders
+                        .get(path)
+                        .accept("application/json"))
+                        .andDo(print());
     }
+
     ResultActions getById(String path, Long id) throws Exception {
         return this.mockMvc.perform(MockMvcRequestBuilders.get(path + "/" + id).accept("application/json"))
                 .andDo(print());
@@ -55,6 +58,7 @@ public abstract class AbstractIntegrationTest {
                         .accept("application/json"))
                         .andDo(print());
     }
+
     ResultActions post(String path, String json) throws Exception {
         return this.mockMvc.perform(MockMvcRequestBuilders.post(path)
                 .contentType("application/json")
