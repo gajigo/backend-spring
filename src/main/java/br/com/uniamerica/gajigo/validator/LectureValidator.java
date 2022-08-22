@@ -134,7 +134,7 @@ public class LectureValidator extends AbstractValidator<Lecture> {
                                     "because another lecture is already scheduled during that period! " +
                                     "Lecture causing conflict takes place between " + roomLecture.getInterval()
                                     .getStartDate() + " and " + roomLecture.getInterval().getEndDate() + ".");
-                    break; // Optimization, assumes the lectures have already been verified to not be conflicting beforehand
+                    break;
                 }
             }
         }
