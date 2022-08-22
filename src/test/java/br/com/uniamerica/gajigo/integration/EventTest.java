@@ -39,6 +39,7 @@ public class EventTest extends AbstractIntegrationTest {
         event.put("owner", "http://localhost:8080/api/users/1");
         return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(event);
     }
+
     @Test
     @DirtiesContext
     public void testInsert() throws Exception  {
@@ -48,6 +49,7 @@ public class EventTest extends AbstractIntegrationTest {
         post(path, createEvent()).andExpect(status().is2xxSuccessful());
 
     }
+
     @Test
     @DirtiesContext
     public void testFindById() throws Exception {
@@ -56,6 +58,7 @@ public class EventTest extends AbstractIntegrationTest {
         post(path, createEvent()).andExpect(status().is2xxSuccessful());
         getById(path, 1L).andExpect(status().is2xxSuccessful());
     }
+
     @Test
     @DirtiesContext
     public void testFindAll() throws Exception {
