@@ -31,19 +31,5 @@ public class UserTest {
 
     }
 
-    @Autowired
-    private MockMvc mockMvc;
 
-    @MockBean
-    private UserRepository repository;
-
-    @Test
-    public void findAllUsers() throws Exception {
-        User user = new User("username", "password", "name", "fullstack dev", "email@email.com", true);
-        List<User> userList = List.of(user);
-        when(repository.findAll()).thenReturn(userList);
-        this.mockMvc.perform(get("/user"))
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("username")));
-    }
 }

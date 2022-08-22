@@ -2,6 +2,8 @@ package br.com.uniamerica.gajigo.integration;
 
 import br.com.uniamerica.gajigo.entity.User;
 import br.com.uniamerica.gajigo.repository.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -20,14 +22,24 @@ public class UserTest extends AbstractIntegrationTest {
         super("users");
     }
 
-    @MockBean
-    private UserRepository repository;
-
     @Test
     public void findAllUsers() throws Exception {
-        User user = new User("username", "password", "name", "fullstack dev", "email@email.com", true);
-        List<User> userList = List.of(user);
-        when(repository.findAll()).thenReturn(userList);
+        get(path).andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    public void postUser() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+                ObjectNode user = mapper.createObjectNode();
+        user.put("name", "John Doe");
+        user.put("email", "john.doe@example.com");
+        user.put("username", "JohnDoe");
+        user.put("password", "john.doe");
+
+        String json = mapper.writeValueAsString(user);
+
+        post(path,json).andExpect(status().isCreated());
+        get(path).andExpect(content().string(containsString("John Doe")));
 
     }
 }
