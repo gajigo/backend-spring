@@ -80,9 +80,11 @@ public abstract class AbstractIntegrationTest {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode object = mapper.createObjectNode();
         object.put("removed", true);
+        String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
+
         return this.mockMvc.perform(MockMvcRequestBuilders.patch(path + "/" + id)
                         .contentType("application/json")
-                        .content(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(object)))
+                        .content(json))
                         .andDo(print());
     }
 }
