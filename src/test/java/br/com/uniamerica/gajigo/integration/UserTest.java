@@ -33,9 +33,7 @@ public class UserTest extends AbstractIntegrationTest {
     @Test
     @DirtiesContext
     public void testUpdate() throws Exception {
-
         post(path, createUser()).andExpect(status().isCreated());
-
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode user = mapper.createObjectNode();
         user.put("name", "eduardo");
