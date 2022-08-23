@@ -1,5 +1,6 @@
 package br.com.uniamerica.gajigo.integration;
 
+import lombok.Getter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -11,9 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -23,13 +22,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WithMockUser(username = "admin", roles = "ADMIN")
 public abstract class AbstractIntegrationTest {
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     private int port = 8080;
     private String root = "http://localhost:" + port + "/api/";
 
     private String resource;
-    String path;
+
+    @Getter
+    private String path;
 
     public AbstractIntegrationTest(String resource) {
         this.resource = resource;
@@ -53,8 +54,8 @@ public abstract class AbstractIntegrationTest {
 
     ResultActions post(String path, String json) throws Exception {
         return this.mockMvc.perform(MockMvcRequestBuilders.post(path)
-                .contentType("application/json")
-                .content(json))
+                        .contentType("application/json")
+                        .content(json))
                 .andDo(print());
     }
 }

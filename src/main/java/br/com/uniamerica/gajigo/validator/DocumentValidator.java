@@ -24,7 +24,7 @@ public class DocumentValidator extends AbstractValidator<Document> {
         User user = document.getUser();
 
         validateNull("user", user,
-                     "Document must belong to an user!", errors);
+                "Document must belong to an user!", errors);
     }
 
     private void validateType(Document document, Errors errors) {
@@ -71,11 +71,14 @@ public class DocumentValidator extends AbstractValidator<Document> {
                 Boolean matches = pattern.matcher(value).find();
                 if (!matches) {
                     errors.rejectValue("value", "value.cpfinvalid",
-                                       "Provided CPF invalid! Expected mask: ddd.ddd.ddd-dd");
+                            "Provided CPF invalid! Expected mask: ddd.ddd.ddd-dd");
                 }
 
                 // TODO add checksum validation
                 break;
+            default:
+                errors.rejectValue("type", "value.typeunknown",
+                        "Provided Document Type is not known!");
         }
     }
 }

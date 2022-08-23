@@ -9,7 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-@Getter @Setter
+@Getter
+@Setter
 public abstract class AbstractMessage {
     @ManyToOne
     @JoinColumn(name = "sender_id")

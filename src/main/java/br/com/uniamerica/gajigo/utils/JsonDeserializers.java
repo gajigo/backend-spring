@@ -14,11 +14,13 @@ import java.io.IOException;
 @Slf4j
 public class JsonDeserializers {
     public static class PasswordDeserializer extends JsonDeserializer<String> {
-        public String deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
+        public String deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
+                throws IOException {
             ObjectCodec oc = jsonParser.getCodec();
             JsonNode node = oc.readTree(jsonParser);
             String rawPassword = node.asText();
-            PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+            PasswordEncoder passwordEncoder =
+                    PasswordEncoderFactories.createDelegatingPasswordEncoder();
             return passwordEncoder.encode(rawPassword);
         }
     }

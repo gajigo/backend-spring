@@ -29,6 +29,6 @@ public class CityValidator extends AbstractValidator<City> {
     private void validateState(City city, Errors errors) {
         State state = city.getState();
         validateNull("state", state,
-                     "City must belong to a state!", errors);
+                "City must belong to a state!", errors);
     }
 }

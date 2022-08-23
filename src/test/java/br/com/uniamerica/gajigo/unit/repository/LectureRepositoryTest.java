@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class LectureRepositoryTest extends AbstractRepositoryTest{
+public class LectureRepositoryTest extends AbstractRepositoryTest {
 
     @Autowired
     private EventRepository eventRepository;
