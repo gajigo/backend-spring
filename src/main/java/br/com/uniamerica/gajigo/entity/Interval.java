@@ -133,11 +133,11 @@ public class Interval {
     public long difference(LocalDateTime time) {
         if (time.isBefore(startDate)) {
             return ChronoUnit.MILLIS.between(time, startDate);
-        }
-        else if (time.isAfter(endDate)) {
+        } else if (time.isAfter(endDate)) {
             return ChronoUnit.MILLIS.between(time, endDate);
+        } else {
+            return 0;
         }
-        else { return 0; }
     }
 
     public long duration() {
