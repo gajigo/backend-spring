@@ -3,7 +3,6 @@ package br.com.uniamerica.gajigo.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -14,7 +13,8 @@ import java.util.Set;
 @Table(schema = "public", name = "events")
 @Where(clause = "removed IS null")
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class Event extends AbstractDescribable {
     @ManyToOne
     @JoinColumn(name = "location_id")

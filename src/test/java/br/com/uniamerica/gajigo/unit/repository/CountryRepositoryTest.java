@@ -15,7 +15,7 @@ public class CountryRepositoryTest extends AbstractRepositoryTest {
     public void testFindName() {
         // Given
         Country a = new Country("Arrrgentina");
-        entityManager.persistAndFlush(a);
+        repository.save(a);
 
         // When
         Country findA = repository.findFirstByName("Arrrgentina");

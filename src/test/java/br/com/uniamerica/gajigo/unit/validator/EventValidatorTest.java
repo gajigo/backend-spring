@@ -17,7 +17,7 @@ public class EventValidatorTest extends AbstractValidatorTest<Event> {
     @Test
     public void testEmptyObject() throws Exception {
         Event event = new Event();
-        Errors errors = validator.validate(event);
+        Errors errors = getValidator().validate(event);
 
         assertTrue(errors.hasErrors());
     }
@@ -27,7 +27,7 @@ public class EventValidatorTest extends AbstractValidatorTest<Event> {
         Event event = validObject();
         event.setLocation(null);
 
-        Errors errors = validator.validate(event);
+        Errors errors = getValidator().validate(event);
 
         assertEquals(1, errors.getErrorCount());
     }
@@ -37,7 +37,7 @@ public class EventValidatorTest extends AbstractValidatorTest<Event> {
         Event event = validObject();
         event.setName("");
 
-        Errors errors = validator.validate(event);
+        Errors errors = getValidator().validate(event);
 
         assertEquals(1, errors.getErrorCount());
     }
@@ -47,7 +47,7 @@ public class EventValidatorTest extends AbstractValidatorTest<Event> {
         Event event = validObject();
         event.setAttendanceMode(AttendanceMode.Online);
 
-        Errors errors = validator.validate(event);
+        Errors errors = getValidator().validate(event);
 
         assertFalse(errors.hasErrors());
         assertNull(event.getLocation());
@@ -59,7 +59,7 @@ public class EventValidatorTest extends AbstractValidatorTest<Event> {
         City city = new CityValidatorTest().validObject();
         User user = new UserValidatorTest().validObject();
         Interval interval = new Interval(LocalDateTime.now().plusDays(1),
-                                   LocalDateTime.now().plusYears(1));
+                LocalDateTime.now().plusYears(1));
 
         event.setLocation(city);
         event.setOwner(user);
