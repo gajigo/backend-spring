@@ -2,6 +2,7 @@ package br.com.uniamerica.gajigo.unit.validator;
 
 import br.com.uniamerica.gajigo.unit.AbstractUnitTest;
 import br.com.uniamerica.gajigo.validator.AbstractValidator;
+import lombok.Getter;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.validation.Errors;
@@ -11,8 +12,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public abstract class AbstractValidatorTest<T> extends AbstractUnitTest {
+    @Getter
     private AbstractValidator validator;
+
+    @Getter
     private Class<T> clazz;
+
+    @Getter
     private String objName;
 
     public AbstractValidatorTest(AbstractValidator validator, Class<T> clazz) {

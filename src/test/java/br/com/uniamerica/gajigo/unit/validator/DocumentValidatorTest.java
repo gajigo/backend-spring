@@ -19,7 +19,7 @@ public class DocumentValidatorTest extends AbstractValidatorTest<Document> {
     @Test
     public void testEmptyObject() throws Exception {
         Document document = new Document();
-        Errors errors = validator.validate(document);
+        Errors errors = getValidator().validate(document);
 
         assertTrue(errors.hasErrors());
     }
@@ -29,7 +29,7 @@ public class DocumentValidatorTest extends AbstractValidatorTest<Document> {
         Document document = validObject();
         document.setType("");
 
-        Errors errors = validator.validate(document);
+        Errors errors = getValidator().validate(document);
 
         assertEquals(1, errors.getErrorCount());
     }
@@ -40,7 +40,7 @@ public class DocumentValidatorTest extends AbstractValidatorTest<Document> {
         document.setType("cpf");
         document.setValue("asdfsfaasf");
 
-        Errors errors = validator.validate(document);
+        Errors errors = getValidator().validate(document);
 
         assertEquals(1, errors.getErrorCount());
     }

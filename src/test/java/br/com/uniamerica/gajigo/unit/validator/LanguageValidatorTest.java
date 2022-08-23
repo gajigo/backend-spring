@@ -16,7 +16,7 @@ public class LanguageValidatorTest extends AbstractValidatorTest<Language> {
     @Test
     public void testEmptyObject() throws Exception {
         Language language = new Language();
-        Errors errors = validator.validate(language);
+        Errors errors = getValidator().validate(language);
 
         assertTrue(errors.hasErrors());
     }
@@ -26,7 +26,7 @@ public class LanguageValidatorTest extends AbstractValidatorTest<Language> {
         Language language = validObject();
         language.setName("");
 
-        Errors errors = validator.validate(language);
+        Errors errors = getValidator().validate(language);
 
         assertEquals(1, errors.getErrorCount());
     }

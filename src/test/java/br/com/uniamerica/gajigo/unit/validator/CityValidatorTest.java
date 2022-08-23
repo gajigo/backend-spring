@@ -17,7 +17,7 @@ public class CityValidatorTest extends AbstractValidatorTest<City> {
     @Test
     public void testEmptyObject() throws Exception {
         City city = new City();
-        Errors errors = validator.validate(city);
+        Errors errors = getValidator().validate(city);
 
         assertTrue(errors.hasErrors());
     }
@@ -27,7 +27,7 @@ public class CityValidatorTest extends AbstractValidatorTest<City> {
         City city = validObject();
         city.setName("");
 
-        Errors errors = validator.validate(city);
+        Errors errors = getValidator().validate(city);
 
         assertEquals(1, errors.getErrorCount());
     }

@@ -18,7 +18,7 @@ public class LectureValidatorTest extends AbstractValidatorTest<Lecture> {
     @Test
     public void testEmptyObject() throws Exception {
         Lecture lecture = new Lecture();
-        Errors errors = validator.validate(lecture);
+        Errors errors = getValidator().validate(lecture);
 
         assertTrue(errors.hasErrors());
     }
@@ -28,7 +28,7 @@ public class LectureValidatorTest extends AbstractValidatorTest<Lecture> {
         Lecture lecture = validObject();
         lecture.setName("");
 
-        Errors errors = validator.validate(lecture);
+        Errors errors = getValidator().validate(lecture);
 
         assertEquals(1, errors.getErrorCount());
     }

@@ -17,7 +17,7 @@ public class StateValidatorTest extends AbstractValidatorTest<State> {
     @Test
     public void testEmptyObject() throws Exception {
         State state = new State();
-        Errors errors = validator.validate(state);
+        Errors errors = getValidator().validate(state);
 
         assertTrue(errors.hasErrors());
     }
@@ -27,7 +27,7 @@ public class StateValidatorTest extends AbstractValidatorTest<State> {
         State state = validObject();
         state.setName("");
 
-        Errors errors = validator.validate(state);
+        Errors errors = getValidator().validate(state);
 
         assertEquals(1, errors.getErrorCount());
     }
