@@ -45,8 +45,8 @@ public class EventTest extends AbstractIntegrationTest {
     public void testInsert() throws Exception  {
         String caminho = "http://localhost:8080/api/users";
 
-        post(caminho, createUser()).andExpect(status().is2xxSuccessful());
-        post(path, createEvent()).andExpect(status().is2xxSuccessful());
+        post(caminho, createUser()).andExpect(status().isCreated());
+        post(path, createEvent()).andExpect(status().isCreated());
 
     }
 
@@ -54,57 +54,59 @@ public class EventTest extends AbstractIntegrationTest {
     @DirtiesContext
     public void testFindById() throws Exception {
         String caminho = "http://localhost:8080/api/users";
-        post(caminho, createUser()).andExpect(status().is2xxSuccessful());
-        post(path, createEvent()).andExpect(status().is2xxSuccessful());
-        getById(path, 1L).andExpect(status().is2xxSuccessful());
+        post(caminho, createUser()).andExpect(status().isCreated());
+        post(path, createEvent()).andExpect(status().isCreated());
+        getById(path, 1L).andExpect(status().isOk());
     }
 
     @Test
     @DirtiesContext
     public void testFindAll() throws Exception {
         String caminho = "http://localhost:8080/api/users";
-        post(caminho, createUser()).andExpect(status().is2xxSuccessful());
-        post(path, createEvent()).andExpect(status().is2xxSuccessful());
-        get(path).andExpect(status().is2xxSuccessful());
+        post(caminho, createUser()).andExpect(status().isCreated());
+        post(path, createEvent()).andExpect(status().isCreated());
+        get(path).andExpect(status().isOk());
     }
 
     @Test
     @DirtiesContext
     public void testUpdate() throws Exception {
         String caminho = "http://localhost:8080/api/users";
-        post(caminho, createUser()).andExpect(status().is2xxSuccessful());
-        post(path, createEvent()).andExpect(status().is2xxSuccessful());
-        String json = "{\n" +
-                "    \"name\": \"Novo Nome\",\n" +
-                "    \"removed\": false,\n" +
-                "    \"attendanceMode\": \"Online\",\n" +
-                "    \"interval\": {\n" +
-                "        \"startDate\": \"2023-07-15T00:00:00\",\n" +
-                "        \"endDate\": \"2023-07-25T00:00:00\"\n" +
-                "    },\n" +
-                "    \"owner\": \"http://localhost:8080/api/users/1\"\n" +
-                "}";
-        put(path, 1L, json).andExpect(status().is2xxSuccessful());
+        post(caminho, createUser()).andExpect(status().isCreated());
+        post(path, createEvent()).andExpect(status().isCreated());
+
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode event = mapper.createObjectNode();
+        ObjectNode interval = mapper.createObjectNode();
+
+        interval.put("startDate", "2023-07-15T00:00:00");
+        interval.put("endDate", "2023-07-25T00:00:00");
+
+        event.put("name", "Novo nome");
+        event.put("removed", false);
+        event.put("attendanceMode", "Online");
+        event.put("interval", interval);
+        event.put("owner", "http://localhost:8080/api/users/1");
+
+        String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(event);
+        put(path, 1L, json).andExpect(status().isOk());
     }
 
     @Test
     @DirtiesContext
     public void testDelete() throws Exception{
         String caminho = "http://localhost:8080/api/users";
-        post(caminho, createUser()).andExpect(status().is2xxSuccessful());
-        post(path, createEvent()).andExpect(status().is2xxSuccessful());
-        delete(path, 1L).andExpect(status().is2xxSuccessful());
+        post(caminho, createUser()).andExpect(status().isCreated());
+        post(path, createEvent()).andExpect(status().isCreated());
+        delete(path, 1L).andExpect(status().isNoContent());
     }
 
     @Test
     @DirtiesContext
     public void testDisable() throws Exception {
         String caminho = "http://localhost:8080/api/users";
-        post(caminho, createUser()).andExpect(status().is2xxSuccessful());
-        post(path, createEvent()).andExpect(status().is2xxSuccessful());
-        String json = "{\n" +
-                "    \"removed\": true\n" +
-                "}";
-        disable(path, 1L, json).andExpect(status().is2xxSuccessful());
+        post(caminho, createUser()).andExpect(status().isCreated());
+        post(path, createEvent()).andExpect(status().isCreated());
+        disable(path, 1L).andExpect(status().isOk());
     }
 }

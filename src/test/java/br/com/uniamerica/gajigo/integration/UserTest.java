@@ -27,14 +27,14 @@ public class UserTest extends AbstractIntegrationTest {
     @Test
     @DirtiesContext
     public void testInsert() throws Exception {
-        post(path, createUser()).andExpect(status().is2xxSuccessful());
+        post(path, createUser()).andExpect(status().isCreated());
     }
 
     @Test
     @DirtiesContext
     public void testUpdate() throws Exception {
 
-        post(path, createUser()).andExpect(status().is2xxSuccessful());
+        post(path, createUser()).andExpect(status().isCreated());
 
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode user = mapper.createObjectNode();
@@ -44,31 +44,27 @@ public class UserTest extends AbstractIntegrationTest {
         user.put("password", "123");
         user.put("removed", false);
         String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
-        put(path,1L, json).andExpect(status().is2xxSuccessful());
+        put(path,1L, json).andExpect(status().isOk());
     }
 
     @Test
     @DirtiesContext
     public void testDisable() throws Exception {
-        post(path, createUser()).andExpect(status().is2xxSuccessful());
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode user = mapper.createObjectNode();
-        user.put("removed", true);
-        String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
-        disable(path, 1L, json).andExpect(status().is2xxSuccessful());
+        post(path, createUser()).andExpect(status().isCreated());
+        disable(path, 1L).andExpect(status().isOk());
     }
 
     @Test
     @DirtiesContext
     public void testFindById() throws Exception {
-        post(path, createUser()).andExpect(status().is2xxSuccessful());
-        getById(path, 1L);
+        post(path, createUser()).andExpect(status().isCreated());
+        getById(path, 1L).andExpect(status().isOk());
     }
 
     @Test
     @DirtiesContext
     public void testFindAll() throws Exception {
-        post(path, createUser()).andExpect(status().is2xxSuccessful());
-        get(path).andExpect(status().is2xxSuccessful());
+        post(path, createUser()).andExpect(status().isCreated());
+        get(path).andExpect(status().isOk());
     }
 }

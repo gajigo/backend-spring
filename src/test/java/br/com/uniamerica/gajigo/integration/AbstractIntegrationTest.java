@@ -1,5 +1,7 @@
 package br.com.uniamerica.gajigo.integration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -74,10 +76,13 @@ public abstract class AbstractIntegrationTest {
                         .andDo(print());
     }
 
-    ResultActions disable(String path, Long id, String json) throws Exception {
+    ResultActions disable(String path, Long id) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode object = mapper.createObjectNode();
+        object.put("removed", true);
         return this.mockMvc.perform(MockMvcRequestBuilders.patch(path + "/" + id)
                         .contentType("application/json")
-                        .content(json))
+                        .content(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(object)))
                         .andDo(print());
     }
 }
