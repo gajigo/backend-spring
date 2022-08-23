@@ -53,7 +53,6 @@ public class UserRepositoryTest extends AbstractRepositoryTest {
         user = this.repository.save(user);
         assertEquals("teste123", user.getUsername());
     }
-    
     @Test
     public void testDeleteUser() {
         User user = new User("eduardo123", "minhasenha123", "eduardo de souza magalhaes");

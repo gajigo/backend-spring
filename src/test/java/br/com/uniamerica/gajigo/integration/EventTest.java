@@ -1,13 +1,10 @@
 package br.com.uniamerica.gajigo.integration;
 
-import br.com.uniamerica.gajigo.entity.Interval;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.annotation.DirtiesContext;
-
-import java.time.LocalDateTime;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -46,7 +43,7 @@ public class EventTest extends AbstractIntegrationTest {
         String caminho = "http://localhost:8080/api/users";
 
         post(caminho, createUser()).andExpect(status().isCreated());
-        post(path, createEvent()).andExpect(status().isCreated());
+        post(this.getPath(), createEvent()).andExpect(status().isCreated());
 
     }
 
@@ -55,8 +52,8 @@ public class EventTest extends AbstractIntegrationTest {
     public void testFindById() throws Exception {
         String caminho = "http://localhost:8080/api/users";
         post(caminho, createUser()).andExpect(status().isCreated());
-        post(path, createEvent()).andExpect(status().isCreated());
-        getById(path, 1L).andExpect(status().isOk());
+        post(this.getPath(), createEvent()).andExpect(status().isCreated());
+        getById(this.getPath(), 1L).andExpect(status().isOk());
     }
 
     @Test
@@ -64,8 +61,8 @@ public class EventTest extends AbstractIntegrationTest {
     public void testFindAll() throws Exception {
         String caminho = "http://localhost:8080/api/users";
         post(caminho, createUser()).andExpect(status().isCreated());
-        post(path, createEvent()).andExpect(status().isCreated());
-        get(path).andExpect(status().isOk());
+        post(this.getPath(), createEvent()).andExpect(status().isCreated());
+        get(this.getPath()).andExpect(status().isOk());
     }
 
     @Test
@@ -73,7 +70,7 @@ public class EventTest extends AbstractIntegrationTest {
     public void testUpdate() throws Exception {
         String caminho = "http://localhost:8080/api/users";
         post(caminho, createUser()).andExpect(status().isCreated());
-        post(path, createEvent()).andExpect(status().isCreated());
+        post(this.getPath(), createEvent()).andExpect(status().isCreated());
 
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode event = mapper.createObjectNode();
@@ -89,16 +86,16 @@ public class EventTest extends AbstractIntegrationTest {
         event.put("owner", "http://localhost:8080/api/users/1");
 
         String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(event);
-        put(path, 1L, json).andExpect(status().isOk());
+        put(this.getPath(), 1L, json).andExpect(status().isOk());
     }
 
     @Test
     @DirtiesContext
-    public void testDelete() throws Exception{
+    public void testDelete() throws Exception {
         String caminho = "http://localhost:8080/api/users";
         post(caminho, createUser()).andExpect(status().isCreated());
-        post(path, createEvent()).andExpect(status().isCreated());
-        delete(path, 1L).andExpect(status().isNoContent());
+        post(this.getPath(), createEvent()).andExpect(status().isCreated());
+        delete(this.getPath(), 1L).andExpect(status().isNoContent());
     }
 
     @Test
@@ -106,7 +103,7 @@ public class EventTest extends AbstractIntegrationTest {
     public void testDisable() throws Exception {
         String caminho = "http://localhost:8080/api/users";
         post(caminho, createUser()).andExpect(status().isCreated());
-        post(path, createEvent()).andExpect(status().isCreated());
-        disable(path, 1L).andExpect(status().isOk());
+        post(this.getPath(), createEvent()).andExpect(status().isCreated());
+        disable(this.getPath(), 1L).andExpect(status().isOk());
     }
 }

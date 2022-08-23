@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class EventRepositoryTest  extends AbstractRepositoryTest{
+public class EventRepositoryTest  extends AbstractRepositoryTest {
     @Autowired
     private EventRepository eventRepository;
 

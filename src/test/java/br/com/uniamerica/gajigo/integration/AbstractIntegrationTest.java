@@ -34,7 +34,7 @@ public abstract class AbstractIntegrationTest {
     private String resource;
 
     @Getter
-    String path;
+    private String path;
 
     public AbstractIntegrationTest(String resource) {
         this.resource = resource;
