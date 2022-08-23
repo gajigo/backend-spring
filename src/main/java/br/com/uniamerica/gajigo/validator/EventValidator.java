@@ -39,8 +39,8 @@ public class EventValidator extends AbstractValidator<Event> {
             event.setLocation(null);
         } else if (event.getLocation() == null) {
             errors.rejectValue("location", "location.null",
-                    "Event location cannot be null if " +
-                            "Attendance is Mixed or Offline!");
+                    "Event location cannot be null if "
+                            + "Attendance is Mixed or Offline!");
         }
     }
 
@@ -55,8 +55,8 @@ public class EventValidator extends AbstractValidator<Event> {
             return;
         }
 
-        if (!validateNull("interval", interval.getStartDate(), errors) | // One | because we dont want short circuiting
-                !validateNull("interval", interval.getEndDate(), errors)) {
+        if (!validateNull("interval", interval.getStartDate(), errors) // We don't want short-circuiting so |.
+                | !validateNull("interval", interval.getEndDate(), errors)) {
             return;
         }
 
