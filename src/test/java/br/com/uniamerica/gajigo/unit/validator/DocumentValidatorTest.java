@@ -31,7 +31,7 @@ public class DocumentValidatorTest extends AbstractValidatorTest<Document> {
 
         Errors errors = getValidator().validate(document);
 
-        assertEquals(1, errors.getErrorCount());
+        assertEquals(2, errors.getErrorCount());
     }
 
     @Test
