@@ -1,14 +1,17 @@
 package br.com.uniamerica.gajigo.mock;
 
 import com.github.javafaker.Faker;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public abstract class AbstractMock<T> {
-    protected Random rd = new Random();
-    protected Faker faker = new Faker();
+    @Getter
+    private Random rd = new Random();
+    @Getter
+    private Faker faker = new Faker();
 
     abstract T create();
 

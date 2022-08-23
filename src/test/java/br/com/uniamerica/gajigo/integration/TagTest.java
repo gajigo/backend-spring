@@ -18,6 +18,6 @@ public class TagTest extends AbstractIntegrationTest {
 
         String json = objectMapper.writeValueAsString(tag);
 
-        post(path, json).andExpect(status().isCreated());
+        post(this.getPath(), json).andExpect(status().isCreated());
     }
 }

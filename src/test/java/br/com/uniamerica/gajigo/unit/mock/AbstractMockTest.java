@@ -9,8 +9,8 @@ import org.springframework.test.annotation.Repeat;
 
 @SpringBootTest
 public abstract class AbstractMockTest<T> extends AbstractUnitTest {
-    AbstractMock<T> mock;
-    AbstractValidator<T> validator;
+    private AbstractMock<T> mock;
+    private AbstractValidator<T> validator;
 
     public AbstractMockTest(AbstractMock<T> mock, AbstractValidator<T> validator) {
         this.mock = mock;

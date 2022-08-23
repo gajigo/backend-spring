@@ -76,6 +76,9 @@ public class DocumentValidator extends AbstractValidator<Document> {
 
                 // TODO add checksum validation
                 break;
+            default:
+                errors.rejectValue("type", "value.typeunknown",
+                        "Provided Document Type is not known!");
         }
     }
 }

@@ -18,6 +18,6 @@ public class LanguageTest extends AbstractIntegrationTest {
 
         String json = objectMapper.writeValueAsString(language);
 
-        post(path, json).andExpect(status().isCreated());
+        post(this.getPath(), json).andExpect(status().isCreated());
     }
 }

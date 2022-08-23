@@ -58,8 +58,8 @@ public class LectureValidator extends AbstractValidator<Lecture> {
         AttendanceMode eventMode = lecture.getEvent().getAttendanceMode();
         if (eventMode != AttendanceMode.Mixed && mode != eventMode) {
             errors.rejectValue("attendanceMode", "attendanceMode.conflictsWithEvent",
-                    "Lecture Attendance Mode does not match mode of its Event! " +
-                            "Expected attendanceMode = " + eventMode.name());
+                    "Lecture Attendance Mode does not match mode of its Event! "
+                            + "Expected attendanceMode = " + eventMode.name());
         }
     }
 
@@ -74,8 +74,8 @@ public class LectureValidator extends AbstractValidator<Lecture> {
             return;
         }
 
-        if (!validateNull("interval", interval.getStartDate(), errors) | // One | because we dont want short circuiting
-                !validateNull("interval", interval.getEndDate(), errors)) {
+        if (!validateNull("interval", interval.getStartDate(), errors) // One |. we dont want short circuiting.
+                | !validateNull("interval", interval.getEndDate(), errors)) {
             return;
         }
 
@@ -89,9 +89,9 @@ public class LectureValidator extends AbstractValidator<Lecture> {
 
         if (!eventInterval.hasInside(interval)) {
             errors.rejectValue("interval", "date.outsideEventDate",
-                    "Lecture startDate and endDate must be completely contained inside its event!" +
-                            "\nExpected startDate after " + eventInterval.getStartDate() +
-                            " and endDate before " + eventInterval.getEndDate() + ".");
+                    "Lecture startDate and endDate must be completely contained inside its event!"
+                            + "\nExpected startDate after " + eventInterval.getStartDate()
+                            + " and endDate before " + eventInterval.getEndDate() + ".");
         }
 
         // Creation time only validations
@@ -130,9 +130,9 @@ public class LectureValidator extends AbstractValidator<Lecture> {
 
                 if (roomLecture.getInterval().isOverlapping(lecture.getInterval())) {
                     errors.rejectValue("room", "room.conflict",
-                            "Lecture cannot take place in room with the specified timeframe " +
-                                    "because another lecture is already scheduled during that period! " +
-                                    "Lecture causing conflict takes place between " + roomLecture.getInterval()
+                            "Lecture cannot take place in room with the specified timeframe "
+                                    + "because another lecture is already scheduled during that period! "
+                                    + "Lecture causing conflict takes place between " + roomLecture.getInterval()
                                     .getStartDate() + " and " + roomLecture.getInterval().getEndDate() + ".");
                     break;
                 }

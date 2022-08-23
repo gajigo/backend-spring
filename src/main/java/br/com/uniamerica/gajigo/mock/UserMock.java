@@ -36,24 +36,24 @@ public class UserMock extends AbstractMock<User> {
     }
 
     private String generateName() {
-        return faker.name().name();
+        return getFaker().name().name();
     }
 
     private String generateDescription() {
-        return faker.lorem().sentence();
+        return getFaker().lorem().sentence();
     }
 
     private String generateEmail() {
-        return faker.lorem().characters(10) +
-                "@gmail.com";
+        return getFaker().lorem().characters(10)
+                + "@gmail.com";
     }
 
     private String generateUsername() {
-        return faker.name().username();
+        return getFaker().name().username();
     }
 
     private String generatePassword() {
-        return faker.lorem().characters(10);
+        return getFaker().lorem().characters(10);
     }
 
     private Document generateDocument() {
@@ -89,7 +89,7 @@ public class UserMock extends AbstractMock<User> {
     private City generateLocation() {
         List<City> cities = cityRepository.findAll();
 
-        if (cities.size() == 0) return null;
-        return cities.get(rd.nextInt(cities.size()));
+        if (cities.size() == 0) { return null; }
+        return cities.get(getRd().nextInt(cities.size()));
     }
 }

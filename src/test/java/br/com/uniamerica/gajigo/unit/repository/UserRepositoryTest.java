@@ -17,7 +17,7 @@ public class UserRepositoryTest extends AbstractRepositoryTest {
         User a = new User("UnitTestingUser", "asdfsafpass",
                 "Unit Testing User", "User for Testing",
                 "fake@test.com", true);
-        this.entityManager.persistAndFlush(a);
+        this.repository.save(a);
 
         // When
         User findA = this.repository.findFirstByUsername("UnitTestingUser");

@@ -11,9 +11,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public abstract class AbstractValidatorTest<T> extends AbstractUnitTest {
-    AbstractValidator validator;
-    Class<T> clazz;
-    String objName;
+    private AbstractValidator validator;
+    private Class<T> clazz;
+    private String objName;
 
     public AbstractValidatorTest(AbstractValidator validator, Class<T> clazz) {
         this.validator = validator;

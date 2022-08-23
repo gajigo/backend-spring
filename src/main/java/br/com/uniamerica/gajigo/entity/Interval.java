@@ -28,20 +28,25 @@ public class Interval {
     }
 
     public IntervalRelation getRelation(Interval b) {
-        if (startDate.isAfter(b.endDate)) return IntervalRelation.After;
-        if (endDate.isBefore(b.startDate)) return IntervalRelation.Before;
-        if (endDate.isEqual(b.startDate)) return IntervalRelation.EndTouching;
-        if (startDate.isEqual(b.endDate)) return IntervalRelation.StartTouching;
-        if (startDate.isEqual(b.startDate) && endDate.isEqual(b.endDate)) return IntervalRelation.ExactMatch;
-        if (startDate.isAfter(b.startDate) && endDate.isBefore(b.endDate)) return IntervalRelation.Inside;
-        if (startDate.isAfter(b.startDate) && endDate.isEqual(b.endDate)) return IntervalRelation.InsideEndTouching;
-        if (startDate.isBefore(b.startDate) && endDate.isAfter(b.endDate)) return IntervalRelation.Enclosing;
-        if (startDate.isBefore(b.startDate) && endDate.isEqual(b.endDate)) return IntervalRelation.EnclosingEndTouching;
-        if (startDate.isEqual(b.startDate) && endDate.isAfter(b.endDate))
+        if (startDate.isAfter(b.endDate)) { return IntervalRelation.After; }
+        if (endDate.isBefore(b.startDate)) { return IntervalRelation.Before; }
+        if (endDate.isEqual(b.startDate)) { return IntervalRelation.EndTouching; }
+        if (startDate.isEqual(b.endDate)) { return IntervalRelation.StartTouching; }
+        if (startDate.isEqual(b.startDate) && endDate.isEqual(b.endDate)) { return IntervalRelation.ExactMatch; }
+        if (startDate.isAfter(b.startDate) && endDate.isBefore(b.endDate)) { return IntervalRelation.Inside; }
+        if (startDate.isAfter(b.startDate) && endDate.isEqual(b.endDate)) { return IntervalRelation.InsideEndTouching; }
+        if (startDate.isBefore(b.startDate) && endDate.isAfter(b.endDate)) { return IntervalRelation.Enclosing; }
+        if (startDate.isBefore(b.startDate) && endDate.isEqual(b.endDate)) {
+            return IntervalRelation.EnclosingEndTouching;
+        }
+        if (startDate.isEqual(b.startDate) && endDate.isAfter(b.endDate)) {
             return IntervalRelation.EnclosingStartTouching;
-        if (startDate.isEqual(b.startDate) && endDate.isBefore(b.endDate)) return IntervalRelation.InsideStartTouching;
-        if (startDate.isBefore(b.startDate) && endDate.isBefore(b.endDate)) return IntervalRelation.EndInside;
-        if (startDate.isBefore(b.endDate)) return IntervalRelation.StartInside;
+        }
+        if (startDate.isEqual(b.startDate) && endDate.isBefore(b.endDate)) {
+            return IntervalRelation.InsideStartTouching;
+        }
+        if (startDate.isBefore(b.startDate) && endDate.isBefore(b.endDate)) { return IntervalRelation.EndInside; }
+        if (startDate.isBefore(b.endDate)) { return IntervalRelation.StartInside; }
         return null; // Unreachable
     }
 
@@ -50,8 +55,8 @@ public class Interval {
     }
 
     public boolean isAfterOrEqual(Interval b) {
-        return isAfter(b) ||
-                getRelation(b) == IntervalRelation.StartTouching;
+        return isAfter(b)
+                || getRelation(b) == IntervalRelation.StartTouching;
     }
 
     public boolean isBefore(Interval b) {
@@ -59,8 +64,8 @@ public class Interval {
     }
 
     public boolean isBeforeOrEqual(Interval b) {
-        return isBefore(b) ||
-                getRelation(b) == IntervalRelation.EndTouching;
+        return isBefore(b)
+                || getRelation(b) == IntervalRelation.EndTouching;
     }
 
     public boolean isEqual(Interval b) {
@@ -76,10 +81,10 @@ public class Interval {
         // B inside A, allowing touching at the start or end (or completely equal)
         IntervalRelation relation = getRelation(b);
 
-        return isEnclosing(b) ||
-                relation == IntervalRelation.EnclosingStartTouching ||
-                relation == IntervalRelation.EnclosingEndTouching ||
-                relation == IntervalRelation.ExactMatch;
+        return isEnclosing(b)
+                || relation == IntervalRelation.EnclosingStartTouching
+                || relation == IntervalRelation.EnclosingEndTouching
+                || relation == IntervalRelation.ExactMatch;
     }
 
     public boolean isOverlapping(Interval b) {
@@ -87,12 +92,12 @@ public class Interval {
         // e.g. 10:00-11:00 does not overlap with 11:00-12:00
         IntervalRelation relation = getRelation(b);
 
-        return hasInside(b) ||
-                relation == IntervalRelation.StartInside ||
-                relation == IntervalRelation.InsideStartTouching ||
-                relation == IntervalRelation.Inside ||
-                relation == IntervalRelation.InsideEndTouching ||
-                relation == IntervalRelation.EndInside;
+        return hasInside(b)
+                || relation == IntervalRelation.StartInside
+                || relation == IntervalRelation.InsideStartTouching
+                || relation == IntervalRelation.Inside
+                || relation == IntervalRelation.InsideEndTouching
+                || relation == IntervalRelation.EndInside;
     }
 
     public boolean isIntersecting(Interval b) {
@@ -100,15 +105,15 @@ public class Interval {
         // e.g. 10:00-11:00 overlaps with 11:00-12:00
         IntervalRelation relation = getRelation(b);
 
-        return isOverlapping(b) ||
-                relation == IntervalRelation.EndTouching ||
-                relation == IntervalRelation.StartTouching;
+        return isOverlapping(b)
+                || relation == IntervalRelation.EndTouching
+                || relation == IntervalRelation.StartTouching;
     }
 
     public long difference(LocalDateTime time) {
-        if (time.isBefore(startDate)) return ChronoUnit.MILLIS.between(time, startDate);
-        else if (time.isAfter(endDate)) return ChronoUnit.MILLIS.between(time, endDate);
-        else return 0;
+        if (time.isBefore(startDate)) { return ChronoUnit.MILLIS.between(time, startDate); }
+        else if (time.isAfter(endDate)) { return ChronoUnit.MILLIS.between(time, endDate); }
+        else { return 0; }
     }
 
     public long duration() {

@@ -1,5 +1,6 @@
 package br.com.uniamerica.gajigo.integration;
 
+import lombok.Getter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -21,13 +22,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WithMockUser(username = "admin", roles = "ADMIN")
 public abstract class AbstractIntegrationTest {
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     private int port = 8080;
     private String root = "http://localhost:" + port + "/api/";
 
     private String resource;
-    String path;
+
+    @Getter
+    private String path;
 
     public AbstractIntegrationTest(String resource) {
         this.resource = resource;
