@@ -36,6 +36,7 @@ public class UserRepositoryTest extends AbstractRepositoryTest {
     public void testInsertUser() {
         User user = new User("eduardo123", "minhasenha123", "eduardo de souza magalhaes");
         user.setEmail("eduardo@gmail.com");
+
         this.repository.save(user);
 
         assertEquals(1, this.repository.count());
@@ -50,9 +51,16 @@ public class UserRepositoryTest extends AbstractRepositoryTest {
         assertEquals("eduardo123", user.getUsername());
         user.setUsername("teste123");
         user = this.repository.save(user);
-
         assertEquals("teste123", user.getUsername());
     }
+    @Test
+    public void testDeleteUser() {
+        User user = new User("eduardo123", "minhasenha123", "eduardo de souza magalhaes");
+        user.setEmail("eduardo@gmail.com");
+        user = this.repository.save(user);
 
+        this.repository.delete(user);
 
+        assertEquals(0, this.repository.count());
+    }
 }
