@@ -38,7 +38,6 @@ public class UserRepositoryTest extends AbstractRepositoryTest {
         user.setEmail("eduardo@gmail.com");
 
         this.repository.save(user);
-
         assertEquals(1, this.repository.count());
     }
 

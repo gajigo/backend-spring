@@ -36,7 +36,7 @@ public class User extends AbstractDescribable {
     @ManyToMany(mappedBy = "organizers")
     private Set<Event> organizes = new HashSet<>();
 
-    @Column(name="profile_image")
+    @Column(name = "profile_image")
     private String profileImage;
 
     @Column(name = "username", nullable = false, unique = true, length = 32)

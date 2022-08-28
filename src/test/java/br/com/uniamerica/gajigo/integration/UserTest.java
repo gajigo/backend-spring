@@ -27,6 +27,7 @@ public class UserTest extends AbstractIntegrationTest {
     @DirtiesContext
     public void testInsert() throws Exception {
         post(this.getPath(), createUser()).andExpect(status().isCreated());
+
     }
 
     @Test
