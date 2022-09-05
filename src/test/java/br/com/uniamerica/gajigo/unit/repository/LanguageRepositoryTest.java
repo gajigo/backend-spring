@@ -15,7 +15,7 @@ public class LanguageRepositoryTest extends AbstractRepositoryTest {
     public void testFindName() {
         // Given
         Language a = new Language("Damokalad");
-        entityManager.persistAndFlush(a);
+        this.repository.save(a);
 
         // When
         Language findA = repository.findFirstByName("Damokalad");

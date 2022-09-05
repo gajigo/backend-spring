@@ -15,7 +15,7 @@ public class TagRepositoryTest extends AbstractRepositoryTest {
     public void testFindName() {
         // Given
         Tag a = new Tag("UnitTestingTag", "Test test test");
-        entityManager.persistAndFlush(a);
+        this.repository.save(a);
 
         // When
         Tag findA = repository.findFirstByName("UnitTestingTag");

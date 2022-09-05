@@ -1,11 +1,9 @@
 package br.com.uniamerica.gajigo.entity;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -26,7 +24,15 @@ public abstract class AbstractEntity {
     private LocalDateTime updated;
 
     @Column(name = "removed")
-    private LocalDateTime removed;
+    private Boolean removed;
+
+    @Column(name = "removeDate")
+    private LocalDateTime removeDate;
+
+    @JsonIgnore
+    public boolean isActive() {
+        return this.removeDate == null;
+    }
 
     @PrePersist
     public void create() {
@@ -36,5 +42,11 @@ public abstract class AbstractEntity {
     @PreUpdate
     public void update() {
         this.updated = LocalDateTime.now();
+
+        if (removed && removeDate == null) {
+            this.setRemoveDate(LocalDateTime.now());
+        } else {
+            this.setRemoveDate(null);
+        }
     }
 }

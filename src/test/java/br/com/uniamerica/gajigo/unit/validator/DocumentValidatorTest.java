@@ -1,6 +1,5 @@
 package br.com.uniamerica.gajigo.unit.validator;
 
-import br.com.uniamerica.gajigo.entity.City;
 import br.com.uniamerica.gajigo.entity.Document;
 import br.com.uniamerica.gajigo.entity.User;
 import br.com.uniamerica.gajigo.validator.DocumentValidator;
@@ -9,7 +8,8 @@ import org.springframework.validation.Errors;
 
 import java.util.HashSet;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DocumentValidatorTest extends AbstractValidatorTest<Document> {
     public DocumentValidatorTest() {
@@ -19,7 +19,7 @@ public class DocumentValidatorTest extends AbstractValidatorTest<Document> {
     @Test
     public void testEmptyObject() throws Exception {
         Document document = new Document();
-        Errors errors = validator.validate(document);
+        Errors errors = getValidator().validate(document);
 
         assertTrue(errors.hasErrors());
     }
@@ -29,9 +29,9 @@ public class DocumentValidatorTest extends AbstractValidatorTest<Document> {
         Document document = validObject();
         document.setType("");
 
-        Errors errors = validator.validate(document);
+        Errors errors = getValidator().validate(document);
 
-        assertEquals(1, errors.getErrorCount());
+        assertEquals(2, errors.getErrorCount());
     }
 
     @Test
@@ -40,7 +40,7 @@ public class DocumentValidatorTest extends AbstractValidatorTest<Document> {
         document.setType("cpf");
         document.setValue("asdfsfaasf");
 
-        Errors errors = validator.validate(document);
+        Errors errors = getValidator().validate(document);
 
         assertEquals(1, errors.getErrorCount());
     }

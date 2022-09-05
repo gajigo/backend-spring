@@ -21,7 +21,7 @@ public class RoomValidator extends AbstractValidator<Room> {
     private void validateEvent(Room room, Errors errors) {
         Event event = room.getEvent();
         validateNull("event", event,
-                     "Room must belong to an event!", errors);
+                "Room must belong to an event!", errors);
     }
 
     private void validateName(Room room, Errors errors) {

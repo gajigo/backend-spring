@@ -1,16 +1,13 @@
 package br.com.uniamerica.gajigo.unit.validator;
 
-import br.com.uniamerica.gajigo.entity.City;
 import br.com.uniamerica.gajigo.entity.Country;
 import br.com.uniamerica.gajigo.entity.State;
-import br.com.uniamerica.gajigo.unit.AbstractUnitTest;
-import br.com.uniamerica.gajigo.validator.AbstractValidator;
 import br.com.uniamerica.gajigo.validator.StateValidator;
 import org.junit.jupiter.api.Test;
-import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StateValidatorTest extends AbstractValidatorTest<State> {
     public StateValidatorTest() {
@@ -20,7 +17,7 @@ public class StateValidatorTest extends AbstractValidatorTest<State> {
     @Test
     public void testEmptyObject() throws Exception {
         State state = new State();
-        Errors errors = validator.validate(state);
+        Errors errors = getValidator().validate(state);
 
         assertTrue(errors.hasErrors());
     }
@@ -30,7 +27,7 @@ public class StateValidatorTest extends AbstractValidatorTest<State> {
         State state = validObject();
         state.setName("");
 
-        Errors errors = validator.validate(state);
+        Errors errors = getValidator().validate(state);
 
         assertEquals(1, errors.getErrorCount());
     }

@@ -1,10 +1,11 @@
 package br.com.uniamerica.gajigo.entity;
 
+import br.com.uniamerica.gajigo.utils.JsonDeserializers;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -16,7 +17,8 @@ import java.util.Set;
 @Table(schema = "public", name = "users")
 @Where(clause = "removed IS null")
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class User extends AbstractDescribable {
     @Column(name = "admin", nullable = false)
     private boolean admin; // boolean is false by default
@@ -41,8 +43,9 @@ public class User extends AbstractDescribable {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password", nullable = false, length = 64)
+    @Column(name = "password", nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonDeserialize(using = JsonDeserializers.PasswordDeserializer.class)
     private String password;
 
     @Column(name = "telephone")

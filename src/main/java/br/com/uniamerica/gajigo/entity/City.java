@@ -3,7 +3,6 @@ package br.com.uniamerica.gajigo.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -11,10 +10,11 @@ import java.util.Set;
 
 @Entity
 @Table(schema = "public", name = "cities",
-       uniqueConstraints = @UniqueConstraint(columnNames = {"name", "state_id"}))
+        uniqueConstraints = @UniqueConstraint(columnNames = {"name", "state_id"}))
 @Where(clause = "removed IS null")
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class City extends AbstractLocation {
     @ManyToOne(optional = false)
     @JoinColumn(name = "state_id")
