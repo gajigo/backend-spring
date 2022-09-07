@@ -11,11 +11,11 @@ import org.springframework.data.rest.core.annotation.RestResource;
 public interface GenericRepository<T, ID> extends JpaRepository<T, ID> {
     @Override
     @Query("select e from #{#entityName} e where e.active=true")
-    public Page<T> findAll(Pageable pageable);
+    Page<T> findAll(Pageable pageable);
 
     @RestResource(path = "inactive", rel = "inactive")
-    public Page<T> findByActiveIsFalse(Pageable pageable);
+    Page<T> findByActiveIsFalse(Pageable pageable);
 
     @RestResource(path = "all", rel = "all")
-    public Page<T> findByActiveIsNotNull(Pageable pageable);
+    Page<T> findByActiveIsNotNull(Pageable pageable);
 }
