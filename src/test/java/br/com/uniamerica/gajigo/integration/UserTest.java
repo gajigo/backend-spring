@@ -39,7 +39,7 @@ public class UserTest extends AbstractIntegrationTest {
         user.put("email", "eduardo@gmail.com");
         user.put("username", "eduardo.sm");
         user.put("password", "123");
-        user.put("removed", false);
+        user.put("active", true);
         String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
         put(this.getPath(), 1L, json).andExpect(status().isOk());
     }
