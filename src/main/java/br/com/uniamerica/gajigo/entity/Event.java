@@ -11,7 +11,6 @@ import java.util.Set;
 
 @Entity
 @Table(schema = "public", name = "events")
-@Where(clause = "removed IS null")
 @NoArgsConstructor
 @Getter
 @Setter

@@ -11,7 +11,6 @@ import java.util.Set;
 @Entity
 @Table(schema = "public", name = "cities",
         uniqueConstraints = @UniqueConstraint(columnNames = {"name", "state_id"}))
-@Where(clause = "removed IS null")
 @NoArgsConstructor
 @Getter
 @Setter
