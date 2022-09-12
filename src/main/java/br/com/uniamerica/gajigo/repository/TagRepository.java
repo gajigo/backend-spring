@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RepositoryRestResource(collectionResourceRel = "tags", path = "tags")
 @CrossOrigin
-public interface TagRepository extends GenericRepository<Tag, Long> {
+public interface TagRepository extends SoftDeleteRepository<Tag, Long> {
     Tag findFirstByName(String name);
 }

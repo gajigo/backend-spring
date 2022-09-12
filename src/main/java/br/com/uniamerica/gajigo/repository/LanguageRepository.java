@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RepositoryRestResource(collectionResourceRel = "languages", path = "languages")
 @CrossOrigin
-public interface LanguageRepository extends GenericRepository<Language, Long> {
+public interface LanguageRepository extends SoftDeleteRepository<Language, Long> {
     Language findFirstByName(String name);
 }

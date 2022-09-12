@@ -6,5 +6,5 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @CrossOrigin
 @RepositoryRestResource(collectionResourceRel = "events", path = "events")
-public interface EventRepository extends GenericRepository<Event, Long> {
+public interface EventRepository extends SoftDeleteRepository<Event, Long> {
 }

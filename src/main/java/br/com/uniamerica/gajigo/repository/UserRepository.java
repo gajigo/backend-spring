@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RepositoryRestResource(collectionResourceRel = "users", path = "users")
 @CrossOrigin
-public interface UserRepository extends GenericRepository<User, Long> {
+public interface UserRepository extends SoftDeleteRepository<User, Long> {
     User findFirstByUsername(String username);
 }

@@ -8,7 +8,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.rest.core.annotation.RestResource;
 
 @NoRepositoryBean
-public interface GenericRepository<T, ID> extends JpaRepository<T, ID> {
+public interface SoftDeleteRepository<T, ID> extends JpaRepository<T, ID> {
     @Override
     @Query("select e from #{#entityName} e where e.active=true")
     Page<T> findAll(Pageable pageable);

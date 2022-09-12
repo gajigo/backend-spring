@@ -6,5 +6,5 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RepositoryRestResource(collectionResourceRel = "rooms", path = "rooms")
 @CrossOrigin
-public interface RoomRepository extends GenericRepository<Room, Long> {
+public interface RoomRepository extends SoftDeleteRepository<Room, Long> {
 }

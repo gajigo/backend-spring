@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RepositoryRestResource(collectionResourceRel = "countries", path = "countries")
 @CrossOrigin
-public interface CountryRepository extends GenericRepository<Country, Long> {
+public interface CountryRepository extends SoftDeleteRepository<Country, Long> {
     Country findFirstByName(String name);
 }

@@ -6,5 +6,5 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RepositoryRestResource(collectionResourceRel = "lectures", path = "lectures")
 @CrossOrigin
-public interface LectureRepository extends GenericRepository<Lecture, Long> {
+public interface LectureRepository extends SoftDeleteRepository<Lecture, Long> {
 }
