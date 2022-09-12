@@ -1,5 +1,6 @@
 package br.com.uniamerica.gajigo;
 
+import br.com.uniamerica.gajigo.utils.ProjectionGenerator;
 import br.com.uniamerica.gajigo.validator.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,6 +11,7 @@ import org.springframework.validation.Validator;
 @SpringBootApplication
 public class GajigoApplication implements RepositoryRestConfigurer {
     public static void main(String[] args) {
+        ProjectionGenerator.generate();
         SpringApplication.run(GajigoApplication.class, args);
     }
 
