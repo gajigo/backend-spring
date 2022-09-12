@@ -15,10 +15,11 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class ProjectionGenerator {
+public final class ProjectionGenerator {
     private static String packageName = "br.com.uniamerica.gajigo.entity";
 
-    private ProjectionGenerator() {}
+    private ProjectionGenerator() {
+    }
 
     public static void main(String[] args) {
         generate();
@@ -162,7 +163,9 @@ public class ProjectionGenerator {
 
         stringBuilder.append("\n");
 
-        stringBuilder.append("@Projection(name = \"expand" + capitalizedRelation + "\", types = { " + name + ".class })\n");
+        stringBuilder.append(
+            "@Projection(name = \"expand" + capitalizedRelation + "\", types = { " + name + ".class })\n"
+        );
 
         stringBuilder.append("public interface Expand" + capitalizedRelation + " {\n");
 
