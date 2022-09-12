@@ -1,5 +1,7 @@
 package br.com.uniamerica.gajigo.utils;
 
+import org.apache.commons.lang3.ClassUtils;
+
 import javax.persistence.*;
 import java.io.BufferedReader;
 import java.io.File;
@@ -80,7 +82,9 @@ public class ProjectionGenerator {
     }
 
     private static String getTypeImports(Field relation) {
-        if (relation.getType().isPrimitive()) {
+        Class<?> type = relation.getType();
+        if (ClassUtils.isPrimitiveOrWrapper(type)
+            || type == String.class) {
             return "";
         }
 
@@ -114,13 +118,18 @@ public class ProjectionGenerator {
 
         stringBuilder.append("import " + packageName + "." + name + ";\n");
         stringBuilder.append("import org.springframework.data.rest.core.config.Projection;\n");
-        stringBuilder.append(getTypeImports(relation));
+
+        String relationImport = getTypeImports(relation);
+        if (!relationImport.isEmpty()) {
+            stringBuilder.append(getTypeImports(relation));
+        }
 
         Set<String> imports = new HashSet<>();
         for (Field field : clazz.getDeclaredFields()) {
             if (isRelation(field)) continue;
 
             String customImport = getTypeImports(field);
+            if (customImport.isEmpty()) continue;
             if (imports.contains(customImport)) continue;
 
             imports.add(customImport);
