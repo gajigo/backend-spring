@@ -16,7 +16,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ProjectionGenerator {
-    static String packageName = "br.com.uniamerica.gajigo.entity";
+    private static String packageName = "br.com.uniamerica.gajigo.entity";
+
+    private ProjectionGenerator() {}
 
     public static void main(String[] args) {
         generate();
@@ -26,19 +28,27 @@ public class ProjectionGenerator {
         Set<Class> classes = findAllClassesUsingClassLoader(packageName);
 
         for (Class clazz: classes) {
-            if (clazz.isEnum()) continue;
-            if (Modifier.isAbstract(clazz.getModifiers())) continue;
-            if (!clazz.isAnnotationPresent(Entity.class)) continue;
+            if (clazz.isEnum()) {
+                continue;
+            }
+
+            if (Modifier.isAbstract(clazz.getModifiers())) {
+                continue;
+            }
+
+            if (!clazz.isAnnotationPresent(Entity.class)) {
+                continue;
+            }
 
             generateClassProjections(clazz);
         }
     }
 
     private static boolean isRelation(Field field) {
-        return field.isAnnotationPresent(OneToMany.class) ||
-                field.isAnnotationPresent(ManyToOne.class) ||
-                field.isAnnotationPresent(ManyToMany.class) ||
-                field.isAnnotationPresent(OneToOne.class);
+        return field.isAnnotationPresent(OneToMany.class)
+                || field.isAnnotationPresent(ManyToOne.class)
+                || field.isAnnotationPresent(ManyToMany.class)
+                || field.isAnnotationPresent(OneToOne.class);
     }
 
     private static String capitalizeName(String s) {
@@ -49,11 +59,14 @@ public class ProjectionGenerator {
         String name = clazz.getSimpleName();
         Field[] fields = clazz.getDeclaredFields();
 
-        String directoryPath = "src/main/java/br/com/uniamerica/gajigo/entity/projection/" + name.toLowerCase();
+        String directoryPath = "src/main/java/br/com/uniamerica/gajigo/entity/projection/"
+                + name.toLowerCase();
         File directory = new File(directoryPath);
 
         for (Field field : fields) {
-            if (!isRelation(field)) continue;
+            if (!isRelation(field)) {
+                continue;
+            }
 
             if (!directory.exists()) {
                 directory.mkdirs();
@@ -62,7 +75,10 @@ public class ProjectionGenerator {
             String projectionName = "Expand" + capitalizeName(field.getName());
 
             try {
-                Files.writeString(Paths.get(directoryPath + "/" + projectionName + ".java"), generateProjectionContent(clazz, field));
+                Files.writeString(
+                    Paths.get(directoryPath + "/" + projectionName + ".java"),
+                    generateProjectionContent(clazz, field)
+                );
             } catch (Exception e) {
                 System.out.println("Couldn't generate projection");
             }
@@ -126,11 +142,19 @@ public class ProjectionGenerator {
 
         Set<String> imports = new HashSet<>();
         for (Field field : clazz.getDeclaredFields()) {
-            if (isRelation(field)) continue;
+            if (isRelation(field)) {
+                continue;
+            }
 
             String customImport = getTypeImports(field);
-            if (customImport.isEmpty()) continue;
-            if (imports.contains(customImport)) continue;
+
+            if (customImport.isEmpty()) {
+                continue;
+            }
+
+            if (imports.contains(customImport)) {
+                continue;
+            }
 
             imports.add(customImport);
             stringBuilder.append(customImport);
@@ -144,7 +168,10 @@ public class ProjectionGenerator {
 
         stringBuilder.append("    " + getRelationType(relation) + " get" + capitalizedRelation + "();\n");
         for (Field field : clazz.getDeclaredFields()) {
-            if (isRelation(field)) continue;
+            if (isRelation(field)) {
+                continue;
+            }
+
             stringBuilder.append("    " + getRelationType(field) + " get" + capitalizeName(field.getName()) + "();\n");
         }
 
