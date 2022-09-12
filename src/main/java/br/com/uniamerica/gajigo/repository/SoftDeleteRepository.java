@@ -17,5 +17,6 @@ public interface SoftDeleteRepository<T, ID> extends JpaRepository<T, ID> {
     Page<T> findByActiveIsFalse(Pageable pageable);
 
     @RestResource(path = "all", rel = "all")
-    Page<T> findByActiveIsNotNull(Pageable pageable);
+    @Query("select e from #{#entityName} e")
+    Page<T> findAllIncludingRemoved(Pageable pageable);
 }
