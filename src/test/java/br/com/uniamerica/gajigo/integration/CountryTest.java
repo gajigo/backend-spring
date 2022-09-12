@@ -18,6 +18,6 @@ public class CountryTest extends AbstractIntegrationTest {
 
         String json = objectMapper.writeValueAsString(country);
 
-        post(path, json).andExpect(status().isCreated());
+        post(this.getPath(), json).andExpect(status().isCreated());
     }
 }

@@ -37,10 +37,10 @@ public class EventValidator extends AbstractValidator<Event> {
         // If the event is offline or mixed, we must have one.
         if (event.getAttendanceMode() == AttendanceMode.Online) {
             event.setLocation(null);
-        } else if (event.getLocation() == null){
+        } else if (event.getLocation() == null) {
             errors.rejectValue("location", "location.null",
-                               "Event location cannot be null if " +
-                                              "Attendance is Mixed or Offline!");
+                    "Event location cannot be null if "
+                            + "Attendance is Mixed or Offline!");
         }
     }
 
@@ -49,20 +49,20 @@ public class EventValidator extends AbstractValidator<Event> {
 
         if (interval == null) {
             errors.rejectValue("interval", "startDate.null",
-                               "startDate must not be null!");
+                    "startDate must not be null!");
             errors.rejectValue("interval", "endDate.null",
                     "endDate must not be null!");
             return;
         }
 
-        if (!validateNull("interval", interval.getStartDate(), errors) | // One | because we dont want short circuiting
-            !validateNull("interval", interval.getEndDate(), errors)) {
+        if (!validateNull("interval", interval.getStartDate(), errors) // We don't want short-circuiting so |.
+                | !validateNull("interval", interval.getEndDate(), errors)) {
             return;
         }
 
         if (!interval.valid()) {
             errors.rejectValue("interval", "endDate.beforeStart",
-                               "The event cannot end before it has started!");
+                    "The event cannot end before it has started!");
             return;
         }
 
@@ -70,7 +70,7 @@ public class EventValidator extends AbstractValidator<Event> {
         if (event.getUpdated() == null) {
             if (interval.getStartDate().isBefore(LocalDateTime.now())) {
                 errors.rejectValue("interval", "startDate.past",
-                                   "The startDate of a new event cannot be in the past!");
+                        "The startDate of a new event cannot be in the past!");
             }
             // No need to check end because end > start
         }
@@ -80,7 +80,7 @@ public class EventValidator extends AbstractValidator<Event> {
         User owner = event.getOwner();
 
         if (!validateNull("owner", owner,
-                         "Event must have an owner!", errors)) {
+                "Event must have an owner!", errors)) {
             // Cannot do any more validations if the field is null
             return;
         }

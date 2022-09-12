@@ -14,19 +14,19 @@ public class IntervalTest extends AbstractUnitTest {
     public void testIntervalRelations() {
         Interval a = validInterval();
 
-        Interval after                  = new Interval(a.getStartDate().minusHours(2), a.getStartDate().minusHours(1));
-        Interval startTouching          = new Interval(a.getStartDate().minusHours(1), a.getStartDate());
-        Interval startInside            = new Interval(a.getStartDate().minusHours(1), a.getStartDate().plusHours(1));
-        Interval insideStartTouching    = new Interval(a.getStartDate(), a.getEndDate().plusMinutes(15));
+        Interval after = new Interval(a.getStartDate().minusHours(2), a.getStartDate().minusHours(1));
+        Interval startTouching = new Interval(a.getStartDate().minusHours(1), a.getStartDate());
+        Interval startInside = new Interval(a.getStartDate().minusHours(1), a.getStartDate().plusHours(1));
+        Interval insideStartTouching = new Interval(a.getStartDate(), a.getEndDate().plusMinutes(15));
         Interval enclosingStartTouching = new Interval(a.getStartDate(), a.getEndDate().minusMinutes(15));
-        Interval enclosing              = new Interval(a.getStartDate().plusHours(1), a.getEndDate().minusHours(1));
-        Interval enclosingEndTouching   = new Interval(a.getStartDate().plusMinutes(15), a.getEndDate());
-        Interval exactMatch             = new Interval(a.getStartDate(), a.getEndDate());
-        Interval inside                 = new Interval(a.getStartDate().minusHours(1), a.getEndDate().plusHours(1));
-        Interval insideEndTouching      = new Interval(a.getStartDate().minusHours(1), a.getEndDate());
-        Interval endInside              = new Interval(a.getStartDate().plusHours(1), a.getEndDate().plusHours(1));
-        Interval endTouching            = new Interval(a.getEndDate(), a.getEndDate().plusHours(1));
-        Interval before                 = new Interval(a.getEndDate().plusHours(1), a.getEndDate().plusHours(2));
+        Interval enclosing = new Interval(a.getStartDate().plusHours(1), a.getEndDate().minusHours(1));
+        Interval enclosingEndTouching = new Interval(a.getStartDate().plusMinutes(15), a.getEndDate());
+        Interval exactMatch = new Interval(a.getStartDate(), a.getEndDate());
+        Interval inside = new Interval(a.getStartDate().minusHours(1), a.getEndDate().plusHours(1));
+        Interval insideEndTouching = new Interval(a.getStartDate().minusHours(1), a.getEndDate());
+        Interval endInside = new Interval(a.getStartDate().plusHours(1), a.getEndDate().plusHours(1));
+        Interval endTouching = new Interval(a.getEndDate(), a.getEndDate().plusHours(1));
+        Interval before = new Interval(a.getEndDate().plusHours(1), a.getEndDate().plusHours(2));
 
         assertEquals(IntervalRelation.After, a.getRelation(after));
         assertEquals(IntervalRelation.StartTouching, a.getRelation(startTouching));
@@ -73,7 +73,7 @@ public class IntervalTest extends AbstractUnitTest {
 
         Interval before = new Interval(now.minusHours(2), now.minusHours(1));
         Interval inside = new Interval(now.minusHours(1), now.plusHours(1));
-        Interval after  = new Interval(now.plusHours(1), now.plusHours(2));
+        Interval after = new Interval(now.plusHours(1), now.plusHours(2));
 
         assertTrue(before.difference(now) < 0);
         assertEquals(0, inside.difference(now));
