@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -14,8 +13,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ProjectionGenerator {
+    static String packageName = "br.com.uniamerica.gajigo.entity";
+
     public static void main(String[] args) {
-        Set<Class> classes = findAllClassesUsingClassLoader("br.com.uniamerica.gajigo.entity");
+        generate();
+    }
+
+    public static void generate() {
+        Set<Class> classes = findAllClassesUsingClassLoader(packageName);
 
         for (Class clazz: classes) {
             if (clazz.isEnum()) continue;
@@ -37,7 +42,7 @@ public class ProjectionGenerator {
         return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
 
-    public static void generateClassProjections(Class clazz) {
+    private static void generateClassProjections(Class clazz) {
         String name = clazz.getSimpleName();
         Field[] fields = clazz.getDeclaredFields();
 
@@ -61,7 +66,7 @@ public class ProjectionGenerator {
         }
     }
 
-    public static String getRelationType(Field relation) {
+    private static String getRelationType(Field relation) {
         String fieldType = relation.getGenericType().toString();
         fieldType = fieldType.replaceFirst("class ", "");
 
@@ -73,7 +78,7 @@ public class ProjectionGenerator {
         return fieldType.replaceFirst(".*\\.", "");
     }
 
-    public static String getTypeImports(Field relation) {
+    private static String getTypeImports(Field relation) {
         if (relation.getType().isPrimitive()) {
             return "";
         }
@@ -95,19 +100,18 @@ public class ProjectionGenerator {
         return imports;
     }
 
-    public static String generateProjectionContent(Class clazz, Field relation) {
+    private static String generateProjectionContent(Class clazz, Field relation) {
         StringBuilder stringBuilder = new StringBuilder();
         String name = clazz.getSimpleName();
-        String basePackage = "br.com.uniamerica.gajigo.entity";
         String capitalizedRelation = capitalizeName(relation.getName());
 
         getRelationType(relation);
 
-        stringBuilder.append("package " + basePackage + ".projection." + name.toLowerCase() + ";\n");
+        stringBuilder.append("package " + packageName + ".projection." + name.toLowerCase() + ";\n");
 
         stringBuilder.append("\n");
 
-        stringBuilder.append("import " + basePackage + "." + name + ";\n");
+        stringBuilder.append("import " + packageName + "." + name + ";\n");
         stringBuilder.append("import org.springframework.data.rest.core.config.Projection;\n");
         stringBuilder.append(getTypeImports(relation));
         for (Field field : clazz.getDeclaredFields()) {
@@ -133,7 +137,7 @@ public class ProjectionGenerator {
         return stringBuilder.toString();
     }
 
-    public static Set<Class> findAllClassesUsingClassLoader(String packageName) {
+    private static Set<Class> findAllClassesUsingClassLoader(String packageName) {
         InputStream stream = ClassLoader.getSystemClassLoader()
                 .getResourceAsStream(packageName.replaceAll("[.]", "/"));
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
