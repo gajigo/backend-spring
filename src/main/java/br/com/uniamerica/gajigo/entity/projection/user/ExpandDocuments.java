@@ -5,9 +5,6 @@ import org.springframework.data.rest.core.config.Projection;
 import br.com.uniamerica.gajigo.entity.Document;
 import java.util.Set;
 import java.lang.String;
-import java.lang.String;
-import java.lang.String;
-import java.lang.String;
 
 @Projection(name = "expandDocuments", types = { User.class })
 public interface ExpandDocuments {

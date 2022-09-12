@@ -4,9 +4,6 @@ import br.com.uniamerica.gajigo.entity.User;
 import org.springframework.data.rest.core.config.Projection;
 import br.com.uniamerica.gajigo.entity.City;
 import java.lang.String;
-import java.lang.String;
-import java.lang.String;
-import java.lang.String;
 
 @Projection(name = "expandLocation", types = { User.class })
 public interface ExpandLocation {

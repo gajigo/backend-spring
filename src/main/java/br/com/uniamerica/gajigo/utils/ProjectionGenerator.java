@@ -9,6 +9,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -114,11 +115,17 @@ public class ProjectionGenerator {
         stringBuilder.append("import " + packageName + "." + name + ";\n");
         stringBuilder.append("import org.springframework.data.rest.core.config.Projection;\n");
         stringBuilder.append(getTypeImports(relation));
+
+        Set<String> imports = new HashSet<>();
         for (Field field : clazz.getDeclaredFields()) {
             if (isRelation(field)) continue;
-            stringBuilder.append(getTypeImports(field));
-        }
 
+            String customImport = getTypeImports(field);
+            if (imports.contains(customImport)) continue;
+
+            imports.add(customImport);
+            stringBuilder.append(customImport);
+        }
 
         stringBuilder.append("\n");
 

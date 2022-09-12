@@ -5,9 +5,6 @@ import org.springframework.data.rest.core.config.Projection;
 import br.com.uniamerica.gajigo.entity.Lecture;
 import java.util.Set;
 import java.lang.String;
-import java.lang.String;
-import java.lang.String;
-import java.lang.String;
 
 @Projection(name = "expandParticipatesIn", types = { User.class })
 public interface ExpandParticipatesIn {
