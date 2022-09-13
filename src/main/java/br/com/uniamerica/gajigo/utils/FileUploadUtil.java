@@ -33,7 +33,7 @@ public final class FileUploadUtil {
             Path filePath = uploadPath.resolve(fileCode + "-" + fileName);
             String nameFile = fileCode + "-" + fileName;
             System.out.println("\n\n\n\nnameFile: " + nameFile);
-            validType(fileName);
+            isImage(fileName);
             Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ioe) {
             throw new IOException("Could not save file: " + fileName, ioe);
@@ -42,7 +42,7 @@ public final class FileUploadUtil {
         return fileCode;
     }
 
-    public static void validType(String falename) {
+    public static void isImage(String falename) {
         String extention = FilenameUtils.getExtension(falename);
         System.out.println("extention: " + extention);
         if (extention.equals("jpg") || extention.equals("png") || extention.equals("jpeg")) {
