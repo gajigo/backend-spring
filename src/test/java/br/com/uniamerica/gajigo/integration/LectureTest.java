@@ -143,7 +143,7 @@ public class LectureTest extends AbstractIntegrationTest {
 
         interval.put("startDate", "2023-07-15T00:00:00");
         interval.put("endDate", "2023-07-25T00:00:00");
-        lecture.put("removed", false);
+        lecture.put("active", true);
         lecture.put("name", "a new new lecture");
         lecture.put("description", "this is a new lecture");
         lecture.put("event", "/1");
