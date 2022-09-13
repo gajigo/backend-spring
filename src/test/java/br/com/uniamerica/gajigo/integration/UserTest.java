@@ -32,7 +32,7 @@ public class UserTest extends AbstractIntegrationTest {
 
         String json = mapper.writeValueAsString(user);
 
-        post(getPath(),json).andExpect(status().isCreated());
+        post(getPath(), json).andExpect(status().isCreated());
         get(getPath()).andExpect(content().string(containsString("John Doe")));
 
     }
@@ -48,10 +48,10 @@ public class UserTest extends AbstractIntegrationTest {
 
         String json = mapper.writeValueAsString(user);
 
-        post(getPath(),json).andExpect(status().isCreated());
+        post(getPath(), json).andExpect(status().isCreated());
         get(getPath()).andExpect(content().string(containsString("John Doe")));
 
-        delete("/api/users/",1L)
+        delete("/api/users/", 1L)
                 .andExpect(status().isNoContent());
 
     }
