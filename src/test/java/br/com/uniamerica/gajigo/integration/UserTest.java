@@ -3,18 +3,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.junit.jupiter.api.Test;
 import org.springframework.test.annotation.DirtiesContext;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 @WithMockUser(username = "admin", roles = "ADMIN")
 public class UserTest extends AbstractIntegrationTest {
     public UserTest() {
