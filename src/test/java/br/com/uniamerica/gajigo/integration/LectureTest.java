@@ -44,7 +44,7 @@ public class LectureTest extends AbstractIntegrationTest {
         return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(event);
     }
 
-    public String createLanguage() throws JsonProcessingException{
+    public String createLanguage() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode language = mapper.createObjectNode();
 
@@ -53,7 +53,7 @@ public class LectureTest extends AbstractIntegrationTest {
         return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(language);
     }
 
-    public String createLecture() throws JsonProcessingException{
+    public String createLecture() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode interval = mapper.createObjectNode();
         ObjectNode lecture = mapper.createObjectNode();
@@ -63,7 +63,7 @@ public class LectureTest extends AbstractIntegrationTest {
 
         interval.put("startDate", "2023-07-15T00:00:00");
         interval.put("endDate", "2023-07-25T00:00:00");
-        lecture.put("name","a new lecture");
+        lecture.put("name", "a new lecture");
         lecture.put("description", "this is a new lecture");
         lecture.put("event", "/1");
         lecture.put("attendanceMode", AttendanceMode.Online.name());
@@ -77,7 +77,7 @@ public class LectureTest extends AbstractIntegrationTest {
 
     @Test
     @DirtiesContext
-    public void testInsert() throws Exception{
+    public void testInsert() throws Exception {
         String pathUsers = "http://localhost:8080/api/users";
         String pathEvent = "http://localhost:8080/api/events";
         String pathLecture = "http://localhost:8080/api/lectures";
@@ -86,12 +86,12 @@ public class LectureTest extends AbstractIntegrationTest {
         post(pathUsers, createUser()).andExpect(status().isCreated());
         post(pathLanguage, createLanguage()).andExpect(status().isCreated());
         post(pathEvent, createEvent()).andExpect(status().isCreated());
-        post(pathLecture,createLecture()).andExpect(status().isCreated());
+        post(pathLecture, createLecture()).andExpect(status().isCreated());
     }
 
     @Test
     @DirtiesContext
-    public void testFindById() throws Exception{
+    public void testFindById() throws Exception {
         String pathUsers = "http://localhost:8080/api/users";
         String pathEvent = "http://localhost:8080/api/events";
         String pathLecture = "http://localhost:8080/api/lectures";
@@ -100,14 +100,14 @@ public class LectureTest extends AbstractIntegrationTest {
         post(pathUsers, createUser()).andExpect(status().isCreated());
         post(pathLanguage, createLanguage()).andExpect(status().isCreated());
         post(pathEvent, createEvent()).andExpect(status().isCreated());
-        post(pathLecture,createLecture()).andExpect(status().isCreated());
+        post(pathLecture, createLecture()).andExpect(status().isCreated());
 
-        getById(getPath(),1L).andExpect(status().isOk());
+        getById(getPath(), 1L).andExpect(status().isOk());
     }
 
     @Test
     @DirtiesContext
-    public void testFindAll() throws Exception{
+    public void testFindAll() throws Exception {
         String pathUsers = "http://localhost:8080/api/users";
         String pathEvent = "http://localhost:8080/api/events";
         String pathLecture = "http://localhost:8080/api/lectures";
@@ -116,14 +116,14 @@ public class LectureTest extends AbstractIntegrationTest {
         post(pathUsers, createUser()).andExpect(status().isCreated());
         post(pathLanguage, createLanguage()).andExpect(status().isCreated());
         post(pathEvent, createEvent()).andExpect(status().isCreated());
-        post(pathLecture,createLecture()).andExpect(status().isCreated());
+        post(pathLecture, createLecture()).andExpect(status().isCreated());
 
-        get(getPath()).andExpect(status().isOk());
+        get(this.getPath()).andExpect(status().isOk());
     }
 
     @Test
     @DirtiesContext
-    public  void testUpdate() throws Exception{
+    public  void testUpdate() throws Exception {
         String pathUsers = "http://localhost:8080/api/users";
         String pathEvent = "http://localhost:8080/api/events";
         String pathLecture = "http://localhost:8080/api/lectures";
@@ -132,7 +132,7 @@ public class LectureTest extends AbstractIntegrationTest {
         post(pathUsers, createUser()).andExpect(status().isCreated());
         post(pathLanguage, createLanguage()).andExpect(status().isCreated());
         post(pathEvent, createEvent()).andExpect(status().isCreated());
-        post(pathLecture,createLecture()).andExpect(status().isCreated());
+        post(pathLecture, createLecture()).andExpect(status().isCreated());
 
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode interval = mapper.createObjectNode();
@@ -144,7 +144,7 @@ public class LectureTest extends AbstractIntegrationTest {
         interval.put("startDate", "2023-07-15T00:00:00");
         interval.put("endDate", "2023-07-25T00:00:00");
         lecture.put("removed", false);
-        lecture.put("name","a new new lecture");
+        lecture.put("name", "a new new lecture");
         lecture.put("description", "this is a new lecture");
         lecture.put("event", "/1");
         lecture.put("attendanceMode", AttendanceMode.Online.name());
@@ -153,13 +153,13 @@ public class LectureTest extends AbstractIntegrationTest {
         lecture.put("interval", interval);
 
         String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(lecture);
-        put(getPath(),1L, json).andExpect(status().isOk());
+        put(this.getPath(), 1L, json).andExpect(status().isOk());
 
     }
 
     @Test
     @DirtiesContext
-    public void testDelete() throws Exception{
+    public void testDelete() throws Exception {
         String pathUsers = "http://localhost:8080/api/users";
         String pathEvent = "http://localhost:8080/api/events";
         String pathLecture = "http://localhost:8080/api/lectures";
@@ -168,14 +168,14 @@ public class LectureTest extends AbstractIntegrationTest {
         post(pathUsers, createUser()).andExpect(status().isCreated());
         post(pathLanguage, createLanguage()).andExpect(status().isCreated());
         post(pathEvent, createEvent()).andExpect(status().isCreated());
-        post(pathLecture,createLecture()).andExpect(status().isCreated());
+        post(pathLecture, createLecture()).andExpect(status().isCreated());
 
         delete(getPath(), 1L).andExpect(status().isNoContent());
     }
 
     @Test
     @DirtiesContext
-    public void testDisable() throws Exception{
+    public void testDisable() throws Exception {
         String pathUsers = "http://localhost:8080/api/users";
         String pathEvent = "http://localhost:8080/api/events";
         String pathLecture = "http://localhost:8080/api/lectures";
@@ -184,8 +184,8 @@ public class LectureTest extends AbstractIntegrationTest {
         post(pathUsers, createUser()).andExpect(status().isCreated());
         post(pathLanguage, createLanguage()).andExpect(status().isCreated());
         post(pathEvent, createEvent()).andExpect(status().isCreated());
-        post(pathLecture,createLecture()).andExpect(status().isCreated());
+        post(pathLecture, createLecture()).andExpect(status().isCreated());
 
-        disable(getPath(),1L).andExpect(status().isOk());
+        disable(getPath(), 1L).andExpect(status().isOk());
     }
 }
