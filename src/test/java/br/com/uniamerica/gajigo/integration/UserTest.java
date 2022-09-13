@@ -23,7 +23,7 @@ public class UserTest extends AbstractIntegrationTest {
 
     @Test
     public void findAllUsers() throws Exception {
-        get(path).andExpect(status().is2xxSuccessful());
+        get(getPath()).andExpect(status().is2xxSuccessful());
     }
 
     @Test
@@ -37,8 +37,8 @@ public class UserTest extends AbstractIntegrationTest {
 
         String json = mapper.writeValueAsString(user);
 
-        post(path,json).andExpect(status().isCreated());
-        get(path).andExpect(content().string(containsString("John Doe")));
+        post(getPath(),json).andExpect(status().isCreated());
+        get(getPath()).andExpect(content().string(containsString("John Doe")));
 
     }
 
@@ -53,10 +53,10 @@ public class UserTest extends AbstractIntegrationTest {
 
         String json = mapper.writeValueAsString(user);
 
-        post(path,json).andExpect(status().isCreated());
-        get(path).andExpect(content().string(containsString("John Doe")));
+        post(getPath(),json).andExpect(status().isCreated());
+        get(getPath()).andExpect(content().string(containsString("John Doe")));
 
-        mockMvc.perform( MockMvcRequestBuilders.delete("/api/users/{id}",1))
+        delete("/api/users/",1L)
                 .andExpect(status().isNoContent());
 
     }
