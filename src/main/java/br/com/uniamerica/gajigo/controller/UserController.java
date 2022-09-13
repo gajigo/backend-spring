@@ -5,7 +5,7 @@ import br.com.uniamerica.gajigo.repository.UserRepository;
 import br.com.uniamerica.gajigo.response.FileUploadResponse;
 import br.com.uniamerica.gajigo.utils.FileDownloadUtil;
 import br.com.uniamerica.gajigo.utils.FileUploadUtil;
-import liquibase.util.file.FilenameUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
@@ -53,7 +53,7 @@ public class UserController {
         String nameFile = filecode + "-" + fileName;
         Optional<User> userOptional = this.userRepository.findById(id);
 
-        if(userOptional.isPresent()) {
+        if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setProfileImage(nameFile);
 
