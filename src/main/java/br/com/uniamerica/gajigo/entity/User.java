@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -15,7 +14,6 @@ import java.util.Set;
 
 @Entity
 @Table(schema = "public", name = "users")
-@Where(clause = "removed IS null")
 @NoArgsConstructor
 @Getter
 @Setter

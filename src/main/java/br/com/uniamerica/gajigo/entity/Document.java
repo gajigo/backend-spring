@@ -3,14 +3,12 @@ package br.com.uniamerica.gajigo.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
 @Entity
 @Table(schema = "public", name = "documents",
         uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "type"}))
-@Where(clause = "removed IS null")
 @NoArgsConstructor
 @Getter
 @Setter

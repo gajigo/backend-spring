@@ -80,7 +80,7 @@ public class EventTest extends AbstractIntegrationTest {
         interval.put("endDate", "2023-07-25T00:00:00");
 
         event.put("name", "Novo nome");
-        event.put("removed", false);
+        event.put("active", true);
         event.put("attendanceMode", "Online");
         event.put("interval", interval);
         event.put("owner", "http://localhost:8080/api/users/1");
