@@ -9,6 +9,7 @@ import java.util.Set;
 public interface ExpandDocuments {
     Set<Document> getDocuments();
     boolean getAdmin();
+    String getProfileImage();
     String getUsername();
     String getEmail();
     String getPassword();

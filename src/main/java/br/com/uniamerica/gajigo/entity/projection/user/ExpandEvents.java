@@ -9,6 +9,7 @@ import java.util.Set;
 public interface ExpandEvents {
     Set<Event> getEvents();
     boolean getAdmin();
+    String getProfileImage();
     String getUsername();
     String getEmail();
     String getPassword();

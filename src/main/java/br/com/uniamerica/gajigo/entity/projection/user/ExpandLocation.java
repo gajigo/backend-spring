@@ -8,6 +8,7 @@ import br.com.uniamerica.gajigo.entity.City;
 public interface ExpandLocation {
     City getLocation();
     boolean getAdmin();
+    String getProfileImage();
     String getUsername();
     String getEmail();
     String getPassword();

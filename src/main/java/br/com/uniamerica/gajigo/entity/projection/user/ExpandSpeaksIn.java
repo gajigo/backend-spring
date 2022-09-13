@@ -9,6 +9,7 @@ import java.util.Set;
 public interface ExpandSpeaksIn {
     Set<Lecture> getSpeaksIn();
     boolean getAdmin();
+    String getProfileImage();
     String getUsername();
     String getEmail();
     String getPassword();

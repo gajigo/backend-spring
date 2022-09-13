@@ -9,6 +9,7 @@ import java.util.Set;
 public interface ExpandParticipatesIn {
     Set<Lecture> getParticipatesIn();
     boolean getAdmin();
+    String getProfileImage();
     String getUsername();
     String getEmail();
     String getPassword();

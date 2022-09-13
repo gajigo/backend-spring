@@ -9,6 +9,7 @@ import java.util.Set;
 public interface ExpandOrganizes {
     Set<Event> getOrganizes();
     boolean getAdmin();
+    String getProfileImage();
     String getUsername();
     String getEmail();
     String getPassword();
