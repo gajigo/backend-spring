@@ -42,7 +42,7 @@ public class UserRepositoryTest extends AbstractRepositoryTest {
         repository.save(user);
         Integer countUser = repository.findAll().size();
         assertEquals(1, countUser);
-        User users1 = repository.findUserByUsernameAndPasswordAndEmail("username", "password", "email@email.com" );
+        User users1 = repository.findUserByUsernameAndPasswordAndEmail("username", "password", "email@email.com");
         assertNotNull(users1);
         assertEquals(user, users1);
 
