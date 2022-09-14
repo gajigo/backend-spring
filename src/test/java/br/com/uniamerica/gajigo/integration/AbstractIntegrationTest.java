@@ -42,6 +42,8 @@ public abstract class AbstractIntegrationTest {
         this.path = root + resource;
     }
 
+    abstract String  create() throws Exception ;
+
     protected String getLinkToSelf(String content) {
         return JsonPath.read(content, "$._links.self.href");
     }
@@ -98,10 +100,10 @@ public abstract class AbstractIntegrationTest {
     ResultActions disable(String path) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode object = mapper.createObjectNode();
-        object.put("active", false);
+        object.put("removed", true);
         String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
 
-        return this.mockMvc.perform(MockMvcRequestBuilders.patch(path)
+        return this.mockMvc.perform(MockMvcRequestBuilders.patch(path + "/" + id)
                         .contentType("application/json")
                         .content(json))
                 .andDo(print());

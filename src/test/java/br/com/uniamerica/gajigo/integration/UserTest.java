@@ -14,7 +14,7 @@ public class UserTest extends AbstractIntegrationTest {
         super("users");
     }
 
-    public String createUser() throws JsonProcessingException {
+    public String create() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode user = mapper.createObjectNode();
         user.put("name", "eduardo");
@@ -28,13 +28,13 @@ public class UserTest extends AbstractIntegrationTest {
     @Test
     @DirtiesContext
     public void testInsert() throws Exception {
-        post(this.getPath(), createUser()).andExpect(status().isCreated());
+        post(getPath(),create()).andExpect(status().isCreated());
     }
 
     @Test
     @DirtiesContext
     public void testUpdate() throws Exception {
-        post(this.getPath(), createUser()).andExpect(status().isCreated());
+        post(getPath(),create());
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode user = mapper.createObjectNode();
         user.put("name", "eduardo");
@@ -58,14 +58,14 @@ public class UserTest extends AbstractIntegrationTest {
     @Test
     @DirtiesContext
     public void testFindById() throws Exception {
-        post(this.getPath(), createUser()).andExpect(status().isCreated());
+        post(getPath(),create());
         getById(this.getPath(), 1L).andExpect(status().isOk());
     }
 
     @Test
     @DirtiesContext
     public void testFindAll() throws Exception {
-        post(this.getPath(), createUser()).andExpect(status().isCreated());
+        post(getPath(),create());
         get(this.getPath()).andExpect(status().isOk());
     }
 }
