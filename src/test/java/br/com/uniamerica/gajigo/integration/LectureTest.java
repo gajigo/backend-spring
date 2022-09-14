@@ -17,12 +17,12 @@ public class LectureTest extends AbstractIntegrationTest {
         super("lectures");
     }
 
-    UserTest userTest = new UserTest();
-    EventTest eventTest = new EventTest();
-    LanguageTest languageTest = new LanguageTest();
-    String userPath = "/api/users";
-    String eventPath = "/api/events";
-    String languagePath = "/api/languages";
+    private UserTest userTest = new UserTest();
+    private EventTest eventTest = new EventTest();
+    private LanguageTest languageTest = new LanguageTest();
+    private String userPath = "/api/users";
+    private String eventPath = "/api/events";
+    private String languagePath = "/api/languages";
 
     public String create() throws Exception {
         ObjectMapper mapper = new ObjectMapper();

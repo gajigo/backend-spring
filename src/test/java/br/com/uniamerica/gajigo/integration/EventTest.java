@@ -11,8 +11,8 @@ public class EventTest extends AbstractIntegrationTest {
     public EventTest() {
         super("events");
     }
-    UserTest userTest = new UserTest();
-    String userPath = "/api/users";
+    private UserTest userTest = new UserTest();
+    private String userPath = "/api/users";
 
 
     public String create() throws Exception {
@@ -34,14 +34,14 @@ public class EventTest extends AbstractIntegrationTest {
     @DirtiesContext
     public void testInsert() throws Exception  {
         post(userPath, userTest.create());
-        post(getPath(), create()).andExpect(status().isCreated());
+        post(this.getPath(), this.create()).andExpect(status().isCreated());
     }
 
     @Test
     @DirtiesContext
     public void testFindById() throws Exception {
         post(userPath, userTest.create());
-        post(getPath(),create());
+        post(this.getPath(), this.create());
         getById(this.getPath(), 1L).andExpect(status().isOk());
     }
 
@@ -49,7 +49,7 @@ public class EventTest extends AbstractIntegrationTest {
     @DirtiesContext
     public void testFindAll() throws Exception {
         post(userPath, userTest.create());
-        post(getPath(),create());
+        post(this.getPath(), this.create());
         get(this.getPath()).andExpect(status().isOk());
     }
 
@@ -57,7 +57,7 @@ public class EventTest extends AbstractIntegrationTest {
     @DirtiesContext
     public void testUpdate() throws Exception {
         post(userPath, userTest.create());
-        post(getPath(),create());
+        post(this.getPath(), this.create());
 
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode event = mapper.createObjectNode();
@@ -79,7 +79,7 @@ public class EventTest extends AbstractIntegrationTest {
     @DirtiesContext
     public void testDelete() throws Exception {
         post(userPath, userTest.create());
-        post(getPath(),create());
+        post(this.getPath(), this.create());
         delete(this.getPath(), 1L).andExpect(status().isNoContent());
     }
 
@@ -87,7 +87,7 @@ public class EventTest extends AbstractIntegrationTest {
     @DirtiesContext
     public void testDisable() throws Exception {
         post(userPath, userTest.create());
-        post(getPath(),create());
+        post(this.getPath(), this.create());
         disable(this.getPath(), 1L).andExpect(status().isOk());
     }
 }
