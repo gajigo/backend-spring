@@ -9,9 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MvcResult;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.springframework.test.annotation.DirtiesContext;
+
 @WithMockUser(username = "admin", roles = "ADMIN")
 public class UserTest extends AbstractIntegrationTest {
     public UserTest() {
