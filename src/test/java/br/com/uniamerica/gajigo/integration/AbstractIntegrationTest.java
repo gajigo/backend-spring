@@ -100,10 +100,10 @@ public abstract class AbstractIntegrationTest {
     ResultActions disable(String path) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode object = mapper.createObjectNode();
-        object.put("removed", true);
+        object.put("active", false);
         String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
 
-        return this.mockMvc.perform(MockMvcRequestBuilders.patch(path + "/" + id)
+        return this.mockMvc.perform(MockMvcRequestBuilders.patch(path)
                         .contentType("application/json")
                         .content(json))
                 .andDo(print());

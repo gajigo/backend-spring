@@ -30,18 +30,12 @@ public class LectureTest extends AbstractIntegrationTest {
     String languagePath = "/api/languages";
 
     public String create() throws Exception {
-//        String userPath = "/api/users";
-//        String eventPath = "/api/events";
-//        String languagePath = "/api/languages";
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode interval = mapper.createObjectNode();
         ObjectNode lecture = mapper.createObjectNode();
         List<String> speakers = new ArrayList<>();
         speakers.add("/1");
         ArrayNode array = mapper.valueToTree(speakers);
-
-//        post(languagePath, languageTest.create());
-//        post(eventPath, eventTest.create());
 
         interval.put("startDate", "2023-07-15T00:00:00");
         interval.put("endDate", "2023-07-25T00:00:00");
@@ -63,7 +57,7 @@ public class LectureTest extends AbstractIntegrationTest {
         post(userPath, userTest.create());
         post(languagePath, languageTest.create());
         post(eventPath, eventTest.create());
-        post(getPath(),create()).andExpect(status().isCreated());
+        post(this.getPath(), this.create()).andExpect(status().isCreated());
     }
 
     @Test
@@ -72,7 +66,7 @@ public class LectureTest extends AbstractIntegrationTest {
         post(userPath, userTest.create());
         post(languagePath, languageTest.create());
         post(eventPath, eventTest.create());
-        post(getPath(),create());
+        post(this.getPath(), this.create());
 
         getById(getPath(), 1L).andExpect(status().isOk());
     }
@@ -83,7 +77,7 @@ public class LectureTest extends AbstractIntegrationTest {
         post(userPath, userTest.create());
         post(languagePath, languageTest.create());
         post(eventPath, eventTest.create());
-        post(getPath(),create());
+        post(this.getPath(), this.create());
 
         get(this.getPath()).andExpect(status().isOk());
     }
@@ -94,7 +88,7 @@ public class LectureTest extends AbstractIntegrationTest {
         post(userPath, userTest.create());
         post(languagePath, languageTest.create());
         post(eventPath, eventTest.create());
-        post(getPath(),create());
+        post(this.getPath(), this.create());
 
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode interval = mapper.createObjectNode();
@@ -125,7 +119,7 @@ public class LectureTest extends AbstractIntegrationTest {
         post(userPath, userTest.create());
         post(languagePath, languageTest.create());
         post(eventPath, eventTest.create());
-        post(getPath(),create());
+        post(this.getPath(), this.create());
 
         delete(getPath(), 1L).andExpect(status().isNoContent());
     }
@@ -136,7 +130,7 @@ public class LectureTest extends AbstractIntegrationTest {
         post(userPath, userTest.create());
         post(languagePath, languageTest.create());
         post(eventPath, eventTest.create());
-        post(getPath(),create());
+        post(this.getPath(), this.create());
 
         disable(getPath(), 1L).andExpect(status().isOk());
     }
