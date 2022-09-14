@@ -3,8 +3,11 @@ package br.com.uniamerica.gajigo.integration;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.web.servlet.MvcResult;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class UserTest extends AbstractIntegrationTest {
@@ -47,8 +50,10 @@ public class UserTest extends AbstractIntegrationTest {
     @Test
     @DirtiesContext
     public void testDisable() throws Exception {
-        post(this.getPath(), createUser()).andExpect(status().isCreated());
-        disable(this.getPath(), 1L).andExpect(status().isOk());
+        MvcResult result = post(this.getPath(), createUser())
+                .andExpect(status().isCreated())
+                .andReturn();
+        disable(getLinkToSelf(result.getResponse().getContentAsString())).andExpect(status().isOk());
     }
 
     @Test
