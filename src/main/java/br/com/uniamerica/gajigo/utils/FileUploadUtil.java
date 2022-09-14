@@ -34,6 +34,7 @@ public final class FileUploadUtil {
             String nameFile = fileCode + "-" + fileName;
             System.out.println("\n\n\n\nnameFile: " + nameFile);
             isImage(fileName);
+            validImageSize(multipartFile);
             Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ioe) {
             throw new IOException("Could not save file: " + fileName, ioe);
@@ -51,6 +52,21 @@ public final class FileUploadUtil {
             throw new RuntimeException("formato incompativel");
         }
     }
+
+    public static void validImageSize(MultipartFile multipartFile) {
+        // o 1024 é utilizado para converter de bytes para kilobytes
+        // bem como de kilobytes para megabytes e adiate
+        double sizeBytesFile = (double) multipartFile.getSize();
+        double sizeKBFile = sizeBytesFile / 1024;
+        double sizeMBFile = sizeKBFile / 1024;
+
+        double maxSizeMB = 10;
+
+        if (sizeMBFile > maxSizeMB) {
+            throw new RuntimeException("tamanho maximo excedido, tamanho maximo é 10 megabyte");
+        }
+    }
+
     public static String generateFileName(Long id) throws RuntimeException, NoSuchAlgorithmException {
         String fileName = (id.toString() + LocalDateTime.now());
         String hashFilename;
