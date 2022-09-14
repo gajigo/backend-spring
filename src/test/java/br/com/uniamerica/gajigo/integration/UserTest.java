@@ -2,10 +2,12 @@ package br.com.uniamerica.gajigo.integration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.Test;
-import org.springframework.security.test.context.support.WithMockUser;
 
+import org.springframework.security.test.context.support.WithMockUser;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.web.servlet.MvcResult;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -83,7 +85,7 @@ public class UserTest extends AbstractIntegrationTest {
         user.put("email", "eduardo@gmail.com");
         user.put("username", "eduardo.sm");
         user.put("password", "123");
-        user.put("removed", false);
+        user.put("active", true);
         String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
         put(this.getPath(), 1L, json).andExpect(status().isOk());
     }
@@ -91,8 +93,10 @@ public class UserTest extends AbstractIntegrationTest {
     @Test
     @DirtiesContext
     public void testDisable() throws Exception {
-        post(this.getPath(), createUser()).andExpect(status().isCreated());
-        disable(this.getPath(), 1L).andExpect(status().isOk());
+        MvcResult result = post(this.getPath(), createUser())
+                .andExpect(status().isCreated())
+                .andReturn();
+        disable(getLinkToSelf(result.getResponse().getContentAsString())).andExpect(status().isOk());
     }
 
     @Test

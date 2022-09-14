@@ -3,6 +3,7 @@ package br.com.uniamerica.gajigo.integration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import com.jayway.jsonpath.JsonPath;
 import lombok.Getter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,10 @@ public abstract class AbstractIntegrationTest {
     public AbstractIntegrationTest(String resource) {
         this.resource = resource;
         this.path = root + resource;
+    }
+
+    protected String getLinkToSelf(String content) {
+        return JsonPath.read(content, "$._links.self.href");
     }
 
     @Test
@@ -82,13 +87,21 @@ public abstract class AbstractIntegrationTest {
                         .andDo(print());
     }
 
+    ResultActions disable(Long id) throws Exception {
+        return disable(this.path + "/" + id);
+    }
+
     ResultActions disable(String path, Long id) throws Exception {
+        return disable(path + "/" + id);
+    }
+
+    ResultActions disable(String path) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode object = mapper.createObjectNode();
         object.put("active", false);
         String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
 
-        return this.mockMvc.perform(MockMvcRequestBuilders.patch(path + "/" + id)
+        return this.mockMvc.perform(MockMvcRequestBuilders.patch(path)
                         .contentType("application/json")
                         .content(json))
                 .andDo(print());
