@@ -42,6 +42,8 @@ public abstract class AbstractIntegrationTest {
         this.path = root + resource;
     }
 
+    abstract String  create() throws Exception;
+
     protected String getLinkToSelf(String content) {
         return JsonPath.read(content, "$._links.self.href");
     }

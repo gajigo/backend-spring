@@ -20,4 +20,7 @@ public class CountryTest extends AbstractIntegrationTest {
 
         post(this.getPath(), json).andExpect(status().isCreated());
     }
+    public String create() throws Exception {
+        return null;
+    }
 }
