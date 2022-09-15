@@ -29,6 +29,15 @@ import static org.springframework.http.HttpMethod.GET;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
+
+    private static final String[] AUTH_WHITELIST = {
+        "/api/login/**",
+        "/swagger-resources/**",
+        "/swagger-ui.html**",
+        "/swagger-ui/**",
+        "/v2/api-docs**",
+        "/webjars/**"
+    };
     @Autowired
     private final AuthenticationService authenticationService;
 
@@ -55,7 +64,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/**").permitAll();
+        http.authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll();
         http.authorizeRequests().antMatchers(GET, "/api/**").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(authenticationFilter);
