@@ -105,7 +105,6 @@ public class LectureTest extends AbstractIntegrationTest {
 
         String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(lecture);
         put(getPath(), 1L, json).andExpect(status().isOk());
-
     }
 
     @Test
