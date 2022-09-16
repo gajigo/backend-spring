@@ -25,11 +25,11 @@ public class SwaggerConfig {
     public OpenAPI springShopOpenAPI() {
         return new OpenAPI()
                 .info(new Info().title("Gajigo API")
-                        .description("Gajigo é uma plataforma de gestão de eventos inteligente")
-                        .version("v0.0.1")
-                        .license(new License().name("Comercial")))
-                .externalDocs(new ExternalDocumentation()
-                        .description("Repositório")
-                        .url("https://github.com/gajigo"));
+                    .description("Gajigo é uma plataforma de gestão de eventos inteligente")
+                    .version("v0.0.1")
+                    .license(new License().name("Comercial"))
+                ).externalDocs(new ExternalDocumentation()
+                    .description("Repositório")
+                    .url("https://github.com/gajigo"));
     }
 }
