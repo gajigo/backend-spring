@@ -1,33 +1,35 @@
 package br.com.uniamerica.gajigo.config;
 
+import io.swagger.v3.oas.models.ExternalDocumentation;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.annotations.OpenAPI30;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
+import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
-@EnableSwagger2
+@OpenAPI30
 public class SwaggerConfig {
+
     @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
-                .build()
-                .apiInfo(apiInfo());
+    public GroupedOpenApi publicApi() {
+        return GroupedOpenApi.builder()
+                .group("gajigo-api")
+                .pathsToMatch("/api/**")
+                .build();
     }
 
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("Gajigo API")
-                .description("Gajigo é uma plataforma de gestão de eventos inteligente")
-                .license("Comercial")
-                .build();
+    @Bean
+    public OpenAPI springShopOpenAPI() {
+        return new OpenAPI()
+                .info(new Info().title("Gajigo API")
+                        .description("Gajigo é uma plataforma de gestão de eventos inteligente")
+                        .version("v0.0.1")
+                        .license(new License().name("Comercial")))
+                .externalDocs(new ExternalDocumentation()
+                        .description("Repositório")
+                        .url("https://github.com/gajigo"));
     }
 }
