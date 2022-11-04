@@ -39,4 +39,14 @@ public class GajigoApplication implements RepositoryRestConfigurer {
         validatingListener.addValidator("beforeSave", validator);
         validatingListener.addValidator("beforeLinkSave", validator);
     }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("http://localhost:3000/");
+            }
+        };
+    }
 }
