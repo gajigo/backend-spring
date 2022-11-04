@@ -3,14 +3,19 @@ package br.com.uniamerica.gajigo.filter;
 import br.com.uniamerica.gajigo.entity.AppUser;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -25,6 +30,7 @@ import java.util.stream.Collectors;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
+@CrossOrigin
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
@@ -36,13 +42,32 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                username, password
-        );
+        if (!HttpMethod.POST.matches(request.getMethod())) {
+            throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
+        }
 
-        return this.authenticationManager.authenticate(authenticationToken);
+        try {
+            JsonAuthenticationParser auth = new ObjectMapper().readValue(
+                    request.getInputStream(), JsonAuthenticationParser.class
+            );
+
+            UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
+                    auth.username, auth.password
+            );
+
+            return this.authenticationManager.authenticate(authRequest);
+        } catch (IOException e) {
+            response.setContentType(APPLICATION_JSON_VALUE);
+            throw new AuthenticationServiceException("Could not parse authentication payload");
+        }
+    }
+
+    record JsonAuthenticationParser(String username, String password) {
+        @JsonCreator
+                JsonAuthenticationParser(@JsonProperty("username") String username, @JsonProperty("password") String password) {
+            this.username = username;
+            this.password = password;
+        }
     }
 
     @Override

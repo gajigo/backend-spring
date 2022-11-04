@@ -6,8 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.rest.core.annotation.RestResource;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @NoRepositoryBean
+@CrossOrigin
 public interface SoftDeleteRepository<T, ID> extends JpaRepository<T, ID> {
     @Override
     @Query("select e from #{#entityName} e where e.active=true")
