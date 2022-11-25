@@ -91,6 +91,8 @@ public class User extends AbstractDescribable implements UserDetails {
 
 
         User currentUser = new User();
+        currentUser.setId(user.getId());
+        currentUser.setEmail(user.getEmail());
         currentUser.setName(user.getName());
         currentUser.setActive(user.isActive());
         currentUser.setUsername(user.getUsername());
