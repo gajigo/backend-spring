@@ -19,11 +19,11 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @CrossOrigin
 public class UserController {
     @RequestMapping(method = GET, value = "/api/users/me")
-    public ResponseEntity<AppUser> getCurrentUser() {
+    public ResponseEntity<User> getCurrentUser() {
         UsernamePasswordAuthenticationToken currentAuth = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 
         return ResponseEntity.ok().body(
-                (AppUser) currentAuth.getPrincipal()
+                (User) currentAuth.getPrincipal()
         );
     }
 }
