@@ -1,6 +1,5 @@
 package br.com.uniamerica.gajigo.service;
 
-import br.com.uniamerica.gajigo.entity.AppUser;
 import br.com.uniamerica.gajigo.entity.User;
 import br.com.uniamerica.gajigo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,6 @@ public class AuthenticationService implements UserDetailsService {
             throw new UsernameNotFoundException("User " + username + " couldn't be located.");
         }
 
-        return AppUser.build(user);
+        return User.build(user);
     }
 }

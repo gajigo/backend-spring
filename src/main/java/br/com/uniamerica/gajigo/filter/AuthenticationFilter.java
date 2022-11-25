@@ -1,6 +1,6 @@
 package br.com.uniamerica.gajigo.filter;
 
-import br.com.uniamerica.gajigo.entity.AppUser;
+import br.com.uniamerica.gajigo.entity.User;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -52,7 +52,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
             FilterChain chain,
             Authentication authentication
     ) throws IOException, ServletException {
-        AppUser user = (AppUser) authentication.getPrincipal();
+        User user = (User) authentication.getPrincipal();
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
         String accessToken = JWT.create()
                 .withSubject(user.getUsername())
