@@ -1,13 +1,18 @@
 package br.com.uniamerica.gajigo.filter;
 
+import br.com.uniamerica.gajigo.service.AuthenticationService;
+import br.com.uniamerica.gajigo.utils.JwtUtils;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -20,45 +25,57 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import static br.com.uniamerica.gajigo.utils.HttpConstants.*;
 import static java.util.Arrays.stream;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class AuthorizationFilter extends OncePerRequestFilter {
+    @Autowired
+    private AuthenticationService authenticationService;
+
     @Override
     protected void doFilterInternal(
             HttpServletRequest request, HttpServletResponse response, FilterChain filterChain
     ) throws ServletException, IOException {
-        if (request.getServletPath().equals("/api/login")) {
+        if (request.getServletPath().equals(API_LOGIN_ENDPOINT)) {
             filterChain.doFilter(request, response);
         } else {
             String authtorizationHeader = request.getHeader(AUTHORIZATION);
-            if (authtorizationHeader != null && authtorizationHeader.startsWith("Bearer ")) {
+            if (authtorizationHeader != null && authtorizationHeader.startsWith(TOKEN_PREFIX)) {
+                String username = null;
+                String token = null;
+                String[] roles;
+                Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
                 try {
-                    String token = authtorizationHeader.substring("Bearer ".length());
-                    Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+                    token = authtorizationHeader.substring(TOKEN_PREFIX.length());
+
+                    Algorithm algorithm = Algorithm.HMAC256(SIGNING_KEY.getBytes());
                     JWTVerifier verifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(token);
-                    String username = decodedJWT.getSubject();
-                    String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
-                    Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+                    username = decodedJWT.getSubject();
+                    roles = decodedJWT.getClaim("roles").asArray(String.class);
                     stream(roles).forEach(role -> {
-                       authorities.add(new SimpleGrantedAuthority(role));
+                        authorities.add(new SimpleGrantedAuthority(role));
                     });
-
-                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                            username, null, authorities
-                    );
-
-                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 } catch (Exception exception) {
                     response.setHeader("error", exception.getMessage());
                     response.setStatus(FORBIDDEN.value());
                     Map<String, String> error = new HashMap<>();
-                    error.put("error_message", exception.getMessage());
+                    error.put("message", exception.getMessage());
                     response.setContentType(APPLICATION_JSON_VALUE);
                     new ObjectMapper().writeValue(response.getOutputStream(), error);
+                }
+                if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                    JwtUtils jwtUtils = new JwtUtils();
+                    UserDetails userDetails = authenticationService.loadUserByUsername(username);
+                    if (jwtUtils.validateToken(token, userDetails)) {
+                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
+                        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                    }
+
                 }
             }
             filterChain.doFilter(request, response);
