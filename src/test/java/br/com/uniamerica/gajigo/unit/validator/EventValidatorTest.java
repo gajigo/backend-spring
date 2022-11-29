@@ -56,12 +56,11 @@ public class EventValidatorTest extends AbstractValidatorTest<Event> {
     public Event validObject() {
         Event event = new Event("Test", "testevent",
                 EventStatus.EventScheduled, AttendanceMode.Mixed);
-        City city = new CityValidatorTest().validObject();
         User user = new UserValidatorTest().validObject();
         Interval interval = new Interval(LocalDateTime.now().plusDays(1),
                 LocalDateTime.now().plusYears(1));
 
-        event.setLocation(city);
+        event.setLocation("são paulo");
         event.setOwner(user);
         event.setInterval(interval);
 

@@ -14,9 +14,9 @@ import java.util.Set;
 @Getter
 @Setter
 public class Event extends AbstractDescribable {
-    @ManyToOne
-    @JoinColumn(name = "location_id")
-    private City location;
+
+    @Column(name = "location")
+    private String location;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "owner_id")
