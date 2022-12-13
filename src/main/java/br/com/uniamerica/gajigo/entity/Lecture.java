@@ -9,8 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(schema = "public", name = "lectures",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"name", "event_id"}))
+@Table(schema = "public", name = "lectures")
 @NoArgsConstructor
 @Getter
 @Setter
