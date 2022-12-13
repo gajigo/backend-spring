@@ -10,6 +10,7 @@ import br.com.uniamerica.gajigo.entity.AttendanceMode;
 @Projection(name = "expandOwner", types = { Event.class })
 public interface ExpandOwner {
     User getOwner();
+    String getLocation();
     EventStatus getStatus();
     Interval getInterval();
     AttendanceMode getAttendanceMode();

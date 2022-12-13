@@ -1,14 +1,19 @@
 package br.com.uniamerica.gajigo.entity;
 
 import br.com.uniamerica.gajigo.utils.JsonDeserializers;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +22,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-public class User extends AbstractDescribable {
+public class User extends AbstractDescribable implements UserDetails {
     @Column(name = "admin", nullable = false)
     private boolean admin; // boolean is false by default
 
@@ -77,5 +82,53 @@ public class User extends AbstractDescribable {
                 String description, String email, boolean isAdmin) {
         this(username, password, name, description, email);
         this.setAdmin(isAdmin);
+    }
+
+    public static User build(final User user) {
+        // TODO: Implementation needed
+        final Set<GrantedAuthority> grantedAuthoritySet = new HashSet<>();
+        grantedAuthoritySet.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+
+
+        User currentUser = new User();
+        currentUser.setId(user.getId());
+        currentUser.setEmail(user.getEmail());
+        currentUser.setName(user.getName());
+        currentUser.setActive(user.isActive());
+        currentUser.setUsername(user.getUsername());
+        currentUser.setPassword(user.getPassword());
+
+        return currentUser;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        final Set<GrantedAuthority> grantedAuthoritySet = new HashSet<>();
+        grantedAuthoritySet.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        return grantedAuthoritySet;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isAccountNonExpired() {
+        return this.isActive();
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isAccountNonLocked() {
+        return this.isActive();
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isCredentialsNonExpired() {
+        return this.isActive();
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isEnabled() {
+        return this.isActive();
     }
 }

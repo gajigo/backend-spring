@@ -11,6 +11,7 @@ import br.com.uniamerica.gajigo.entity.AttendanceMode;
 @Projection(name = "expandOrganizers", types = { Event.class })
 public interface ExpandOrganizers {
     Set<User> getOrganizers();
+    String getLocation();
     EventStatus getStatus();
     Interval getInterval();
     AttendanceMode getAttendanceMode();
