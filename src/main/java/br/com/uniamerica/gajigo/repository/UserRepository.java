@@ -8,4 +8,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin
 public interface UserRepository extends SoftDeleteRepository<User, Long> {
     User findFirstByUsername(String username);
+
+    User findUserByUsernameAndPasswordAndEmail(String username, String password, String email);
 }
+
+

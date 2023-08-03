@@ -3,15 +3,62 @@ package br.com.uniamerica.gajigo.integration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.Test;
+
+import org.springframework.security.test.context.support.WithMockUser;
+import static org.hamcrest.Matchers.containsString;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MvcResult;
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
+@WithMockUser(username = "admin", roles = "ADMIN")
 public class UserTest extends AbstractIntegrationTest {
     public UserTest() {
         super("users");
     }
+
+    @Test
+    public void findAllUsers() throws Exception {
+        get(getPath()).andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    public void postUser() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+                ObjectNode user = mapper.createObjectNode();
+        user.put("name", "John Doe");
+        user.put("email", "john.doe@example.com");
+        user.put("username", "JohnDoe");
+        user.put("password", "john.doe");
+
+        String json = mapper.writeValueAsString(user);
+
+        post(getPath(), json).andExpect(status().isCreated());
+        get(getPath()).andExpect(content().string(containsString("John Doe")));
+
+    }
+
+    @Test
+    public void createAndDeleteUser() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode user = mapper.createObjectNode();
+        user.put("name", "John Doe");
+        user.put("email", "john.doe@example.com");
+        user.put("username", "JohnDoe");
+        user.put("password", "john.doe");
+
+        String json = mapper.writeValueAsString(user);
+
+        post(getPath(), json).andExpect(status().isCreated());
+        get(getPath()).andExpect(content().string(containsString("John Doe")));
+
+        delete("/api/users/", 1L)
+                .andExpect(status().isNoContent());
+
+    }
+
+    public String createUser() throws JsonProcessingException {
 
     public String create() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
